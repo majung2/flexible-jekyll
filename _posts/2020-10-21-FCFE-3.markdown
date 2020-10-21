@@ -31,12 +31,12 @@ function for() {} // for 도 반복문 예약어 이므로 함수명으로 사�
 
 ### Reserved keywords
 이미 특정한 목적을 위해 사용하기 때문에 사용할 수 없는 예약어
-`break`, `if`, `in` 등...
+`break`,  `if`,  `in` 등...
 -> 런타임 환경에 따라 다를 수 있음
 
 ### Future reserved keywords
 앞으로 특정한 목적을 위해 사용할 가능성이 있어서 사용할 수 없는 예약어
-`abstract`, `boolean` 등...
+`abstract`,  `boolean` 등...
 -> 런타임 환경에 따라 다를 수 있음
 
 ![25-5 Keywords & Reserved Words]({{site.baseurl}}/assets/img/FCFE/post3-1.png)
@@ -55,11 +55,13 @@ var person = {name: 'Mark', age: 37};
 - person 객체 내의 name, age도 식별자
 
 > 식별자는 대소문자를 구분합니다!
+
 ```
 var myName = 'Mark';
 var myname = 'Mark';
 ```
 둘은 다른 변수
+
 
 - 유니코드 문자(한글)도 사용가능, `$`, `_`, `숫자(0-9)`를 사용할 수 있지만 **숫자로 시작 할 수는 없습니다.**
 - **예약어**는 사용할 수 **없고**, **공백문자**도 사용할 수 **없습니다.**

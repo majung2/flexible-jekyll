@@ -1,0 +1,113 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 4회차 미션"
+date: 2020-10-22 16:57:05 +0300
+description: # Add post description (optional)
+img: FCFE/post4-3.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+* [25 - 07 Comments](#07-Comments)
+* [25 - 08 변수와 상수](#08-변수와-상수)
+
+# 07 Comments
+> 주석
+
+- 소스코드에서 프로그램에 영향을 주지 않고, 무시되는 부분
+- 보통은 소스코드 이해를 돕는 역할로 사용
+
+```
+// 이 함수는 인사를 하는 함수입니다 <- 주석으로 소스코드 설명
+function hello(){}
+```
+
+한 줄만 주석 `//` 이용
+```
+// 이 줄만 주석이 됩니다
+```
+보통 에디터에서 `ctrl + /` 혹은 `command + /`로 주석을 만들 수 있음
+
+여러줄 주석 `/* */` 이용
+```
+/*
+한줄
+두줄
+세줄
+*/
+```
+
+![25 - 07 Comments]({{site.baseurl}}/assets/img/FCFE/post4-1.png)
+
+
+# 08 변수와 상수
+> variable and constant
+- 프로그래밍 시 값을 보관소에 저장하는 역할을 하는 것들
+- 모든 자료형 가능
+
+```
+if ((5 + 10) % 3 === 0){
+    console.log('야호3');
+}
+if ((5 + 10) % 5 === 0){
+    console.log('야호3');
+}
+```
+이 경우 매번 `5 + 10` 을 계산할 필요 없이 저장해두면 보다 편리할 것임 => 이때 사용하는 것이 변수/상수 (이 예시는 변하지 않으므로 상수사용이 적절)
+
+## 상수 constant
+
+### const 상수를_지칭하는_이름
+`const` : 상수를 선언할 때 사용하는 키워드
+이름은 식별자 규칙에 맞게 정하면 된다.
+
+```
+const sum = 5 + 10;
+if (sum % 3 === 0){
+    console.log('야호3');
+}
+if (sum % 5 === 0){
+    console.log('야호3');
+}
+```
+> 상수는 한 번 값이 정해지면 변하지 않음 = 선언과 동시에 값을 할당해야 함!
+
+### const 상수를_지칭하는_이름 = 값;
+
+## 변수 variable
+
+### let 변수를_지칭하는_이름;
+> 변수는 여러번 값을 할당할 수 있음. 할당 전에는 `undefined`라는 값을 가지게 됨
+
+### 변수를_지칭하는_이름 = 값;
+: 변수에 값을 할당하는 방법
+
+### let 변수를_지칭하는_이름 = 값;
+- 선언과 동시에 값을 할당할 수 있음
+- **주의** 선언이 되지 않은 변수에 값을 할당할 수 없음
+
+```
+const sum = 5 + 10;
+let result = false;
+
+if (sum % 3 === 0){
+    console.log('야호3');
+    result = true;
+}
+if (sum % 5 === 0){
+    console.log('야호');
+    result = true;
+}
+console.log(result);
+```
+`result`의 값이 변하므로 변수로 선언이 적절
+
+![25 - 08 변수와 상수]({{site.baseurl}}/assets/img/FCFE/post3-2.png)
+
+*****
+
+#### 4회차 인증샷
+![4회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post4-3.jpg)
+
+
+올인원 패키지 : 프론트엔드 개발👉https://bit.ly/3m0t8GM

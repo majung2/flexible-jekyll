@@ -8,8 +8,8 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 ---
 
 강의
-- 25 - 05 Keywords & Reserved Words
-- 25 - 04 Expression Statement
+- [25 - 05 Keywords & Reserved Words](#05-Keywords-&-Reserved-Words)
+- [25 - 06 식별자 Identifier](#06-식별자-Identifier)
 
 # 05 Keywords & Reserved Words
 

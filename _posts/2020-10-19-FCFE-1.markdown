@@ -10,8 +10,8 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 강의
 자바스크립트 먼저 공부하고 싶어서 자바스크립트 부분 부터 시작!
 
-- 25 - 01 자바스크립트란 무엇인가
-- 25 - 02 Various JavaScript Runtime
+- [25 - 01 자바스크립트란 무엇인가](#01-자바스크립트란-무엇인가)
+- [25 - 02 Various JavaScript Runtime](#02-Various-JavaScript-Runtime)
 
 
 # 01 자바스크립트란 무엇인가

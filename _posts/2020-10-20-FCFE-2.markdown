@@ -8,8 +8,8 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 ---
 
 강의
-- 25 - 03 실습을 위한 준비
-- 25 - 04 Expression Statement
+- [25 - 03 실습을 위한 준비](#03-실습을-위한-준비)
+- [25 - 04 Expression Statement](#04-Expression-Statement)
 
 # 03 실습을 위한 준비
 

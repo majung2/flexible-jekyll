@@ -218,10 +218,9 @@ let name;
 ```
 
 ![25 - 10 var 와 호이스팅]({{site.baseurl}}/assets/img/FCFE/post5-2.png)
-
-
-
-
+   
+   
+   
 *****
 
 #### 5회차 인증샷

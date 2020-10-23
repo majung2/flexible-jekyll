@@ -104,4 +104,4 @@ var name = "Mark";
 ![2회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post2-4.jpg)
 
 
-올인원 패키지 : 프론트엔드 개발👉https://bit.ly/3m0t8GM
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

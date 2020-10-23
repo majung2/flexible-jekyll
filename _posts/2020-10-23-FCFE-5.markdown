@@ -3,7 +3,7 @@ layout: post
 title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 5회차 미션"
 date: 2020-10-23 11:52:12 +0300
 description: # Add post description (optional)
-img: FCFE/post5-3.jpg
+img: FCFE/post5.jpg
 tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 ---
 
@@ -33,6 +33,7 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 console.log(name); // name이 정의되지 않았다는 에러 뜸
 ```
 
+
 ```
 // 밖에서 안으로
 let age = 37;
@@ -42,6 +43,7 @@ let age = 37;
 }
 console.log(age); // 38
 ```
+
 
 ```
 // 중첩
@@ -80,9 +82,10 @@ function hello2 = () => {
 > 함수 스코프
 
 - 일반적으로 `const`와 `let`처럼 블록 스코프를 가짐 but JS는 **함수 스코프**를 가진 변수 선언 방법인 `var`를 가짐 
-- _ES5_까지 JS의 가장 대표적 선언 방법이었음
-- _ES6_부터 `const`, `let`을 사용 
-- 블록스코프가 보다 직관적으로 코드 이해가 되므로 함수스코프보다 많이 사용
+- __ES5__까지 JS의 가장 대표적 선언 방법이었음
+- __ES6__부터 `const`, `let`을 사용 
+- **블록스코프**가 보다 직관적으로 코드 이해가 되므로 **함수스코프**보다 많이 사용
+
 
 ### function() {} 함수
 > 함수 선언 영역이 하나의 유효 범위가 됨!
@@ -110,8 +113,9 @@ console.log(b); // b is not defined
 ```
 
 ### var를 블록스코프에서 사용하면?
-- 블록스코프 _바깥_에서 선언된 `var` 변수를 블록 _안_에서 사용하는 경우
-: 아래와 같은 코드는 블록스코프 변수인 `const`와 `let`처럼 `var`도 문제가 없음
+1. 블록스코프 _바깥_에서 선언된 `var` 변수를 블록 _안_에서 사용하는 경우
+- 아래와 같은 코드는 블록스코프 변수인 `const`와 `let`처럼 `var`도 문제가 없음
+
 ```
 // 블록 스코프
 var c = 0;
@@ -121,8 +125,9 @@ var c = 0;
     console.log(c);
 }
 ```
-- 블록스코프 _안_에서 선언된 변수 `var`를 블록 _바깥_에서 사용하는 경우
-: `var`는 블록스코프는 영향을 미치지 않음
+
+2. 블록스코프 _안_에서 선언된 변수 `var`를 블록 _바깥_에서 사용하는 경우
+- `var`는 블록스코프는 영향을 미치지 않음
 
 ```
 // var에서는 문제가 없음!
@@ -145,6 +150,7 @@ console.log(d);
 [MDN web docs](https://developer.mozilla.org/ko/docs/Glossary/Hoisting)의 용어 설명
 
 자바스크립트에서는 함수 선언하고 호출하는 경우, 호출하고 선언하는 경우 모두 가능
+
 ```
 // 함수 먼저
 function hello1(){
@@ -159,10 +165,12 @@ function hello2(){
     console.log('hello2');
 }
 ```
+
 ## hoisting
 > 아래 있는 선언(만)을 끌어올리다
 
 함수 뿐 아니라 변수에서도 사용 후 선언이 가능!
+
 ```
 age = 6;
 age++;
@@ -171,12 +179,14 @@ console.log(age);
 var age;
 ```
 
+
 ```
 console.log(name); // undefined
 name = 'Mijeong';
 console.log(name); // Mijeong
 var name ;
 ```
+
 아래 결과도 위와 동일 
 > **why?** 선언부만 위로 올라가기 때문!
 
@@ -206,8 +216,6 @@ name = 'mijeong';
 console.log(name);
 let name;
 ```
-
-
 
 ![25 - 10 var 와 호이스팅]({{site.baseurl}}/assets/img/FCFE/post5-2.png)
 

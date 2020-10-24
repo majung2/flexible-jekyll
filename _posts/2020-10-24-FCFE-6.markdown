@@ -20,6 +20,7 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 
 ## 동적타이핑
 > Dynamic Type Language
+
 ```
 let whatever = 'Mijeong';
 
@@ -27,6 +28,7 @@ whatever = 37;
 
 whatever = true;
 ```
+
 자바스크립트에서는 값에 따라 변수의 타입이 달라짐 = 동적 타이핑
 > 변수가 가지는 고정 타입이 없다.
 >   > 하지만 타입이 없는 것은 아니다!
@@ -184,6 +186,7 @@ if (false) console.log('항상 실행되지 않음');
 
 ### 표현식이 거짓으로 평가될 때 : Falsy 한 값
 > `false`, `0`, `''`, `null`, `undefined`, `NaN`
+
 ```
 if (false) console.log(false);
 if (0) console.log(false);
@@ -196,6 +199,7 @@ if (NaN) console.log(NaN);
 
 ### 표현식이 참으로 평가될 때 : Truethy 한 값
 > Falsy의 반대 : `true`, `37`, `'Mark'`, `{}`, `[]`
+
 ```
 if (true) console.log(true); 
 if (-37) console.log(-37); 

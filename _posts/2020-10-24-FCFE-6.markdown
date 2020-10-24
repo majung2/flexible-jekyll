@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 6회차 미션"
-date: 2020-10-23 11:18:16 +0300
+date: 2020-10-24 11:18:16 +0300
 description: # Add post description (optional)
 img: FCFE/post6.jpg
 tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]

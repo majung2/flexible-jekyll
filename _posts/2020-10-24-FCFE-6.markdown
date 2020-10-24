@@ -17,6 +17,7 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 > Data Types
 
 [자바스크립트의 자료형 MDN 문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Data_structures)
+   
 
 ## 동적타이핑
 > Dynamic Type Language
@@ -33,6 +34,7 @@ whatever = true;
 > 변수가 가지는 고정 타입이 없다.
 >   > 하지만 타입이 없는 것은 아니다!
 
+   
 ## 데이터 타입
 - 기본 타입 Primitive values
     - Boolean
@@ -43,9 +45,11 @@ whatever = true;
     - Symbol (*ECMAScript 6에 추가됨*)
 - 객체 Objects
     - 브라우저에서 제공하는 객체가 있음 : 표준 내장 객체
-   
+
+      
 ### Boolean
 - `true` 와 `false` 라는 값이 있음
+
 ```
 const isTrue = true;
 const isFalse = false;
@@ -64,22 +68,21 @@ if (a){
     console.log('false?');
 }
 ```
+- `false` 의 위치에 `true` 와 `false` 판단이 필요한 값을 넣어 사용
 
 ```
 const b = Boolean(false);
 ```
-`false` 의 위치에 `true` 와 `false` 판단이 필요한 값을 넣어 사용
+   
 
 ### Null
-
 값이 없다는 객체
 ```
 const a = null;
 console.log(a, typeof a); // null, object
 ```
-
+   
 ### Undefined
-
 값이 정해지지 않은 객체
 ```
 let b;
@@ -96,9 +99,8 @@ if (a === b){
     console.log(a === b); // false
 }
 ```
-
+   
 ### Number
-
 - 정수 
 ```
 const a = 37;
@@ -111,13 +113,11 @@ const b = 96.7;
 console.log(b, typeof b);
 ```
 
-- NaN
+- NaN : 형 변환시 숫자가 아닌 숫자를 의미
 ```
 const c = NaN;
 console.log(c, typeof c); // NaN, number
 ```
-
-형 변환시 숫자가 아닌 숫자를 의미
 ```
 const d = Number('Mark');
 console.log(d, typeof d); // NaN, number
@@ -126,6 +126,7 @@ const e = Number('37');
 console.log(e, typeof e); // 37, number
 ```
 
+   
 ### String
 
 ```
@@ -149,11 +150,13 @@ const a = 'Mark';
 const d = `${a} Lee`; // Mark Lee
 ```
 
+   
 ### Symbol
 ES6부터 등장
 
 - 함수 호출하는 형태로 사용
 - 고유한 값을 사용하고 싶을 때 사용
+
 ```
 const a = Symbol();
 const b = Symbol(37);
@@ -179,11 +182,13 @@ console.log(c === d); // false
 - - *블럭* 중괄호 `{}` 로 설정해 한 개 이상의 statment를 작성한 코드 덩어리
 - `if` 라는 키워드를 사용하고 중괄호 `{}` 로 실행영역 설정
 - 블록에 코드가 *한 줄*이면, 중괄호 `{}` 는 생략이 가능하다.
+
 ```
 if (true) console.log('항상 실행');
 if (false) console.log('항상 실행되지 않음');
 ```
 
+  
 ### 표현식이 거짓으로 평가될 때 : Falsy 한 값
 > `false`, `0`, `''`, `null`, `undefined`, `NaN`
 
@@ -197,6 +202,7 @@ if (NaN) console.log(NaN);
 ```
 - 모두 실행되지 않음
 
+   
 ### 표현식이 참으로 평가될 때 : Truethy 한 값
 > Falsy의 반대 : `true`, `37`, `'Mark'`, `{}`, `[]`
 
@@ -210,6 +216,7 @@ if ([]) console.log([]); // 빈 배열: 참
 ```
 - 모두 실행 됨
 
+   
 ## else
 > if 에 해당하지 않을 때
 

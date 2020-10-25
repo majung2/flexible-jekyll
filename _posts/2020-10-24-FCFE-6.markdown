@@ -114,18 +114,18 @@ console.log(b, typeof b);
 ```
 
 - NaN : 형 변환시 숫자가 아닌 숫자를 의미
-```
-const c = NaN;
-console.log(c, typeof c); // NaN, number
-```
+    ```
+    const c = NaN;
+    console.log(c, typeof c); // NaN, number
+    ```
 
-```
-const d = Number('Mark');
-console.log(d, typeof d); // NaN, number
+    ```
+    const d = Number('Mark');
+    console.log(d, typeof d); // NaN, number
 
-const e = Number('37');
-console.log(e, typeof e); // 37, number
-```
+    const e = Number('37');
+    console.log(e, typeof e); // 37, number
+    ```
 
    
 ### String
@@ -180,7 +180,7 @@ console.log(c === d); // false
 ## if
 
 - 표현식이 참으로 평가될 때 살행되는 블럭
-- - *블럭* 중괄호 `{}` 로 설정해 한 개 이상의 statment를 작성한 코드 덩어리
+    - *블럭*: 중괄호 `{}` 로 설정해 한 개 이상의 statment를 작성한 코드 덩어리
 - `if` 라는 키워드를 사용하고 중괄호 `{}` 로 실행영역 설정
 - 블록에 코드가 *한 줄*이면, 중괄호 `{}` 는 생략이 가능하다.
 

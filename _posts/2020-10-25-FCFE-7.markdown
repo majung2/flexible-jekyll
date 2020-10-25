@@ -1,0 +1,181 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 7회차 미션"
+date: 2020-10-25 18:05:46 +0300
+description: # Add post description (optional)
+img: FCFE/post7.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+- [25 - 13 조건문-2](#13-조건문-2)
+- [25 - 14 조건문-3](#14-조건문-3)
+
+*****
+
+# 13 조건문-2
+
+## else if {}
+> if 에 해당하지 않을 때
+
+```
+const n = 15;
+
+if (n % 3 === 0){
+    console.log('n은 3의 배수입니다.');
+} else if (n % 5 === 0){
+    console.log('n은 5의 배수입니다.');
+} else {
+    console.log('n은 3의 배수도 아니고 5의 배수도 아닙니다.');
+}
+```
+- 3의 배수 이면서 5의 배수이면? 위 코드에서는 *'n은 3의 배수입니다.'* 출력
+- 더 좁은 범위를 먼저 씀!
+    ```
+    if (n % 3 === 0 && n % 5 === 0){
+        console.log('n은 15의배수입니다.');
+    } else if (n % 3 === 0){
+        console.log('n은 3의 배수입니다.');
+    } else if (n % 5 === 0){
+        console.log('n은 5의 배수입니다.');
+    } else {
+        console.log('n은 3의 배수도 아니고, 5의 배수도 아닙니다.');
+    }
+    ```
+
+- `n % 3 === 0` 과 `n % 5 === 0` 의 값이 여러 번 반복되므로, 변수나 상수에 넣습니다.
+    ```
+    const multipleOfThree = (n % 3 === 0);
+    const multipleOfFive = (n % 5 === 0);
+
+    if (multipleOfThree && multipleOfFive){
+        console.log('n은 15의배수입니다.');
+    } else if (multipleOfThree){
+        console.log('n은 3의 배수입니다.');
+    } else if (multipleOfFive){
+        console.log('n은 5의 배수입니다.');
+    } else {
+        console.log('n은 3의 배수도 아니고, 5의 배수도 아닙니다.');
+    }
+    ```
+
+- 중첩을 이용해서 표현할 수도 있습니다.
+    ```
+    const multipleOfThree = (n % 3 === 0);
+    const multipleOfFive = (n % 5 === 0);
+
+    if (multipleOfThree && multipleOfFive){
+        console.log('n은 15의배수입니다.');
+    } else {
+        if (multipleOfThree){
+        console.log('n은 3의 배수입니다.');
+        } else if (multipleOfFive){
+        console.log('n은 5의 배수입니다.');
+        } else {
+        console.log('n은 3의 배수도 아니고, 5의 배수도 아닙니다.');
+        }
+    }
+    ```
+
+
+![25 - 13 조건문-2]({{site.baseurl}}/assets/img/FCFE/post7-1.png)
+   
+   
+   
+# 14 조건문-3
+## 논리 연산자를 이용한 조건문 평가
+> `&&`, `||`, `!`
+
+- boolean 으로 써있는 부분이 모두 표현식이라 가정
+### &&
+```
+if (true && true) { 
+    console.log('두 개 모두 참이면 참');
+}
+
+if (true && false){
+    console.log('한 개만 참이면 거짓');
+}
+
+if (false && true){
+    console.log('한 개만 참이면 거짓');
+}
+
+if (false && false){
+    console.log('두 개 모두 거짓이면 거짓');
+}
+```
+
+### ||
+```
+if (true || true) { 
+    console.log('두 개 모두 참이면 참');
+}
+
+if (true || false){
+    console.log('한 개만 참이면 참');
+}
+
+if (false || true){
+    console.log('한 개만 참이면 참');
+}
+
+if (false || false){
+    console.log('두 개 모두 거짓이면 거짓');
+}
+```
+
+# !
+```
+if (!true){
+    console.log('참이면 거짓');
+}
+if (!false){
+    console.log('거짓이면 참');
+}
+```
+
+## 논리 연산자를 이용한 조건부 실행
+> 표현식 && 표현식
+- 둘 다 참 일때만 참이다.
+- 표현식은 앞에 먼저 평가하고 뒤를 평가
+- 앞 표현식이 참일 때 만, 뒤 표현식 평가 = 앞 표현식이 거짓일 땐 뒤 표현식 평가 X
+
+```
+let n = 5;
+
+(n % 5 === 0) && console.log('5로 나누어 떨어질때만 실행'); // '5로 나누어 떨어질때만 실행' 출력
+
+n = 6;
+
+(n % 5 === 0) && console.log('5로 나누어 떨어질때만 실행'); // 출력 없음
+```
+
+> 표현식 || 표현식
+- 둘 중 하나만 참이면 참
+- 앞 표현식이 참이면 뒤 표현식 평가할 필요 X
+
+```
+let n = 5;
+(n % 5 === 0) || console.log('5로 나누어 떨어지지 않을 때만 실행'); // 실행 x
+
+n = 6;
+(n % 5 === 0) || console.log('5로 나누어 떨어질때만 실행'); // '5로 나누어 떨어질때만 실행' 출력
+```
+
+
+
+
+
+
+![25 - 14 조건문-3]({{site.baseurl}}/assets/img/FCFE/post7-2.png)
+   
+   
+   
+*****
+
+#### 7회차 인증샷
+![7회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post7.jpg)
+
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

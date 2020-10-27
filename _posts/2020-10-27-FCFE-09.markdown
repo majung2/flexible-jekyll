@@ -1,0 +1,207 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 9회차 미션"
+date: 2020-10-27 17:08:46 +0300
+description: # Add post description (optional)
+img: FCFE/post09.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+- [25 - 17 반복문-2](#17-반복문-2)
+- [25 - 18 함수 A](#18-함수-A)
+
+*****
+
+# 17 반복문-2
+
+## while
+
+```
+while(조건){
+    // 조건이 거짓이 될 때까지 반복 실행
+}
+```
+
+```
+while(true){
+    console.log('안녕하세요');
+    if(Math.random() * 100 > 90){
+        break;
+    }
+}
+```
+
+## do while
+
+`while` 과 차이 : `do` 안에 있는 부분이 무조건 한 번은 실행 (`while` 은 경우에 따라 실행되지 않을 때도 있음)
+
+```
+do {
+    //조건이 거짓이 될 때까지 반복 실행
+} while(조건);
+```
+
+```
+do{
+    console.log('안녕하세요');
+} while (Math.random() * 100 < 90)
+```
+   
+## for of
+> iterable 한 객체에 모두 사용 가능
+
+- 내장된 iterable 프로토콜을 보유한 경우 사용 가능
+```
+for (const i of [1,2,3]){
+    console.log(i);
+}
+```
+
+**결과**   
+1   
+2   
+3   
+   
+   
+## for in
+> 모든 프로퍼티 (객체 포함) 에서도 사용 가능
+ 
+```
+Object.prototype.test = function(){};
+
+for (const i in {a:1, b:2, c:3}){
+    console.log(i);
+}
+```
+
+**결과**   
+a   
+b   
+c   
+test -> 이게 출력됨!    
+     
+
+![25 - 17 반복문-2]({{site.baseurl}}/assets/img/FCFE/post09-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 18 함수 A
+
+## function 
+> 함수를 만들 때 사용하는 키워드
+
+```
+function hello1(){
+    console.log('hello1');
+}
+
+console.log(hello1, typeof hello1);
+```
+
+**결과**   
+[Function: hello1] function   
+- `function` 은 내장객체 (함수는 객체의 한 종류)
+   
+
+### 매개변수
+
+- 함수를 호출할 때 값을 지정
+```
+function hello2(name){
+    console.log('hello2', name);
+}
+```
+
+### 함수의 리턴
+
+```
+function hello3(name) {
+    return `hello3 ${name}`;
+}
+
+console.log(hello3('Mijeong'));
+```
+   
+     
+## const hello = function() {}
+
+```
+const hello4 = function(){
+    console.log('hello4');
+}
+console.log(hello4, typeof hello4);
+```
+
+**결과**   
+[Function: hello4] function   
+
+- `hello1` 과 동일!
+   
+### 매개변수
+
+```
+const hello5 = function(name){
+    console.log('hello5');
+}
+```
+
+### 함수의 리턴
+
+```
+const hello6 = function(name){
+    return `hello6 ${name}`;
+}
+```
+   
+## 선언적 function 과 익명 함수를 만들어 변수에 할당 
+
+### 선언적 함수 : function 함수명 () {}
+
+```
+hello7();
+
+function hello7(){
+    console.log('hello7');
+}
+```
+    
+- 문제 없이 실행됨!
+- 함수를 먼저 메모리에 올려서 어디서 호출해도 문제 없음
+
+### 익명 함수 변수에 할당
+
+```
+console.log(hello8); // undefined 출력
+hello8(); // hello8 is not a function 에러
+
+var hello8 = function(){
+    console.log('hello8');
+}
+```
+    
+```
+hello9();
+
+const hello9 = function(){
+    console.log('hello9');
+}
+```
+
+ReferenceError: Cannot access 'hello9' before initialization 출력
+- 변수 호출 위치에 따라 문제 발생
+
+
+![25 - 18 함수 A]({{site.baseurl}}/assets/img/FCFE/post09-2.png)
+*****
+<br>   
+
+#### 9회차 인증샷
+![9회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post09.jpg)
+<br>   
+<br>   
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

@@ -1,0 +1,196 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 10회차 미션"
+date: 2020-10-27 17:08:46 +0300
+description: # Add post description (optional)
+img: FCFE/post10.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+- [25 - 19 함수 B](#19-함수-B)
+- [25 - 20 함수 C](#20-함수-C)
+
+*****
+
+# 19 함수 B
+
+## const hello = new Function();
+> 생성자 함수로 함수를 만드는 방법 (잘 쓰이진 않음)
+
+```
+const sum = new Function('a', 'b', 'c', 'return a+b+c'); // 매개변수와 바디를 문자열로 넣음
+
+console.log(sum(1,2,3));
+```
+<br>
+<br>
+
+## function 과 new Function();
+
+```
+{
+    const a = 1;
+    const test = new Function('return a');
+    console.log(test());
+}
+```
+**결과** a is not defined
+   
+전역변수를 만들어 사용가능
+```
+global.a = 0; // 전역변수
+
+{
+    const a = 1;
+    const test = new Function('return a');
+    console.log(test());
+}
+```
+**결과** 0 (전역변수 a)를 출력
+
+```
+global.a = 0; 
+{
+    const a = 2;
+    const test = function(){
+        return a;
+    }
+    console.log(test());
+}
+```
+**결과** 2 (지역변수 a)를 출력
+<br>
+<br>
+
+## () => {} arrow function
+> ES6에서 생김
+
+- 선언적 방식으로 사용할 수 없음 = 항상 익명함수
+    ```
+    const hello1 = () => {
+        console.log('hello1');
+    }
+    ```
+     
+- 매개면수가 하나일 땐 괄호() 생략가능
+    ```
+    const hello2 = name => {
+        console.log('hello2', name);
+    }
+    ```
+     
+- 여럿일 땐 괄호 사용
+    ```
+    const hello3 = (name, age) => {
+        console.log('hello3', name, age);
+    }
+    ```
+     
+- `return` 키워드
+    ```
+    const hello4 = name => {
+        return `hello5 ${name}`;    
+    }
+    ```
+
+    함수 블럭 내에 바로 `return` 이 있을 경우 `{}` 을 생략해서 사용 가능! 
+    ```
+    const hello5 = name => `hello5 ${name}`;
+    ```
+    
+     
+       
+![25 - 19 함수 B]({{site.baseurl}}/assets/img/FCFE/post10-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 20 함수 C
+
+## new 함수();
+> 생성자 함수
+
+```
+function Person(name, age){
+    console.log(this); // this: 객체가 만들어졌을 때 객체를 가리킴
+    this.name = name;
+    this.age = age;
+}
+const p = new Person('Mijeong', 25);
+
+console.log(p, p.name, p.age);
+```
+
+**결과**    
+Person {}     
+Person { name: 'Mijeong', age: 25 } Mijeong 25     
+
+```
+const Cat = (name, age) => {
+    console.log(this);
+    this.name = name;
+    this.age = age;
+} 
+
+const c = new Cat('mimi', 10);
+```
+**이렇게 사용 불가!!**
+
+<br>
+<br>
+
+## 함수 안에서 함수를 만들어 리턴
+
+```
+function plus(base){
+    return function(num){
+        return base + num;
+    }
+}
+
+const plus5 = plus(5);
+console.log(plus5(10));
+
+const plus7 = plus(7);
+console.log(plus7(8));
+```
+
+**결과**    
+15    
+15    
+
+<br>
+<br>
+
+## 함수를 호출할 때 인자로 함수를 사용
+
+```
+function hello(c){
+    console.log('hello');
+    c();
+}
+
+hello(function() {
+    console.log('콜백');
+});
+```
+
+**결과**    
+hello    
+콜백     
+
+
+
+![25 - 20 함수 C]({{site.baseurl}}/assets/img/FCFE/post10-2.png)
+*****
+<br>   
+
+#### 10회차 인증샷
+![10회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post10.jpg)
+<br>   
+<br>   
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

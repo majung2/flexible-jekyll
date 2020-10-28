@@ -31,7 +31,8 @@ while(true){
     }
 }
 ```
-
+<br>
+<br>
 ## do while
 
 `while` 과 차이 : `do` 안에 있는 부분이 무조건 한 번은 실행 (`while` 은 경우에 따라 실행되지 않을 때도 있음)
@@ -47,7 +48,8 @@ do{
     console.log('안녕하세요');
 } while (Math.random() * 100 < 90)
 ```
-   
+<br>
+<br>
 ## for of
 > iterable 한 객체에 모두 사용 가능
 
@@ -63,7 +65,8 @@ for (const i of [1,2,3]){
 2   
 3   
    
-   
+<br>
+<br> 
 ## for in
 > 모든 프로퍼티 (객체 포함) 에서도 사용 가능
  
@@ -104,18 +107,18 @@ console.log(hello1, typeof hello1);
 
 **결과**   
 [Function: hello1] function   
-- `function` 은 내장객체 (함수는 객체의 한 종류)
-   
-
+`function` 은 내장객체 (함수는 객체의 한 종류)
+    
+<br>  
 ### 매개변수
 
-- 함수를 호출할 때 값을 지정
+함수를 호출할 때 값을 지정
 ```
 function hello2(name){
     console.log('hello2', name);
 }
 ```
-
+<br>
 ### 함수의 리턴
 
 ```
@@ -125,8 +128,9 @@ function hello3(name) {
 
 console.log(hello3('Mijeong'));
 ```
-   
-     
+
+<br>
+<br>  
 ## const hello = function() {}
 
 ```
@@ -140,7 +144,8 @@ console.log(hello4, typeof hello4);
 [Function: hello4] function   
 
 - `hello1` 과 동일!
-   
+
+<br>
 ### 매개변수
 
 ```
@@ -149,6 +154,7 @@ const hello5 = function(name){
 }
 ```
 
+<br>
 ### 함수의 리턴
 
 ```
@@ -156,7 +162,8 @@ const hello6 = function(name){
     return `hello6 ${name}`;
 }
 ```
-   
+<br>
+<br>
 ## 선언적 function 과 익명 함수를 만들어 변수에 할당 
 
 ### 선언적 함수 : function 함수명 () {}
@@ -172,6 +179,7 @@ function hello7(){
 - 문제 없이 실행됨!
 - 함수를 먼저 메모리에 올려서 어디서 호출해도 문제 없음
 
+<br>
 ### 익명 함수 변수에 할당
 
 ```

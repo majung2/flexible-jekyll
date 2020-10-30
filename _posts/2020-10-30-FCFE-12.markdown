@@ -1,0 +1,237 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 12회차 미션"
+date: 2020-10-30 13:48:20 +0300
+description: # Add post description (optional)
+img: FCFE/post12.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+- [25 - 23 객체 C](#23-객체-C)
+- [25 - 24 객체 D](#24-객체-D)
+- [25 - 25 클래스 A](#25-클래스-A)
+
+*****
+
+# 23 객체 C
+
+## 프로토타입을 이용한 객체 확장
+
+```
+function Person(){}
+
+Person.prototype.hello = function(){
+    console.log('hello');
+}
+
+function Korean(region){
+    this.region = region;
+    this.where = function(){
+        console.log('where', this.region);
+    }
+}
+
+Korean.prototype = Person.prototype;
+
+const k = new Korean('Seoul');
+k.hello();
+k.where();
+```
+**결과**   
+hello    
+where Seoul    
+     
+위 코드의 `k` 는 `Korean` 객체, `Person` 객체, `Object` 객체의 인스턴스
+```
+console.log(k instanceof Korean);
+console.log(k instanceof Person);
+console.log(k instanceof Object);
+```
+> 결과는 모두 `true`
+
+<br>
+<br>
+
+## 객체 리터럴
+
+```
+const a = {};
+console.log(a, typeof a);
+
+const b = {
+    name: 'Mijeong'
+};
+console.log(b, typeof b);
+```
+**결과**    
+{} object     
+{ name: 'Mijeong' } object     
+
+**주의**
+arrow function은 this 바인드가 안 됨!
+```
+const c = {
+    name: 'Mark',
+    hello1(){
+        console.log('hello1', this.name);
+    },
+    hello2: function(){
+        console.log('hello2', this.name);
+    },
+    hello3:() => { 
+        console.log('hello3', this.name);
+    }
+};
+
+c.hello1();
+c.hello2();
+c.hello3();
+```
+**결과**    
+hello1 Mark     
+hello2 Mark     
+hello3 undefined -> arrow function은 this바인드가 안 됨!!!
+
+
+
+
+![25 - 23 객체 C]({{site.baseurl}}/assets/img/FCFE/post12-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 24 객체 D
+
+## 표준 내장 객체
+> 객체가 이미 런타임 환경에 만들어져 있는 것 (예. Object, Function)
+
+[> 표준 내장 객체 MDN 자료](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects)
+
+<br>
+
+### 표준 내장 객체 Array
+```
+const a = new Array('red', 'black', 'white');
+console.log(a, typeof a);
+```
+**결과**    
+[ 'red', 'black', 'white' ] object
+
+```
+console.log(a instanceof Array); // true
+console.log(a instanceof Object); // true
+```
+
+리터럴로 선언해도 Object!
+```
+const b = ['red', 'black', 'green'];
+
+console.log(b, typeof b);
+console.log(b instanceof Array);
+console.log(b instanceof Object);
+```
+**결과**    
+[ 'red', 'black', 'green' ] object     
+true       
+true     
+
+*따라서 Array가 가진 프로토타입 함수 사용 가능*
+```
+console.log(b.slice(0,1)); // ['red']
+```
+
+`slice` 는 `Object` 에는 없고 `Array` 에 있는 함수!
+```
+console.log(Array.prototype.slice, Object.prototype.slice);
+```
+**결과**    
+[Function: slice] undefined     
+
+> 표준 내장 객체 함수에 대해 공부하는 것이 도움이 될 것!
+
+![25 - 24 객체 D]({{site.baseurl}}/assets/img/FCFE/post12-2.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 25 클래스 A
+> class
+
+객체를 만들 수 있는 새로운 방법 **ES6에 새로 추가된 방법!**
+[클래스 MDN문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes)
+
+### 클래스를 만드는 두가지 방식
+```
+// 선언적 방식
+
+class A {}
+
+console.log(new A());
+
+// class 표현식을 변수에 할당
+const B = class {};
+
+console.log(new B());
+```
+
+선언적 방식이지만 **호이스팅은 일어나지 않는다.**
+```
+new C();
+
+class C{};
+```
+ReferenceError: Cannot access 'C' before initialization
+
+<br>
+<br>
+
+## constructor 생성자
+
+```
+class A{}
+console.log(new A());
+
+class B{
+    constructor(){
+        console.log('constructor');
+    }
+}
+
+console.log(new B());
+
+class C{
+    constructor(name, age){
+        console.log('constructor', name, age);
+    }
+}
+
+console.log(new C('mijeong', 25));
+console.log(new C('mama'));
+```
+**결과**    
+A {}     
+constructor     
+B {}     
+constructor mijeong 25     
+C {}    
+constructor mama undefined
+C {}
+
+의도치 않게 값이 빠진 경우 `undefined` 로 출력됨
+
+![25 - 25 클래스 A]({{site.baseurl}}/assets/img/FCFE/post12-3.png)
+
+*****
+<br>  
+
+#### 12회차 인증샷
+![12회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post12.jpg)
+<br>   
+<br>   
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

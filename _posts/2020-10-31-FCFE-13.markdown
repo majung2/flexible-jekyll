@@ -10,6 +10,7 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 강의
 - [25 - 26 클래스 B](#26-클래스-B)
 - [25 - 27 클래스 C](#27-클래스-C)
+- [25 - 28 클래스 D](#28-클래스-D)
 
 *****
 # 26 클래스 B
@@ -261,6 +262,144 @@ console.log(E);
 
 
 ![25 - 27 클래스 C]({{site.baseurl}}/assets/img/FCFE/post13-2.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 28 클래스 D
+
+## extends
+> 클래스의 상속 기본
+
+```
+class Parent {
+    name = 'Lee';
+
+    hello(){
+        console.log('hello', this.name);
+    }
+}
+
+class Child extends Parent {}
+
+const p = new Parent();
+const c = new Child();
+
+console.log(p, c);
+```
+**결과**   
+Parent { name: 'Lee' } Child { name: 'Lee' }   
+
+부모의 멤버변수 그대로 들어옴!
+
+위 코드에 아래 코드 추가
+```
+c.hello();
+c.name = 'Anna';
+c.hello();
+```
+**결과**   
+hello Lee    
+hello Anna    
+
+<br>
+<br>
+
+## override
+> 클래스의 상속 멤버 변수 및 함수 오버라이딩, 추가
+부모에서 구현한 함수/변수를 자식에서 똑같은 이름으로 구현시 *오버라이드*라고 함!
+- 자식이 만들어 놓은 함수가 부모의 함수를 덮어씌우는 경우
+- 부모가 만들어 놓지 않은 부분은 자식이 추가!
+
+```
+class Parent {
+    name = 'Lee';
+
+    hello() {
+        console.log('hello', this.name);
+    }
+}
+
+class Child extends Parent{
+    age = 25;
+
+    hello(){
+        console.log('hello', this.name, this.age);
+    }
+}
+
+const p = new Parent();
+const c = new Child();
+
+console.log(p, c);
+```
+**결과**   
+Parent { name: 'Lee' } Child { name: 'Lee', age: 25 }     
+
+부모가 가진 것과 똑같은 이름의 함수를 자식이 가지면 자식이 보유한 함수 출력
+```
+c.hello(); // hello Lee 25
+```
+
+<br>
+<br>
+
+## super
+> 클래스의 상속 생성자 함수 변경
+
+```
+class Parent{
+    name;
+
+    constructor(name){
+        this.name = name;
+    }
+    hello(){
+        console.log('hello', this.name);
+    }
+}
+
+class Child extends Parent{
+    age;
+
+    constructor(name, age){
+        super(name); // Parent 클래스의 constructor 와 동일!
+        this.age = age;
+    }
+    hello(){
+        console.log('hello', this.name, this.age);
+    }
+}
+
+const p = new Parent('Mark');
+const c = new Child('Mark', 25);
+
+console.log(p, c);
+```
+**결과**   
+Parent { name: 'Mark' } Child { name: 'Mark', age: 25 }    
+
+<br>
+<br>
+
+## static
+> 클래스의 상속 static 상속
+
+```
+class Parent{
+    static age = 25;
+}
+
+class Child extends Parent{}
+console.log(Parent.age, Child.age);
+```
+**결과**    
+25 25    
+
+![25 - 28 클래스 D]({{site.baseurl}}/assets/img/FCFE/post13-3.png)
+
 *****
 <br>   
 

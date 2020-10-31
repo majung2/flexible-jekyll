@@ -1,0 +1,272 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 13회차 미션"
+date: 2020-10-31 22:51:20 +0300
+description: # Add post description (optional)
+img: FCFE/post13.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+- [25 - 26 클래스 B](#26-클래스-B)
+- [25 - 27 클래스 C](#27-클래스-C)
+
+*****
+# 26 클래스 B
+
+## 멤버변수
+> 객체의 프로퍼티
+
+```
+class A{
+    constructor(name, age){
+        this.name = name;
+        this.age = age;
+
+    }
+}
+
+console.log(new A('Mark', 37));
+```
+**결과**    
+A { name: 'Mark', age: 37 }    
+
+> 런타임 환경에 따라 아래 코드는 에러가 날 수 있음!!
+
+```
+class B { 
+    name; // this.name 에 해당, 값 할당 전엔 undefined
+    age; // this.age
+}
+
+console.log(new B());
+```
+
+```
+class C {
+    name = 'no name';
+    age = 0;
+    constructor(name, age){
+        this.name = name;
+        this.age = age;
+    }
+}
+
+console.log(new C('mijeong', 25));
+```
+**결과**    
+C { name: 'mijeong', age: 25 }     
+
+<br>
+<br>
+
+## 멤버함수
+
+```
+class D {
+    hello1(){
+        console.log('hello1', this);
+    }
+
+    hello2 = () => {
+        console.log('hello2', this);
+    }
+
+}
+
+new D().hello1();
+new D().hello2();
+```
+**결과**    
+hello1 D { hello2: [Function: hello2] }     
+hello2 D { hello2: [Function: hello2] }     
+
+```
+class E {
+    name = 'Mark';
+    hello(){
+        console.log('hello', this.name);
+    }
+}
+
+new E().hello();
+```
+**결과**    
+hello Mark     
+
+
+![25 - 26 클래스 B]({{site.baseurl}}/assets/img/FCFE/post13-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 27 클래스 C
+
+## get, set
+> 게터, 세터
+
+```
+class A {
+    _name = 'no name';
+
+    get name() {
+        return this._name;
+    }
+
+    set name(value){
+        this._name = value + '!!!'; 
+    }
+}
+
+const a = new A();
+
+console.log(a);
+```
+**결과**   
+A { _name: 'no name' }    
+
+setter 사용해보기
+```
+class A {
+    _name = 'no name';
+
+    get name() {
+        return this._name + '@@@';
+    }
+
+    set name(value){
+        this._name = value + '!!!'; 
+    }
+}
+
+const a = new A();
+a.name = 'Mark'; // set 함수가 호출됨! 인자로 'Mark'가 들어감
+console.log(a);
+```
+**결과**    
+A { _name: 'Mark!!!' }   
+
+getter 사용해보기
+```
+class A {
+    _name = 'no name';
+
+    get name() {
+        return this._name + '@@@';
+    }
+
+    set name(value){
+        this._name = value + '!!!'; 
+    }
+}
+
+const a = new A();
+
+a.name = 'Mark'; // set 함수가 호출됨! 인자로 'Mark'가 들어감
+console.log(a.name);
+console.log(a._name);
+```
+**결과**    
+Mark!!!@@@    
+Mark!!!    
+
+`_name` 의 의미!
+- 내부적으로 사용할 경우 언더바(`-`)를 붙여서 사용한다.
+- `get name()` 과 `set name()` 을 사용함
+
+<br>
+
+### readonly
+
+```
+class B{
+    _name = 'no name';
+    get name(){
+        return this._name + '@@@';
+    }
+}
+
+const b = new B();
+console.log(b);
+b.name = 'Mark';
+console.log(b)
+```
+**결과**   
+B { _name: 'no name' }   
+B { _name: 'no name' }   
+
+setter 함수가 없으므로 변화가 없다!
+단, 언더바와 함께 쓰인 변수명은 외부에서 사용하지 않는 것으로 약속
+
+<br>
+<br>
+
+## static 변수, 함수
+> 객체가 아니고, 클래스의 변수와 함수
+
+```
+class C {
+    static age = 25; // static 변수
+    static hello() {
+        console.log(C.age); // static 변수에 접근시 클래스 명으로 접근
+    }
+}
+
+console.log(C, C.age);
+C.hello();
+```
+**결과**    
+[class C] { age: 25 } 25     
+25     
+
+```
+class D {
+    age = 20; 
+    static hello(){
+        console.log(this.age); // 말이 안되는 문법
+    }
+}
+
+console.log(D, D.age);
+D.hello();
+```
+**결과**    
+[class D] undefined    
+undefined    
+
+```
+new D().hello();
+```
+`new` 로 객체 생성후 `hello()` 함수 호출 시 -> 에러
+TypeError: (intermediate value).hello is not a function
+static 함수이므로 객체에 속한 함수가 아님!!
+
+<br>
+
+### 클래스의 이름 설정
+
+```
+class E {
+    static name = '이 클래스의 이름을 E가 아니다.'
+}
+
+console.log(E);
+```
+**결과**    
+[class 이 클래스의 이름을 E가 아니다.] { name: '이 클래스의 이름을 E가 아니다.' }
+`static name` 은 클래스의 이름을 뜻함!
+
+
+
+![25 - 27 클래스 C]({{site.baseurl}}/assets/img/FCFE/post13-2.png)
+*****
+<br>   
+
+#### 13회차 인증샷
+![13회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post13.jpg)
+<br>   
+<br>   
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

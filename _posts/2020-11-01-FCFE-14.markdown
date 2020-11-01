@@ -1,0 +1,223 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 14회차 미션"
+date: 2020-10-30 22:57:20 +0300
+description: # Add post description (optional)
+img: FCFE/post14.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+- [25 - 29 Promise 1](#29-Promise-1)
+- [25 - 30 Promise 2](#30-Promise-2)
+
+*****
+
+# 29 Promise 1
+
+[MDN Promise 문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+> ES6 부터 JS 표준 내장 객체로 추가
+
+```
+console.log(Promise); // [Function: Promise]
+```
+
+- 생성자를 통해서 프로미스 객체를 만들 수 있습니다.
+- 생성자의 인자로 `executor` 라는 함수를 이용합니다.
+```
+new Promise(/* executor */);
+```
+
+### executor 함수
+- `resolve` 와 `reject` 를 인자로 가집니다. `(resolve, reject) => {}`
+```
+new Promise(/* executor */(resolve, reject) => {});
+```
+
+- 생성자를 통해 프로미스 객체를 만드는 순간 pending(대기) 상태라고 합니다.
+```
+new Promise((resolve, reject)=>{}); // pending 도입
+```
+
+- `executor` 함수 인자 중 하나인 `resolve` 함수를 실행하면, fulfilled(이행) 상태가 됩니다.
+```
+
+new Promise((resolve, reject)=>{
+    // pending 상태
+    // 비동기적 처리 상황
+
+    resolve(); // fulfilled 상태
+
+}); 
+```
+
+- `executor` 함수 인자 중 하나인 `reject` 함수를 실행하면, rejected(거부) 상태가 됩니다.
+```
+new Promise((resolve, reject)=>{
+    reject(); // rejected 상태
+
+}); 
+```
+
+- `p` 라는 객체는 1000ms(1초)후에 fulfilled 됩니다.
+- `p` 라는 프로미스 객체가 fulfilled 되는 시점에 `p.then` 안에 설정한 callback 함수가 실행됩니다.
+```
+
+const p = new Promise((resolve, reject) => {
+    //pending
+
+    // ms 이후에 실행되는 함수
+    setTimeout(() => { 
+        resolve(); // fulfilled
+    }, 1000);
+});
+
+p.then(() => { 
+    //fulfilled 이후 실행 = callback
+})
+```
+
+
+
+![25 - 29 Promise 1]({{site.baseurl}}/assets/img/FCFE/post14-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 30 Promise 2
+
+```
+const p = new Promise((resolve, reject) => {
+    //pending
+
+    // ms 이후에 실행되는 함수
+    setTimeout(() => { 
+        resolve(); // fulfilled
+    }, 1000);
+});
+
+p.then(() => { //fulfilled 이후 실행 = callback 작성
+    console.log('1000ms후에 fulfilled 됩니다.');
+})
+```
+**결과**    
+(1초 후에)1000ms후에 fulfilled 됩니다.   
+
+`then` 을 설정하는 시점을 정확히 하고 함수의 실행과 동시에 프로미스 객체를 만들면서 pending이 시작하도록 하기 위해 프로미스 객체를 생성하면서 리턴하는 함수 `p` 를 만들어 함수 `p` 실행과 동시에 `then` 을 설정합니다.
+
+```
+function p() {
+    return new Promise((resolve, reject) => {
+        //pending
+    
+        // ms 이후에 실행되는 함수
+        setTimeout(() => { 
+            resolve(); // fulfilled
+        }, 1000);
+    });
+
+}
+
+p().then(() => {
+    console.log('1000ms 후에 fulfilled!');
+});
+```
+
+프로미스 객체가 rejected 되는 시점에 `p.catch` 안에 설정한 callback 함수가 실행됩니다.
+
+```
+function p() {
+    return new Promise((resolve, reject) => {
+        //pending
+        setTimeout(() => { 
+            reject(); // rejected
+        }, 1000);
+    });
+
+}
+
+p().then(() => {
+    console.log('1000ms 후에 fulfilled!');
+}).catch(() => {
+    //callback 함수
+    console.log('1000ms 후에 rejected');
+});
+```
+
+executor의 resolve 함수를 실행할 때 인자를 넣어 실행하면, `then` 의 callback 함수의 인자로 받을 수 있습니다.
+```
+function p() {
+    return new Promise((resolve, reject) => {
+        //pending
+        setTimeout(() => { 
+            resolve('hello'); // 여기!!!!
+        }, 1000);
+    });
+
+}
+
+p().then((message) => { // message 로 받음!
+    console.log('1000ms 후에 fulfilled!', message);
+}).catch(() => {
+    //callback 함수
+    console.log('1000ms 후에 rejected');
+});
+```
+
+마찬가지로 reject 함수 실행할 때 인자를 넣어 실행하면, `catch` 의 callback 함수의 인자로 받을 수 있습니다.
+```
+function p() {
+    return new Promise((resolve, reject) => {
+        //pending
+        setTimeout(() => { 
+            reject('error'); // 에러!
+        }, 1000);
+    });
+
+}
+
+p().then((message) => {
+    console.log('1000ms 후에 fulfilled!', message);
+}).catch(reason => { // reason 으로 넘김
+    //callback 함수
+    console.log('1000ms 후에 rejected', reason);
+});
+```
+
+하지만 JS의 error 객체를 사용하는게 일반적
+```
+function p() {
+    return new Promise((resolve, reject) => {
+        //pending
+        setTimeout(() => { 
+            reject(new Error('bad')); 
+        }, 1000);
+    });
+
+}
+
+p().then((message) => {
+    console.log('1000ms 후에 fulfilled!', message);
+}).catch(error => {
+    //callback 함수
+    console.log('1000ms 후에 rejected', error);
+});
+```
+**결과**     
+1000ms 후에 rejected Error: bad     
+    at Timeout._onTimeout (/Users/mijeong/Desktop/gitblog/FCFE/clip3.js:22:20)
+    at listOnTimeout (node:internal/timers:555:17)
+    at processTimers (node:internal/timers:498:7)
+
+![25 - 30 Promise 2]({{site.baseurl}}/assets/img/FCFE/post14-2.png)
+*****
+<br>   
+
+#### 14회차 인증샷
+![14회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post14.jpg)
+<br>   
+<br>   
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

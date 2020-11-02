@@ -1,0 +1,212 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 15회차 미션"
+date: 2020-11-02 11:58:20 +0300
+description: # Add post description (optional)
+img: FCFE/post15.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+- [25 - 31 Promise 3](#31-Promise-3)
+- [25 - 32 Promise 4](#32-Promise-4)
+
+*****
+
+# 31 Promise 3
+
+## finally
+
+fulfilled되거나 rejected 된 후에 최종적으로 실행할 것이 있다면, `.finally` 를 설정하고, 함수를 인자로 넣습니다.
+     
+```
+function p(){
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            reject(new Error('bad'));
+        }, 1000);
+    });
+}
+
+p()
+.then(message => {
+    console.log('1000ms 후에 fulfill', message);
+})
+.catch(error =>{
+    console.log('1000ms 후에 reject', error);
+})
+.finally(()=>{
+    console.log('end');
+});
+```
+
+**결과**     
+1000ms 후에 reject Error: bad     
+    at Timeout._onTimeout (/Users/mijeong/Desktop/gitblog/FCFE/clip31.js:4:20)     
+    at listOnTimeout (node:internal/timers:555:17)     
+    at processTimers (node:internal/timers:498:7)     
+end     
+
+보통 비동기 작업을 할 때, callback 함수를 인자로 넣어 로직이 끝나면 callback 함수를 호출합니다. 이런 경우 함수가 아래로 진행되지 않고, callback 함수 안으로 진행됩니다.
+
+```
+function c(callback){
+    setTimeout(()=>{
+        callback();
+    }, 1000);
+}
+
+c(()=> {
+    console.log('1000ms 후에 callback 함수가 실행됩니다.');
+});
+
+c(()=> {
+    c(()=> {
+        c(()=> {
+            console.log('3000ms 후에 callback 함수가 실행됩니다.');
+        });
+    });    
+});
+```     
+     
+이 작업을  `Promise` 를 활용해 바꿔보자!
+
+```
+function p(){
+    return new Promise((resolve, reject) =>{
+        setTimeout(()=>{
+            resolve();
+        }, 1000);
+    });
+}
+
+p()
+    .then(()=>{ // 1초뒤에 실행
+        return p();
+    })
+    .then(() => p()) // 2초뒤에 실행
+    .then(p) // 3초뒤에 실행
+    .then(()=>{ // 4초뒤에 실행
+        console.log('4000ms 후에 fulfilled');
+    });
+```   
+
+
+![25 - 31 Promise 3]({{site.baseurl}}/assets/img/FCFE/post15-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 32 Promise 4
+
+## Promise.resolve(); 로 Promise 만들기
+
+```
+Promise.resolve(/* value */);
+```
+
+`value` 에 `Promise` 객체를 넣어줄 수 있음
+
+```
+
+Promise.resolve(new Promise((resolve, reject)=>{
+    setTimeout(()=>{
+        resolve('foo');
+    },1000);
+})).then((data)=>{
+    console.log('프로미스 객체인 경우, resolve 된 결과를 받아서 then이 실행됩니다.', data);
+});
+
+Promise.resolve('bar').then(data => {
+    console.log('then 메소드가 없는 경우, fulfilled 됩니다.', data);
+})
+```
+
+**결과**     
+then 메소드가 없는 경우, fulfilled 됩니다. bar    
+프로미스 객체인 경우, resolve 된 결과를 받아서 then이 실행됩니다. foo     
+
+프로미스 객체인지 아닌지 모를 경우      
+
+<br>
+
+### reject
+
+```
+Promise.reject(/* value */);
+
+Promise.reject(new Error('reason'))
+    .then(error => {})
+    .catch(error => {
+    console.log(error);
+    });
+```
+
+**결과**   
+ERROR
+
+<br>
+<br>
+
+## Promise.all([프로미스 객체들]);
+
+프로미스 객체를 여러개 생성하여, 배열로 만들어 인자로 넣고, `Promise.all` 을 실행하면, 배열의 모든 프로미스 객체들이 fulfilled 되었을 때, `then` 의 함수가 실행됩니다. `then` 의 함수의 인자로 프로미스 객체들의 `resolve` 인자값을 배열로 돌려줍니다. 
+
+```
+function p(ms){
+    return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            resolve(ms);
+        },ms);
+    })
+}
+
+Promise.all([p(1000), p(2000), p(3000)]).then(messages => {
+    console.log('모두 fulfilled 된 이후 실행됩니다.', messages);
+});
+```
+**결과**     
+모두 fulfilled 된 이후 실행됩니다. [ 1000, 2000, 3000 ]       
+
+비동기 작업을 여러개 동시에 시작한 후 모두 끝나면 처리해줄 것이 있다면 이렇게 사용!
+
+<br>
+<br>
+
+## Promise.race([프로미스 객체들]);
+
+프로미스 객체들 중 가장 먼저 fulfilled 된 것으로 `then` 의 함수가 실행됩니다. `then` 의 함수의 인자로 가장 먼저 fulfilled 된 프로미스 객체의 `resolve` 인자값을 돌려줍니다.
+
+```
+function p(ms){
+    return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            resolve(ms);
+        },ms);
+    })
+}
+
+Promise.race([p(2000), p(1000), p(3000)]).then(message => {
+    console.log('가장 먼저 fulfilled 된 이후 실행됩니다.', message);
+});
+```     
+
+**결과**    
+가장 먼저 fulfilled 된 이후 실행됩니다. 1000     
+
+
+> 자바스크립트에서 비동기 처리를 위해 가장 기본이 되는 것이 `Promise` !! 
+
+
+![25 - 32 Promise 4]({{site.baseurl}}/assets/img/FCFE/post15-2.png)
+*****
+<br>   
+
+#### 15회차 인증샷
+![15회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post15.jpg)
+<br>   
+<br>   
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

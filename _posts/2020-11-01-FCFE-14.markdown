@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 14회차 미션"
-date: 2020-10-30 22:57:20 +0300
+date: 2020-11-01 22:57:20 +0300
 description: # Add post description (optional)
 img: FCFE/post14.jpg
 tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
@@ -45,7 +45,7 @@ new Promise((resolve, reject)=>{}); // pending 도입
      
 
 - `executor` 함수 인자 중 하나인 `resolve` 함수를 실행하면, fulfilled(이행) 상태가 됩니다.     
-   
+     
 ```
 new Promise((resolve, reject)=>{
     // pending 상태

@@ -1,0 +1,247 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 16회차 미션"
+date: 2020-11-03 13:54:47 +0300
+description: # Add post description (optional)
+img: FCFE/post16.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [25 - 33 async function과 await 1](#33-async-function과-await-1)
+- [25 - 34 async functino과 await 2](#34-async-function과-await-2)
+
+---
+
+# 33 async function과 await 1
+
+[MDN async function 문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/async_function)
+
+- ES2017의 표준으로 지정됨
+- `async` 를 함수 앞 키워드로 사용
+  <br>
+  <br>
+
+## async function 함수이름(){}
+
+## const 함수이름 = async() => {}
+
+```
+function p(ms){
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            resolve(ms);
+        }, ms);
+    });
+}
+
+p(1000).then(ms => {
+    console.log(`${ms} ms 후에 실행된다.`);
+})
+```
+
+이를 `async` 와 `await` 를 사용해서 작성하면
+
+```
+(async function main(){
+    const ms = await p(1000);
+    console.log(`${ms} ms 후에 실행된다.`);
+})();
+```
+
+- `async` 가 있는 함수를 실행하면 안에 있는 로직이 끝날 때까지 프로그램이 종료되지 않음
+- `await` 의 비동기 처리가 끝날때까지 기다렸다가 진행함
+
+**좋은점**  
+비동기 처리를 _밑으로_ 흘러가게 짤 수 있어 좋다
+
+<br>
+
+### try catch
+
+Promise 객체가 rejected 된 경우의 처리를 위해 try catch를 이용한다.
+
+```
+function p(ms){
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            reject(new Error('reason'));
+        }, ms);
+    });
+}
+
+(async function main(){
+    try{
+        const ms = await p(1000);
+    } catch(error){ // new Error 로 만들어진 객체가 들어옴
+        console.log(error);
+    }
+})();
+```
+
+**결과**  
+![25 - 33 async function과 await 1]({{site.baseurl}}/assets/img/FCFE/post16-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 34 async functino과 await 2
+
+> `async function`에서 return 값은 `Promise.resolve` 로 감싸서 리턴된다.
+
+```
+async function asyncP(){
+    return 'Mark';
+}
+
+(async function main(){
+    try{
+        const name = await asyncP();
+        console.log(name);
+    } catch(error){
+        console.log(error);
+    }
+})();
+```
+
+두 개의 `async` 함수 사용하기
+
+```
+function p(ms){
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            resolve(ms);
+        }, ms);
+    });
+}
+
+
+async function asyncP(){
+    const ms = await p(1000);
+    return 'Mark' + ms;
+}
+
+(async function main(){
+    try{
+        const name = await asyncP();
+        console.log(name);
+    } catch(error){ // new Error 로 만들어진 객체가 들어옴
+        console.log(error);
+    }
+})();
+```
+
+**결과** Mark1000
+
+### error 처리
+
+```
+function p(ms){
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            // resolve(ms);
+            reject(new Error('reason'));
+        }, ms);
+    });
+}
+
+async function asyncP(){
+    const ms = await p(1000); // 여기서 에러 처리를 할 수도 있음
+    return 'Mark' + ms;
+}
+
+(async function main(){
+    try{
+        const name = await asyncP();
+        console.log(name);
+    } catch(error){ // asyncP 에서 발생한 에러가 넘어옴
+        console.log(error);
+    }
+})();
+```
+
+### finally
+
+```
+(async function main(){
+    try{
+        const name = await asyncP();
+        console.log(name);
+    } catch(error){ // asyncP 에서 발생한 에러가 넘어옴
+        console.log(error);
+    } finally {
+        console.log('end');
+    }
+})();
+```
+
+- `resolve` : 정상적인 값 출력 후 'end'
+- `reject` : Error 출력 후 'end'
+
+<br>
+<br>
+
+## 여러 비동기 처리
+
+### Promise
+
+```
+p(1000)
+  .then(() => p(1000))
+  .then(() => p(1000))
+  .then(() => {
+    console.log("3000ms 후에 실행");
+  });
+```
+
+### async await
+
+```
+(async function main() {
+  await p(1000);
+  await p(1000);
+  await p(1000);
+  console.log("3000ms 후에 실행");
+})();
+```
+
+## Promise.all 과 Promise.await
+
+`Promise.all`
+
+```
+(async function main() {
+  const results = await Promise.all([p(1000), p(2000), p(3000)]); // 배열로 result에 값이 넘어감
+  console.log(results);
+})();
+```
+
+**결과** (6초후) [ 1000, 2000, 3000 ]
+
+`Promise.race`
+
+```
+(async function main() {
+  const results = await Promise.race([p(1000), p(2000), p(3000)]); // 배열로 result에 값이 넘어감
+  console.log(results);
+})();
+```
+
+**결과** (1초후) 1000
+
+![25 - 34 async functino과 await 2]({{site.baseurl}}/assets/img/FCFE/post16-2.png)
+
+---
+
+<br>
+
+#### 16회차 인증샷
+
+![16회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post16.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

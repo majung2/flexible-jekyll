@@ -128,7 +128,7 @@ Promise.resolve('bar').then(data => {
 then 메소드가 없는 경우, fulfilled 됩니다. bar    
 프로미스 객체인 경우, resolve 된 결과를 받아서 then이 실행됩니다. foo     
 
-프로미스 객체인지 아닌지 모를 경우      
+프로미스 객체인지 아닌지 모를 경우 사용하기 좋음!
 
 <br>
 

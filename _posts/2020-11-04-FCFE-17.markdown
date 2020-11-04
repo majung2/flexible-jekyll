@@ -1,0 +1,190 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 17회차 미션"
+date: 2020-11-04 21:04:09 +0300
+description: # Add post description (optional)
+img: FCFE/post17.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [25 - 35 프로젝트 개요](#35-프로젝트-개요)
+- [25 - 36 리스트 페이지](#36-리스트-페이지)
+
+---
+
+# 35 프로젝트 개요
+
+다음과 같은 페이지로 구성된 프로젝트 진행~
+![25 - 35 프로젝트 개요 - 페이지 구성]({{site.baseurl}}/assets/img/FCFE/post17-1.png)
+
+서버로부터 데이터를 가져오는 작업을 할 수 있어야 함!
+API를 이해하는 시간 필요~
+![25 - 35 프로젝트 개요 - API사용 예]({{site.baseurl}}/assets/img/FCFE/post17-2.png)
+
+- 로그인 `POST`
+- 내 정보 가져오기 `GET`
+- 책 관련 request는 권한 필요
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 36 리스트 페이지
+
+> 서버로부터 API 호출 하는 방법
+
+## axios
+
+> Promise based HTTP client for the browser and node.js
+
+- HTTP 프로토콜을 이용해서 데이터를 요청하고 받아올 수 있는 라이브러리
+- 모든 메소드가 `Promise` 형태로 지원
+
+템플릿은 [부트스트랩](https://getbootstrap.com/) 이용
+
+[axios - github 페이지](https://github.com/axios/axios)
+![25 - 36 리스트 페이지 - bootstrap starter]({{site.baseurl}}/assets/img/FCFE/post17-3.png)
+
+- css는 cdn(웹)에 있는 파일 사용
+  > CDN? Contents Delivery Network
+  > 콘텐츠를 효율적으로 전달하기 위해 여러 노드를 가진 네트워크에 데이터를 저장하여 제공하는 시스템을 말한다.
+- 사용해야할 스타일이 있을 시 `<link rel="stylesheet" type="text/css" href="css/index.css" >` 와 같이 입력 후 사용
+- `<body>` 가 문서 작성 내용
+- JS는 바디 아랫쪽에 있음
+- jqeury, popper.min.js, bootstrap.min.js 라는 JS 라이브러리 사용 -> 모두 웹을 통해 받아옴
+- `<script src="js/index.js></script>` 가 JS작성할 부분
+
+<br>
+
+### JS 코드
+
+```
+async function main() {
+  // 메인함수
+}
+document.addEventListener("DOMContentLoded", main);
+```
+
+DOM Content가 모두 Load된 후 main 함수 실행
+
+**[DOMContentLoaded](https://developer.mozilla.org/ko/docs/Web/Events/DOMContentLoaded)**
+
+- 이벤트는 초기 HTML 문서를 완전히 불러오고 분석했을 때 발생합니다. 스타일 시트, 이미지, 하위 프레임의 로딩은 기다리지 않습니다.
+
+1. 버튼에 이벤트 연결
+
+```
+function bindLogoutButton() {
+  const btnLogout = document.querySelector("#btn_logout");
+  btnLogout.addEventListener("click", logout);
+}
+
+async function main() {
+  // 버튼에 이벤트 연결
+  bindLogoutButton();
+}
+```
+
+2. 토큰 체크
+
+```
+function getToken() {
+  return localStorage.getItem("token");
+}
+async function main() {
+  // 토큰 체크
+  const token = getToken();
+  if (token == null) {
+    location.assign("/login");
+    return;
+  }
+}
+```
+
+- **[localStorage](https://developer.mozilla.org/ko/docs/Web/API/Window/localStorage)** 브라우저에 구현되어 있는 global 객체, `window.localStorage` 로 사용도 가능
+- 로그인 상태일 경우) 개발자도구 > Application > Storage 에서 token이라는 key의 value값 확인 가능
+  ![25 - 36 리스트 페이지 - 개발자도구]({{site.baseurl}}/assets/img/FCFE/post17-4.png)
+- 페이지 이동시 **[window.location](https://developer.mozilla.org/ko/docs/Web/API/Window/location)** 이라는 객체를 통해 다른 주소를 assign 해 처리
+
+3. 토큰으로 서버에서 나의 정보 받아오기
+
+```
+async function getUserByToken(token) {
+  try {
+    const res = await axios.get("https://api.marktube.tv/vl/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data; // 유저 정보가 담긴 data
+  } catch (error) {
+    console.log("getUserByToken error", error);
+    return null;
+  }
+}
+
+async function main() {
+  // 토큰으로 서버에서 나의 정보 받아오기
+  const user = await getUserByToken(token);
+  if (user === null) { // catch 블럭에 걸려서 null 값 받음
+    localStorage.clear(); // token 없애기
+    location.assign("/login"); // login 페이지로 assign
+    return;
+  }
+}
+```
+
+4. 나의 책을 서버에서 받아오기
+
+```
+async function getBooks(token) {
+  try {
+    const res = await axios.get("https://api.marktube.tv/vl/book", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data; // 책 목록
+  } catch (error) {
+    console.log("getBooks error", error);
+    return null;
+  }
+}
+
+async function main() {
+  // 나의 책 목록을 서버에서 받아오기
+  const books = await getBooks(token);
+  if (books === null) {
+    return;
+  }
+}
+```
+
+5. 받아온 책을 그리기
+
+```
+async function main() {
+  // 받아온 책을 그리기
+  render(books);
+}
+```
+
+![25 - 36 리스트 페이지 - render함수]({{site.baseurl}}/assets/img/FCFE/post17-5.png)
+
+> 37 - 40강은 한 번 듣고 정리 후 다시 들으면서 코드 따라치기!
+
+---
+
+<br>
+
+#### 17회차 인증샷
+
+![17회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post17.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

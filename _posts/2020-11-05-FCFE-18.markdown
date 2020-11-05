@@ -1,0 +1,232 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 18회차 미션"
+date: 2020-11-05 15:25:21 +0300
+description: # Add post description (optional)
+img: FCFE/post18.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [25 - 37 로그인 페이지](#37-로그인-페이지)
+- [25 - 38 책 추가하기](#38-책-추가하기)
+
+---
+
+# 37 로그인 페이지
+
+## 파일생성
+
+### 프로젝트 코드 깃허브
+
+[프로젝트 코드 깃허브](https://github.com/xid-mark/fc-js-project)
+
+- 프로젝트 코드 깃허브에서 clone
+- fc-js-project 폴더에서 `npm install`
+- `npm start` 로컬 호스트 5000으로 작업 가능
+
+(코드는 모두 github에...)
+
+- 루트 위치에 `login.html` 만들기!
+- css 폴더에 `login.css` 생성
+- js 폴더에 `login.js` 생성
+
+<br>
+<br>
+
+## login.js
+
+[login.js 깃허브](https://github.com/majung2/fastcampus-frontend-all-in-one/blob/master/25-JS/js-project/js/login.js)
+
+```
+async function login(event) {
+  event.preventDefault(); // submit의 default 로직이 발생하지 않게 막기
+  event.stopPropagation(); // submit 이벤트가 상위로 전달되지 않게 막기
+
+  const emailElement = document.querySelector("#email"); // dom element
+  const passwordElement = document.querySelector("#password");
+
+  const email = emailElement.value; // 값
+  const password = passwordElement.value;
+
+  try {
+    const res = await axios.post("https://api.marktube.tv/v1/me", {
+      email,
+      password,
+    });
+    const { token } = res.data; // const token = res.data.token; 과 동일
+    if (token === undefined) {
+      return;
+    }
+    localStorage.setItem("token", token);
+    location.assign("/");
+  } catch (error) {
+    const data = error.response.data;
+    if (data) {
+      const state = data.error;
+      if (state === "USER_NOT_EXIST") {
+        // 서버가 정의한 코드
+        alert("사용자가 존재하지 않습니다.");
+      } else if (state === "PASSWORD_NOT_MATCH") {
+        alert("비밀번호가 틀렸습니다.");
+      }
+    }
+  }
+}
+
+function bindLoginButton() {
+  const form = document.querySelector("#form-login");
+  form.addEventListener("submit", login);
+}
+
+function getToken() {
+  return localStorage.getItem("token");
+}
+function main() {
+  // 버튼에 이벤트 연결
+  bindLoginButton();
+
+  // 토큰 체크
+  const token = getToken();
+  if (token !== null) {
+    location.assign("/");
+    return;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", main);
+```
+
+- 로그인정보 test@marktube.tv / 1234
+
+![25 - 37 로그인 페이지]({{site.baseurl}}/assets/img/FCFE/post18-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 38 책 추가하기
+
+## 파일생성
+
+- `add.html`, `add.css` 파일 생성
+- [프로젝트 코드 깃허브](#프로젝트-코드-깃허브)에서 코드 복붙
+
+<br>
+<br>
+
+## add.js
+
+[add.js 깃허브](https://github.com/majung2/fastcampus-frontend-all-in-one/blob/master/25-JS/js-project/js/add.js)
+
+```
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+async function save(event) {
+  event.preventDefault(); // html에서 submit을 눌렀을 때 form이 하는 행동 막기
+  event.stopPropagation(); // form을 가진 상위 DOM에도 이벤트 전달 안되게
+  console.log("save");
+
+  event.target.classList.add("was-validated"); // bootstrap기능, 유효성 검사를 DOM에 보여줌
+
+  const titleElement = document.querySelector("#title");
+  const messageElement = document.querySelector("#message");
+  const authorElement = document.querySelector("#author");
+  const urlElement = document.querySelector("#url");
+
+  const title = titleElement.value;
+  const message = messageElement.value;
+  const author = authorElement.value;
+  const url = urlElement.value;
+
+  if (title === "" || message === "" || author === "" || url === "") {
+    return;
+  }
+
+  const token = getToken();
+  if (token === null) {
+    location.assign("/login");
+    return;
+  }
+
+  try {
+    await axios.post(
+      "https://api.marktube.tv/v1/book",
+      {
+        title,
+        message,
+        author,
+        url,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    location.assign("/");
+  } catch (error) {
+    console.log("save error", error);
+    alert("책 추가 실패");
+  }
+}
+
+function bindSaveButton() {
+  const form = document.querySelector("#form-add-book");
+  form.addEventListener("submit", save);
+}
+
+async function getUserByToken(token) {
+  try {
+    const res = await axios.get("https://api.marktube.tv/v1/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log("getUserByToken error", error);
+    return null; // 문제 발생 시 null 값 넘기기
+  }
+}
+
+async function main() {
+  // 버튼에 이벤트 연결
+  bindSaveButton();
+
+  // 토큰 체크
+  const token = getToken();
+  if (token === null) {
+    location.assign("/login");
+    return;
+  }
+
+  // 토큰으로 서버에서 나의 정보 받아오기
+  const user = await getUserByToken(token);
+  if (user === null) {
+    localStorage.clear();
+    location.assign("/login");
+    return;
+  }
+  console.log(user); // user 정보 제대로 들어오는지 확인
+}
+document.addEventListener("DOMContentLoaded", main);
+```
+
+![25 - 38 책 추가하기]({{site.baseurl}}/assets/img/FCFE/post18-2.png)
+
+---
+
+<br>
+
+#### 18회차 인증샷
+
+![18회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post18.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

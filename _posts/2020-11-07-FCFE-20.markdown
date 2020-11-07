@@ -1,0 +1,272 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 20회차 미션"
+date: 2020-11-07 12:02:56 +0300
+description: # Add post description (optional)
+img: FCFE/post20.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 01 JavaScript는 뭔가요](#01-JavaScript는-뭔가요)
+- [26 - 02 Hello-JavaScript](#02-Hello-JavaScript)
+- [26 - 03 변수와 상수](#03-변수와-상수)
+- [26 - 04-06 연산자](#04-06-연산자)
+
+---
+
+# 01 JavaScript는 뭔가요
+
+주로 웹 브라우저에서 UI를 동적으로 보여주기 위해 사용되었다.
+
+- 이제는 서버에서도 실행가능해짐! -> node.js
+- 데스크탑 앱 -> electron
+- 모바일 네이티브 앱 -> react native, nativeScript
+- 하드웨어 -> node.js
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 02 Hello-JavaScript
+
+[강의문서](https://learnjs.vlpt.us/)
+
+개발자도구 열기 (크롬에서)
+
+- 메뉴 > 도구더보기 > 개발자도구
+- 페이지 오른쪽 > 검사
+
+console을 선택후 JS 실행!
+
+**[codeSandbox](https://codesandbox.io/) 라는 사이트 활용!**
+
+![26 - 02 Hello-JavaScript]({{site.baseurl}}/assets/img/FCFE/post20-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 03 변수와 상수
+
+크롬 오른쪽 상단에 CodeSandbox 설치가 있음! > 새 창에서 작업 가능
+
+## 변수
+
+**선언** 특정 이름에 값을 담는 것
+
+```
+let value = 1;
+console.log(value);
+value = 2;
+console.log(value);
+```
+
+- 값을 바꿀 수 있음
+- 같은 이름으로 두 번이상 선언 할 수는 없음
+
+<br>
+<br>
+
+## 상수
+
+- 값을 바꿀 수 없음
+- 같은 이름으로 두 번이상 선언 할 수는 없음
+
+```
+const a = 1;
+```
+
+**var**
+
+- 같은 이름으로 여러번 사용 가능
+- `let`과 유사
+- 구형 브라우저에서는 `let`과 `const`가 있음 > 하지만 바벨이라는 도구를 사용해 호환
+- 몰라도 됨!
+
+<br>
+<br>
+
+## 자료형
+
+**문자열**
+
+```
+let text = 'hello'; // 'hello' 동일
+```
+
+**boolean**
+
+```
+let good = 'true';
+let loading = 'false';
+```
+
+**null 과 undefined**
+
+![26 - 03 변수와 상수]({{site.baseurl}}/assets/img/FCFE/post20-2.png)
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 04-06 연산자
+
+<br>
+
+## 산술연산자
+
+사칙연산
+
+```
+let a = 1 + 2 - (3 * 4) / 4;
+```
+
+`++`
+
+```
+let a = 1;
+console.log(a++);
+console.log(a);
+console.log(++a);
+```
+
+<br>
+
+## 대입연산자
+
+```
+let a = 1;
+a += 1; // a에 1을 더하기
+a -= 3; // a에 3을 빼기
+a *= 4; // a에 4를 곱하기
+a /= 2; // a를 2로 나누기
+```
+
+<br>
+
+## 논리연산자
+
+> NOT `!` , AND `&&` , OR `||`
+
+_NOT_
+
+```
+const a = true;
+console.log(!a); // false
+```
+
+결과를 반대로 바꿔줌
+
+_AND_
+
+```
+const a = true && true;
+console.log(a); // true
+```
+
+둘다 true일 때 true
+
+_OR_
+
+```
+const a = true || false;
+console.log(a); // true
+```
+
+둘 중 하나라도 true 일 때 true
+
+NOT > AND > OR : 우선순위 순!
+
+```
+const value = !(true && false || true && false || !false);
+// !(true && false || true && false || true)
+// !(false || false || true)
+// !(true)
+// false
+console.log(value);
+```
+
+<br>
+
+## 비교연산자
+
+### 같고 다름
+
+`===` 와 `==`
+
+```
+const a = 1;
+const b = 1;
+const equals = a === b;
+console.log(equals); // true
+```
+
+`==` 는 타입을 비교해주지 않음
+
+```
+const a = false;
+const b = 0;
+const equals = a == b;
+console.log(equals); // true
+
+const a = null;
+const b = undefined;
+const equals = a == b;
+console.log(equals);
+```
+
+`!==` (`!=` 도 위와 유사)
+
+```
+const a = 'a';
+const b = 'b';
+const notEquals = a !== b;
+console.log(notEquals);
+```
+
+> 무조건 `===` 혹은 `!==` 입력하기!
+
+### 크고 작음
+
+`<` `>` `>=` `<=`
+
+```
+const a = 10;
+const b = 15;
+const c = 15;
+
+console.log(a < b);
+console.log(b >= a);
+console.log(b <= c);
+```
+
+## 문자열 합치기
+
+```
+const a = '안녕';
+const b = '하세요';
+console.log(a+b); // 안녕하세요 출력
+```
+
+---
+
+<br>
+
+#### 20회차 인증샷
+
+![20회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post20.jpg)
+<br>
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)
+
+```
+
+```

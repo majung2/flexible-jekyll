@@ -1,0 +1,208 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 21회차 미션"
+date: 2020-11-08 12:54:26 +0300
+description: # Add post description (optional)
+img: FCFE/post21.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 07-08 조건문](#07-08-조건문)
+- [26 - 09-12 함수](#09-12-함수)
+
+---
+
+# 07-08 조건문
+
+## if
+
+`if` 문을 사용할 때, 특정 조건을 만족할 때 작업을 할 수 있다.
+
+```
+const a = 1;
+if (a + 1 === 2) {
+  console.log("a + 1 이 2 입니다.");
+}
+```
+
+참고) `{}` 범위가 다르면 같은 이름으로 선언 가능
+
+```
+const a = 1;
+if (a + 1 === 2) {
+  const a = 2;
+  console.log("if문 안의 a 값은 " + a);
+}
+console.log("if문 밖의 a 값은 " + a);
+```
+
+<br>
+<br>
+
+## else와 else if
+
+```
+const a = 10;
+if (a === 5) {
+  console.log("5입니다.");
+} else if (a === 10) {
+  console.log("10입니다.");
+} else {
+  console.log("5도 아니고 10도 아닙니다.");
+}
+```
+
+<br>
+<br>
+
+## switch case
+
+`break` 를 꼭 입력해야 함!
+
+```
+const device = "ipad";
+
+switch (device) {
+  case "iphone":
+    console.log("iphone");
+    break; // 비교 끝
+  case "ipad":
+    console.log("ipad");
+    break;
+  case "galaxy note":
+    console.log("galaxy note");
+    break;
+  default:
+    console.log("모르겠네요");
+}
+```
+
+`break` 가 없을 경우
+![26 - 07-08 조건문]({{site.baseurl}}/assets/img/FCFE/post21-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 09-12 함수
+
+```
+function add(a, b) {
+	return a + b;
+}
+
+const sum = add(1, 2);
+
+console.log(sum);
+```
+
+```
+function hello(name) {
+	console.log('hello ' + name + '!');
+}
+
+hello('mijeong');
+```
+
+### ES6
+
+ECMAScript 6
+
+- 자바스크립트 버전
+- ES2015 라고도 함
+- ES7, ES8, ES9, ES10 ...
+
+<br>
+<br>
+
+## Template literal
+
+위의 함수와 동일하게 template literal을 사용해 작성
+
+```
+function hello(name) {
+	return `Hello ${name}!`;
+}
+
+const result = hello('mijeong');
+console.log(result);
+```
+
+**주의**
+함수 `return` 키워드 뒤에 작성된 내용은 실행 안 됨!
+
+```
+function getGrade(score) {
+	if (score === 100) {
+		return 'A+';
+	} else if (score >= 90) {
+		return 'A';
+	} else if (score === 89) {
+		return 'B+';
+	} else if (score >= 80) {
+		return 'B';
+	} else if (score === 79) {
+		return 'C+';
+	} else if (score >= 70) {
+		return 'C';
+	} else if (score === 69) {
+		return 'D+';
+	} else if (score >= 60) {
+		return 'D';
+	} else {
+		return 'F';
+	}
+}
+
+const grade = getGrade(40);
+console.log(grade);
+```
+
+<br>
+<br>
+
+## 화살표 함수
+
+`let` 이나 `const` 를 만들고 시작
+
+```
+const add = (a, b) => {
+	return a + b;
+};
+
+const sum = add(1, 2);
+console.log(sum);
+```
+
+```
+const hello = (name) => {
+	console.log(`hello, ${name}`);
+};
+
+hello('lala');
+```
+
+함수 내부 코드가 한 줄일 경우 `{}` 없이 사용가능
+
+```
+const hello = (name) => console.log(`hello, ${name}`);
+
+hello('lala');
+```
+
+![25 - 09-12 함수]({{site.baseurl}}/assets/img/FCFE/post21-2.png)
+
+---
+
+<br>
+
+#### 21회차 인증샷
+
+![21회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post21.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

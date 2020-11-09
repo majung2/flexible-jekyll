@@ -1,0 +1,124 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 22회차 미션"
+date: 2020-11-09 16:05:27 +0300
+description: # Add post description (optional)
+img: FCFE/post22.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 13 객체](#13-객체)
+- [26 - 14 객체 비구조화 할당](#14-객체-비구조화-할당)
+
+---
+
+# 13 객체
+
+하나의 이름에 여러 종류의 값을 넣을 수 있게 함!
+
+예)
+
+```
+const dog = {
+  name : '멍멍이',
+  age : 2,
+  cute: true,
+  sample: {
+    a:1,
+    b:2,
+  }
+}
+```
+
+`key` 와 `value` 로 이루어짐
+
+```
+const ironMan = {
+	name: '토니 스타크',
+	actor: '로버트 다우니 주니어',
+	alias: '아이언맨'
+};
+
+const captainAmerica = {
+	name: '스티븐 로저스',
+	actor: '크리스 에반스',
+	alias: '캡틴 아메리카'
+};
+
+function print(hero) {
+	const text = `${hero.alias}(${hero.name})역할을 맡은 배우는 ${hero.actor}입니다.`;
+	console.log(text);
+}
+
+print(ironMan);
+print(captainAmerica);
+```
+
+![26 - 13 객체]({{site.baseurl}}/assets/img/FCFE/post22-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 14 객체 비구조화 할당
+
+```
+function print(hero) {
+	const text = `${hero.alias}(${hero.name})역할을 맡은 배우는 ${hero.actor}입니다.`;
+	console.log(text);
+}
+```
+
+위와 같은 코드를
+
+```
+function print(hero) {
+	const { alias, name, actor } = hero;
+	const text = `${alias}(${name})역할을 맡은 배우는 ${actor}입니다.`;
+	console.log(text);
+}
+```
+
+이렇게 작성 가능.
+더 나아가
+
+```
+function print({ alias, name, actor }) {
+	const text = `${alias}(${name})역할을 맡은 배우는 ${actor}입니다.`;
+	console.log(text);
+}
+```
+
+이렇게 작성도 가능!
+
+꼭 함수에서만 사용가능한 것은 아님
+
+```
+const ironMan = {
+	name: '토니 스타크',
+	actor: '로버트 다우니 주니어',
+	alias: '아이언맨'
+};
+
+const { name } = ironMan; // const name = ironMan.name; 과 동일
+console.log(name); // 토니 스타크 출력
+```
+
+이렇게 작성도 가능!
+
+![26 - 14 객체 비구조화 할당]({{site.baseurl}}/assets/img/FCFE/post22-2.png)
+
+---
+
+<br>
+
+#### 22회차 인증샷
+
+![22회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post22.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

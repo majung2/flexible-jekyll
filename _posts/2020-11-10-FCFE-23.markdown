@@ -1,0 +1,220 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 23회차 미션"
+date: 2020-11-10 16:47:43 +0300
+description: # Add post description (optional)
+img: FCFE/post23.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 15 객체-객체 안에 함수 넣기](#15-객체-객체-안에-함수-넣기)
+- [26 - 16 객체-Getter와 Setter함수](#16-객체-Getter와-Setter함수)
+
+---
+
+# 15 객체-객체 안에 함수 넣기
+
+dog객체를 만들어보자
+
+```
+const dog = {
+	name: '멍멍이',
+	sound: '멍멍',
+	say: function say() {
+		console.log(this.sound);
+	}
+};
+
+dog.say();
+```
+
+객체 내 `say` 함수 부분을 아래와 같이 작성해도 동일!
+
+```
+say: function () { // say(): { 이렇게도 가능!
+    console.log(this.sound);
+}
+```
+
+하지만 **화살표함수**로 작성시 `this` 가 가리키는 대상을 모름!
+
+```
+say: () => {
+    console.log(this); // undefined
+    console.log(this.sound); // 에러
+}
+```
+
+> `function` 키워드로 만들었을 때 `this` 는 해당 함수가 속해있는 곳을 가리킴
+
+화살표 함수에서는 `this` 는 그렇지 않음!
+
+위의 코드에 이어
+
+```
+const cat = {
+	name: '야옹이',
+	sound: '야옹'
+};
+
+cat.say = dog.say;
+dog.say(); // 멍멍
+cat.say(); // 야옹
+
+const catSay = cat.say;
+catSay(); // 에러
+```
+
+함수를 `catSay` 처럼 꺼내버리면 `this` 와의 관계가 사라진다!
+
+![26 - 15 객체-객체 안에 함수 넣기]({{site.baseurl}}/assets/img/FCFE/post23-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 16 객체-Getter와 Setter함수
+
+## Getter 함수
+
+특정값을 조회하려고 할 때 사용
+
+```
+const numbers = {
+	a: 1,
+	b: 2,
+	get sum() {
+		console.log('sum 함수가 실행됩니다.');
+		return this.a + this.b;
+	}
+};
+
+console.log(numbers.sum); // 3
+numbers.b = 5;
+console.log(numbers.sum); // 6
+```
+
+<br>
+<br>
+
+## Setter 함수
+
+특정값을 수정하려고 할 때 사용
+
+```
+const dog = {
+	_name: '멍멍이',
+	set name(value) {
+		// 무조건 파라미터 받아와야함
+		console.log('이름이 바뀝니다.' + value);
+		this._name = value;
+	}
+};
+
+console.log(dog._name); // 멍멍이
+dog.name = '뭉뭉이'; // 이름이 바뀝니다.뭉뭉이
+console.log(dog._name); // 뭉뭉이
+```
+
+함수와 변수명이 동일할 수는 없지만
+동일한 이름의 `get` 함수와 `set` 함수는 존재할 수 있다!
+
+```
+const dog = {
+	_name: '멍멍이',
+	get name() {
+		console.log('이름을 조회합니다.');
+		return this._name;
+	},
+	set name(value) {
+		// 무조건 파라미터 받아와야함
+		console.log('이름이 바뀝니다.' + value);
+		this._name = value;
+	}
+};
+
+console.log(dog.name);
+dog.name = '뭉뭉이';
+console.log(dog.name);
+```
+
+**결과**  
+이름을 조회합니다.  
+멍멍이  
+이름이 바뀝니다.뭉뭉이  
+이름을 조회합니다.  
+뭉뭉이
+
+```
+const numbers = {
+	_a: 1,
+	_b: 2,
+	sum: 3,
+	calculate() {
+		console.log('calculate');
+		this.sum = this._a + this._b;
+	},
+	get a() {
+		return this._a;
+	},
+	get b() {
+		return this._b;
+	},
+	set a(value) {
+		this._a = value;
+		this.calculate();
+	},
+	set b(value) {
+		this._b = value;
+		this.calculate();
+	}
+};
+
+console.log(numbers.sum); // 3
+numbers.a = 5; // calculate
+numbers.b = 7; // calculate
+numbers.a = 10; // calculate
+console.log(numbers.sum); // 17
+```
+
+아래와 같이 작성할 수도 있다!
+
+```
+const numbers = {
+	a: 1,
+	b: 2,
+	get sum() {
+		console.log('sum');
+		return this.a + this.b;
+	}
+};
+
+console.log(numbers.sum);
+numbers.a = 5;
+numbers.b = 7;
+numbers.a = 10;
+console.log(numbers.sum);
+console.log(numbers.sum);
+console.log(numbers.sum);
+console.log(numbers.sum);
+```
+
+이 경우 `sum` 을 호출할 때마다 계산하게 된다.
+위의 경우는 값 수정시 `sum` 이 변경되어 저장되어 있다.
+
+![26 - 16 객체-Getter와 Setter함수]({{site.baseurl}}/assets/img/FCFE/post23-2.png)
+
+---
+
+<br>
+
+#### 23회차 인증샷
+
+![23회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post23.jpg)
+<br>
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

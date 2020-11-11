@@ -1,0 +1,151 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 24회차 미션"
+date: 2020-11-11 11:37:26 +0300
+description: # Add post description (optional)
+img: FCFE/post24.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 17 배열](#17-배열)
+- [26 - 18-19 반복문 for,while](#18-19-반복문-for,while)
+- [26 - 20 반복문 for...of, for...in](#20-반복문-for...of,-for...in)
+
+---
+
+# 17 배열
+
+여러 항목이 들어있는 리스트와 같음
+자바스크립트 배열에는 다른 값들이 들어있어도 상관이 없음
+
+```
+const array = [1, 'blabla', {}, 4];
+```
+
+```
+const objects = [{ name: '멍멍이' }, { name: '야옹이' }];
+console.log(objects[1]); // {name: "야옹이"}
+```
+
+배열에 값을 추가할 때 `push`
+
+```
+objects.push({ name: '멍뭉이' });
+```
+
+배열의 크기를 알아볼 때 `.length`
+
+```
+console.log(objects.length);
+```
+
+![26 - 17 배열]({{site.baseurl}}/assets/img/FCFE/post24-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 18-19 반복문 for,while
+
+![26 - 18-19 반복문 for,while]({{site.baseurl}}/assets/img/FCFE/post24-2.png)
+
+## for
+
+```
+for (let i = 10; i > 0; i--) {
+	console.log(i);
+}
+```
+
+10부터 1까지 출력함
+<br>
+<br>
+
+## while
+
+- 보다 반복종료 조건이 까다로울 때 사용
+- 반드시 언젠가 종료되는 조건이어야 함 > 그렇지 않으면 무한루프!
+
+```
+let i = 0;
+let isFun = false;
+
+while (!isFun) {
+	console.log(i);
+	i++;
+	if (i === 10) {
+		isFun = true;
+	}
+}
+```
+
+0부터 9까지 출력
+
+# 20 반복문 for...of, for...in
+
+## for ... of
+
+배열 안 내용물 반복시 사용
+
+```
+const numbers = [10, 20, 30, 40, 50];
+
+for (let number of numbers) {
+	console.log(number);
+}
+```
+
+아래코드와 동일
+
+```
+for (let i = 0; i < numbers.length; i++) {
+	console.log(numbers[i]);
+}
+```
+
+사실 배열 내장함수를 이용해 더 쉽게 처리하는 방법이 있음...!
+
+<br>
+<br>
+
+## for ... in
+
+객체 내용 반복시 사용
+
+`Obejcts.keys()` 객체의 key를 배열로
+`Obejcts.values()` 객체의 value를 배열로
+`Obejcts.entries()` 객체의 key와 value를 배열로
+
+```
+const doggy = {
+	name: '멍멍이',
+	sound: '멍멍',
+	age: 2
+};
+
+console.log(Object.keys(doggy));
+console.log(Object.values(doggy));
+console.log(Object.entries(doggy));
+
+for (let key in doggy) {
+	console.log(`${key}: ${doggy[key]}`);
+}
+```
+
+**결과**
+![26 - 20 반복문 for...of, for...in]({{site.baseurl}}/assets/img/FCFE/post24-3.png)
+
+---
+
+<br>
+
+#### 24회차 인증샷
+
+![24회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post24.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

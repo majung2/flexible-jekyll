@@ -3,6 +3,7 @@
 
 ### 블로그 콘텐츠
 - [패스트캠퍼스 프론트엔드 개발 올인원 패키지](https://bit.ly/3m0t8GM) 강의 기록
+  - [강의 코드 기록](https://github.com/majung2/fastcampus-frontend-all-in-one)
 
 <hr>
 

@@ -1,0 +1,142 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 25회차 미션"
+date: 2020-11-12 16:52:30 +0300
+description: # Add post description (optional)
+img: FCFE/post25.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 21 반복문-continue와 break](#21-반복문-continue와-break)
+- [26 - 22 반복문-연습과 퀴즈](#22-반복문-연습과-퀴즈)
+
+---
+
+# 21 반복문-continue와 break
+
+## continue
+
+다음으로 넘어가는 것
+
+```
+for (let i = 0; i < 10; i++) {
+	if (i === 2) continue;
+	console.log(i);
+}
+```
+
+2를 제외한 값들이 출력된다.
+
+_참고_
+`if` 문 안에서 실행할 코드가 한 줄 밖에 되지 않으면 `{}` 중괄호를 생략해도 됨
+
+<br>
+<br>
+
+## break
+
+끝나는 것
+
+```
+for (let i = 0; i < 10; i++) {
+	if (i === 2) continue;
+	console.log(i);
+	if (i === 5) break;
+}
+```
+
+0,1,3,4,5 출력하고 끝남
+
+둘 다 `while`, `for...of`, `for...in` 에서 모두 사용가능
+
+![26 - 21 반복문-continue와 break]({{site.baseurl}}/assets/img/FCFE/post25-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 22 반복문-연습과 퀴즈
+
+```
+function sumOf(numbers) {
+	// 배열을 받으면 배열의 모든 원소의 합을 구해주는 함수
+	let sum = 0;
+	for (let i = 0; i < numbers.length; i++) {
+		sum += numbers[i];
+	}
+	return sum;
+}
+
+const result = sumOf([1, 2, 3, 4, 5]);
+console.log(result);
+```
+
+## 퀴즈
+
+숫자로 이루어진 배열이 주어졌을 때, 해당 숫자 배열안에 들어있는 숫자 중 3보다 큰 숫자로만 이루어진 배열을 새로 만들어서 반환해보세요.
+
+```
+function biggerThanThree(numbers) {
+  /* 구현해보세요 */
+}
+
+const numbers = [1, 2, 3, 4, 5, 6, 7];
+console.log(biggerThanThree(numbers)); // [4, 5, 6, 7]
+```
+
+[다음 링크](https://codesandbox.io/s/x3lkzz0m4p?fontsize=14)를 열어서 문제를 풀어보세요.
+
+**나의 답!**
+
+```
+function biggerThanThree(numbers) {
+	/* 구현해보세요 */
+	let newArray = [];
+	for (let number of numbers) {
+		if (number <= 3) continue;
+		else newArray.push(number);
+	}
+	return newArray;
+}
+
+const numbers = [1, 2, 3, 4, 5, 6, 7];
+console.log(biggerThanThree(numbers));
+```
+
+**정답코드**
+
+```
+function biggerThanThree(numbers) {
+  const array = [];
+  for (let i = 0; i < numbers.length; i++) {
+    if (numbers[i] > 3) {
+      array.push(numbers[i]);
+    }
+  }
+  return array;
+}
+
+const numbers = [1, 2, 3, 4, 5, 6, 7];
+console.log(biggerThanThree(numbers));
+```
+
+![26 - 22 반복문-연습과 퀴즈]({{site.baseurl}}/assets/img/FCFE/post25-2.png)
+
+---
+
+<br>
+
+#### 25회차 인증샷
+
+![25회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post25.jpg)
+<br>
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)
+
+```
+
+```

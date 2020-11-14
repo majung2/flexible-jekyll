@@ -1,0 +1,118 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 27회차 미션"
+date: 2020-11-14 16:01:29 +0300
+description: # Add post description (optional)
+img: FCFE/post27.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 25 배열 내장함수 filter](#25-배열-내장함수-filter)
+- [26 - 26 배열 내장함수 splice와 slice](#26-배열-내장함수-splice와-slice)
+
+---
+
+# 25 배열 내장함수 filter
+
+특정 조건을 만족하는 원소를 찾아서 새로운 배열을 만드는 것
+
+```
+const todos = [
+	{
+		id: 1,
+		text: '자바스크립트 입문',
+		done: true
+	},
+	{
+		id: 2,
+		text: '함수배우기',
+		done: true
+	},
+	{
+		id: 3,
+		text: '객체와 배열배우기',
+		done: true
+	},
+	{
+		id: 4,
+		text: '배열 내장함수 배우기',
+		done: false
+	}
+];
+
+const taskNotDone = todos.filter((todo) => todo.done === false);
+console.log(taskNotDone);
+```
+
+이 경우는 `todos` 배열에서 `todo` 값이 `false` 인 객체로만 이루어진 배열
+**결과**  
+![26 - 25 배열 내장함수 filter]({{site.baseurl}}/assets/img/FCFE/post27-1.png)
+
+더 간략히 표현하면,
+
+```
+const taskNotDone = todos.filter((todo) => !todo.done);
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 26 배열 내장함수 splice와 slice
+
+## splice(index, n)
+
+index부터 n개를 지우겠다.
+
+30을 배열에서 지우기
+
+```
+const numbers = [10, 20, 30, 40];
+const index = numbers.indexOf(30);
+numbers.splice(index, 1);
+console.log(numbers); // 결과 [10, 20, 40]
+```
+
+지우는 값을 return함
+
+```
+const numbers = [10, 20, 30, 40];
+const index = numbers.indexOf(30);
+const spliced = numbers.splice(index, 2);
+console.log(spliced); // [30, 40]
+console.log(numbers); // [10, 20]
+```
+
+<br>
+<br>
+
+## slice(a, b)
+
+a이상 b이하의 인덱스 범위 자르기
+기존의 배열을 변화시키지 않음!
+
+```
+const numbers = [10, 20, 30, 40];
+
+const sliced = numbers.slice(0, 2);
+console.log(sliced); // [10, 20]
+console.log(numbers); // [10, 20, 30, 40]
+```
+
+![26 - 26 배열 내장함수 splice와 slice]({{site.baseurl}}/assets/img/FCFE/post27-2.png)
+
+---
+
+<br>
+
+#### 27회차 인증샷
+
+![27회차 인증샷11{14i16.b1s29r14}16ss1t29img/FCFE/post27.jpg)
+<br>
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

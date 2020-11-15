@@ -1,0 +1,172 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 28회차 미션"
+date: 2020-11-15 22:32:26 +0300
+description: # Add post description (optional)
+img: FCFE/post28.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 27 배열 내장함수 shift, pop, unshift, push](#27-배열-내장함수-shift,-pop,-unshift,-push)
+- [26 - 28 배열 내장함수 reduce](#28-배열-내장함수-reduce)
+
+---
+
+# 27 배열 내장함수 shift, pop, unshift, push
+
+## shift
+
+배열의 첫 번째 값을 빼줌 (원래 배열 수정됨)
+
+```
+const numbers = [10, 20, 30, 40];
+
+const value = numbers.shift();
+console.log(value); // 10
+console.log(numbers); // [20, 30, 40]
+```
+
+<br>
+<br>
+
+## pop
+
+배열의 마지막 값을 빼줌 (원래 배열 수정됨)
+
+```
+const numbers = [10, 20, 30, 40];
+
+const value = numbers.pop();
+console.log(value); // 40
+console.log(numbers); // [10, 20, 30]
+```
+
+_더 이상 뺄 값이 없어도 에러가 나지 않음_
+<br>
+<br>
+
+## unshift(n)
+
+배열의 맨 앞에 값을 추가
+
+```
+const numbers = [10, 20, 30, 40];
+
+numbers.unshift(5);
+console.log(numbers); // [5, 10, 20, 30, 40];
+```
+
+<br>
+<br>
+
+## push(n)
+
+배열의 맨 뒤에 값을 추가
+
+```
+const numbers = [10, 20, 30, 40];
+
+numbers.push(5);
+console.log(numbers); // [10, 20, 30, 40, 5]
+```
+
+<br>
+<br>
+
+## concat
+
+여러 배열을 하나의 배열로 합쳐준다.
+
+```
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+
+const concated = arr1.concat(arr2); // const concated = [...arr1, ...arr2]; 와 동일
+console.log(concated); // [1, 2, 3, 4, 5, 6]
+```
+
+_`concat` 은 기존 배열을 수정하지 않는다!_
+
+<br>
+<br>
+
+## join
+
+배열 내부의 값을 문자열 형태로 합칠 때 사용
+
+```
+const arr = [1, 2, 3, 4, 5];
+
+console.log(arr.join());
+console.log(arr.join(' '));
+console.log(arr.join(', '));
+```
+
+**결과**
+
+![26 - 27 배열 내장함수 shift, pop, unshift, push]({{site.baseurl}}/assets/img/FCFE/post28-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 28 배열 내장함수 reduce
+
+배열안의 모든 값을 사용해 연산시 활용
+
+배열의 합을 구한다고 가정해보자!
+
+```
+const numbers = [1, 2, 3, 4, 5];
+
+let sum = 0;
+numbers.forEach((n) => {
+	sum += n;
+});
+
+console.log(sum);
+```
+
+이것을
+
+```
+const numbers = [1, 2, 3, 4, 5];
+
+const sum = numbers.reduce((accumulator, current) => accumulator + current, 0);
+console.log(sum);
+```
+
+이렇게 작성 가능
+
+평균을 구하는 경우
+
+```
+const numbers = [1, 2, 3, 4, 5];
+
+const avg = numbers.reduce((accumulator, current, index, array) => {
+	if (index === array.length - 1) {
+		return (accumulator + current) / array.length;
+	}
+	return accumulator + current;
+}, 0);
+console.log(avg);
+```
+
+`accumulator` 라는 값이 계속해서 변화!
+
+![26 - 28 배열 내장함수 reduce]({{site.baseurl}}/assets/img/FCFE/post28-2.png)
+
+---
+
+<br>
+
+#### 28회차 인증샷
+
+![28회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post28.jpg)
+<br>
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

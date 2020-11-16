@@ -1,0 +1,274 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 29회차 미션"
+date: 2020-11-16 11:02:43 +0300
+description: # Add post description (optional)
+img: FCFE/post29.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 29 배열 내장함수 reduce 다른예시](#29-배열-내장함수-reduce-다른예시)
+- [26 - 30 배열 내장함수 복습과 퀴즈](#30-배열-내장함수-복습과-퀴즈)
+
+---
+
+# 29 배열 내장함수 reduce 다른예시
+
+객체에서 활용!
+
+```
+const alphabets = ["a", "a", "a", "b", "c", "c", "d", "e"];
+const counts = alphabets.reduce((acc, current) => {
+  if (acc[current]) {
+    acc[current] += 1;
+  } else {
+    acc[current] = 1;
+  }
+  return acc;
+}, {}); // 배어있는 객체
+
+console.log(counts);
+```
+
+**결과**  
+{ a: 3, b: 1, c: 2, d: 1, e: 1 }
+
+정리하면
+
+```
+array.reduce((acc, current) => { // acc: 반복되는 것, current : 현재값
+  //코드블럭
+}, {} // acc의 시작값
+);
+```
+
+![26 - 29 배열 내장함수 reduce 다른예시]({{site.baseurl}}/assets/img/FCFE/post29-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 30 배열 내장함수 복습과 퀴즈
+
+<br>
+<br>
+
+## forEach
+
+배열의 모든 원소 하나씩 호출
+
+```
+const superheroes = ["아이언맨", "캡틴 아메리카", "토르", "닥터 스트레인지"];
+superheroes.forEach((hero) => {
+  console.log(hero);
+});
+```
+
+<br>
+<br>
+
+## map
+
+배열의 모든 원소를 변화
+
+```
+const array = [1, 2, 3, 4, 5];
+const squared = array.map((n) => n * n);
+```
+
+<br>
+<br>
+
+## indexOf(x)
+
+배열에 특정값(x)의 위치
+
+```
+const fruits = ["apple", "banana", "watermelon", "grape"];
+const index = fruits.indexOf("watermelon");
+```
+
+<br>
+<br>
+
+## findIndex(x => x === true)
+
+특정원소를 조건으로 찾기
+
+```
+const todos = [
+  {
+    id: 1,
+    text: "자바스크립트 입문",
+    done: true,
+  },
+  {
+    id: 2,
+    text: "함수배우기",
+    done: true,
+  },
+  {
+    id: 3,
+    text: "객체와 배열 배우기",
+    done: true,
+  },
+  {
+    id: 4,
+    text: "배열 내장함수 배우기",
+    done: false,
+  },
+];
+
+const index = todos.findIndex((todo) => todo.id === 3);
+```
+
+<br>
+<br>
+
+## find(x => x === true)
+
+특정 조건을 만족하는 원소 자체 리턴
+
+```
+const index = todos.find((todo) => todo.id === 3);
+```
+
+<br>
+<br>
+
+## filter(x => x === true)
+
+특정 조건을 만족하는 원소들로 새로운 배열을 만들기
+
+```
+const taskNotDone = todos.filter((todo) => todo.done === false);
+```
+
+<br>
+<br>
+
+## splice(index, n)
+
+특정 인덱스부터 n개 지우기 (기존 배열 변화)
+
+```
+const numbers = [1, 2, 3, 4];
+numbers.splice(1, 2);
+```
+
+<br>
+<br>
+
+## slice (a, b)
+
+a이상 b미만으로 자르기 (기존 배열 변화 없음!)
+
+```
+const ages = [10, 20, 30, 40];
+const sliced = ages.slice(0, 2);
+```
+
+<br>
+<br>
+
+## shift, unshift(x)
+
+배열의 앞에 빼고 넣기
+
+```
+const arr1 = [1, 2, 3];
+const value = arr1.shift();
+arr1.unshift(4);
+```
+
+<br>
+<br>
+
+## push(x), pop
+
+배열의 뒤에 넣고 빼기
+
+```
+const arr2 = [1, 2, 3];
+const value = arr2.pop();
+arr2.push(4);
+```
+
+<br>
+<br>
+
+## concat(arr)
+
+배열 두 개를 합칠 때 사용
+
+```
+const arrA = [1, 2, 3];
+const arrB = [4, 5, 6];
+const concated = arrA.concat(arrB);
+```
+
+<br>
+<br>
+
+## join(seperator)
+
+seperator를 사용해 배열을 문자열로 만들기
+
+```
+const array2 = [1, 2, 3, 4, 5];
+console.log(array2.join());
+console.log(array2.join(" "));
+console.log(array2.join(", "));
+```
+
+<br>
+<br>
+
+## reduce((acc, cur) => { //코드블럭 }, 0 // acc 초기값)
+
+배열을 반복하며 코드블럭 실행
+
+```
+const array3 = [1, 2, 3, 4, 5];
+let sum = array3.reduce((acc, cur) => acc + cur, 0);
+```
+
+![26 - 30 배열 내장함수 복습과 퀴즈]({{site.baseurl}}/assets/img/FCFE/post29-2.png)
+![26 - 30 배열 내장함수 복습과 퀴즈]({{site.baseurl}}/assets/img/FCFE/post29-3.png)
+
+## 퀴즈
+
+[퀴즈](https://learnjs.vlpt.us/basics/09-array-functions.html#%ED%80%B4%EC%A6%88)
+
+답1
+![26 - 30 배열 내장함수 복습과 퀴즈]({{site.baseurl}}/assets/img/FCFE/post29-4.png)
+답2
+![26 - 30 배열 내장함수 복습과 퀴즈]({{site.baseurl}}/assets/img/FCFE/post29-5.png)
+답3
+![26 - 30 배열 내장함수 복습과 퀴즈]({{site.baseurl}}/assets/img/FCFE/post29-6s.png)
+
+<br>
+
+# 궁금증정리
+
+왜 (내용이 변하는) 배열이나 객체를 `const` 로 선언할까?
+
+- **참조형변수(object, array, funciton)**를 사용할 때는 `const` 를 사용하는 것이 바람직
+- 참조하는 _메모리 주소가 변하지 않을 때_ 사용한다!!!!
+
+[참고글](https://smilerici.tistory.com/68)
+
+---
+
+<br>
+
+#### 29회차 인증샷
+
+![29회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post29.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

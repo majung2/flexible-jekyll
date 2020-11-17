@@ -1,0 +1,142 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 30회차 미션"
+date: 2020-11-17 13:08:04 +0300
+description: # Add post description (optional)
+img: FCFE/post30.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 31 프로토타입과 클래스-객체 생성자](#31-프로토타입과-클래스-객체-생성자)
+- [26 - 32 프로토타입과 클래스-객체 생성자 상속하기](#32-프로토타입과-클래스-객체-생성자-상속하기)
+
+---
+
+# 31 프로토타입과 클래스-객체 생성자
+
+```
+function Animal(type, name, sound) {
+	this.type = type;
+	this.name = name;
+	this.sound = sound;
+	this.say = function () {
+		console.log(this.sound);
+	};
+}
+
+const dog = new Animal('개', '멍멍이', '멍멍');
+const cat = new Animal('고양이', '야옹이', '야옹');
+
+dog.say();
+cat.say();
+```
+
+- 객체 생성자를 사용할 때 함수 이름은 *대문자*로 함
+- 새로운 객체가 만들어질 때마다 새로운 `say` 함수가 만들어짐 > 바깥으로 꺼내 재사용하기!
+
+`prototype`을 이용해 다음과 같이 만들 수 있음!
+
+```
+Animal.prototype.say = function () {
+	console.log(this.sound);
+};
+```
+
+이 코드는 아래와 같음
+
+```
+function say() {
+	console.log(this.sound);
+}
+dog.say = say;
+cat.say = say;
+```
+
+함수가 아니어도 재사용하고자 하는 값이 있다면 `prototype` 이용가능
+
+```
+Animal.prototype.sharedValue = 1;
+
+console.log(dog.sharedValue); // 1
+console.log(cat.sharedValue); // 1
+```
+
+![26 - 31 프로토타입과 클래스-객체 생성자]({{site.baseurl}}/assets/img/FCFE/post30-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 32 프로토타입과 클래스-객체 생성자 상속하기
+
+다음과 같은 코드를 보자
+
+```
+function Dog(name, sound){
+	this.type = '개';
+	this.name = name;
+	this.sound = sound;
+}
+
+function Cat(name, sound){
+	this.type = '고양이';
+	this.name = name;
+	this.sound = sound;
+}
+
+Dog.prototype.say = function(){
+	console.log(this.sound);
+}
+Cat.prototype.say = function(){
+	console.log(this.sound);
+}
+
+
+const dog = new Dog('멍멍이', '멍멍');
+const cat = new Cat('야옹이', '야옹');
+```
+
+비슷한 코드가 반복되어 있다! > 이런 상황에서 사용 가능한 것이 바로 **상속**
+
+```
+function Animal(type, name, sound) {
+	this.type = type;
+	this.name = name;
+	this.sound = sound;
+}
+
+Animal.prototype.say = function () {
+	console.log(this.sound);
+};
+
+function Dog(name, sound) {
+	Animal.call(this, '개', name, sound);
+}
+function Cat(name, sound) {
+	Animal.call(this, '고양이', name, sound);
+}
+
+Dog.prototype = Animal.prototype;
+Cat.prototype = Animal.prototype;
+```
+
+`call`
+첫 번째 파라미터: 해당 함수를 사용하고 있는 객체 생성자를 가리키는 `this`  
+나머지: 필요한 파라미터들
+
+![26 - 32 프로토타입과 클래스-객체 생성자 상속하기]({{site.baseurl}}/assets/img/FCFE/post30-2.png)
+
+---
+
+<br>
+
+#### 30회차 인증샷
+
+![30회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post30.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

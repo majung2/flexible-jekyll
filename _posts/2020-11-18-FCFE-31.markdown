@@ -1,0 +1,114 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 31회차 미션"
+date: 2020-11-18 15:42:38 +0300
+description: # Add post description (optional)
+img: FCFE/post31.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [26 - 33 프로토타입과 클래스-ES6 Class](#33-프로토타입과-클래스-ES6-Class)
+- [26 - 34 프로토타입과 클래스-연습-Food class 만들기](#34-프로토타입과-클래스-연습-Food-class-만들기)
+
+---
+
+# 33 프로토타입과 클래스-ES6 Class
+
+ES6부터 `Class` 라는 개념이 도입되었다!
+
+```
+class Animal {
+	constructor(type, name, sound) {
+		this.type = type;
+		this.name = name;
+		this.sound = sound;
+	}
+
+	say() {
+		console.log(this.sound);
+	}
+}
+```
+
+`say` 와 같은 함수를 클래스 내부에 만들면 자동으로 `prototype` 으로 등록이 된다!
+
+```
+console.log(Animal.prototype.say);
+```
+
+상속을 해야하는 상황에서 훨씬 더 쉽게 할 수 있음!
+
+![26 - 33 프로토타입과 클래스-ES6 Class]({{site.baseurl}}/assets/img/FCFE/post31-1.png)
+
+상속을 받은 경우 `super` 키워드로 부모 클래스의 상속자를 사용할 수 있음
+
+```
+class Dog extends Animal {
+  constructor(name, sound) {
+    super("개", name, sound);
+  }
+}
+```
+
+![26 - 33 프로토타입과 클래스-ES6 Class]({{site.baseurl}}/assets/img/FCFE/post31-2.png)
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 34 프로토타입과 클래스-연습-Food class 만들기
+
+```
+class Food {
+	constructor(name) {
+		this.name = name;
+		this.brands = [];
+	}
+
+	addBrand(brand) {
+		this.brands.push(brand);
+	}
+
+	print() {
+		console.log(`${this.name}을(를) 파는 음식점들:`);
+		console.log(this.brands.join(', '));
+	}
+}
+
+const pizza = new Food('피자');
+pizza.addBrand('피자헛');
+pizza.addBrand('도미노피자');
+
+const chicken = new Food('치킨');
+chicken.addBrand('굽네치킨');
+chicken.addBrand('BBQ');
+
+pizza.print();
+chicken.print();
+```
+
+**결과**  
+피자을(를) 파는 음식점들:  
+피자헛, 도미노피자  
+치킨을(를) 파는 음식점들:  
+굽네치킨, BBQ
+
+클래스 문법을 사용하면 비슷한 작업을 하는 객체들의 값과 함수(메서드)관리가 편리!
+
+![26 - 34 프로토타입과 클래스-연습-Food class 만들기]({{site.baseurl}}/assets/img/FCFE/post31-2.png)
+
+---
+
+<br>
+
+#### 31회차 인증샷
+
+![31회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post31.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

@@ -1,0 +1,217 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 32회차 미션"
+date: 2020-11-19 12:23:00 +0300
+description: # Add post description (optional)
+img: FCFE/post32.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 01 삼항연산자](#01-삼항연산자)
+- [30 - 01 강의소개](#01-강의소개)
+- [30 - 02 리액트는 어쩌다가 만들어졌을까](#02-리액트는-어쩌다가-만들어졌을까)
+- [30 - 03 작업환경 준비](#03-작업환경-준비)
+
+---
+
+# 01 삼항연산자
+
+`condition ? true : false`
+
+- 조건이 true면 true에 해당하는 부분 실행, false면 false에 해당하는 부분 실행
+
+```
+const array = [];
+let text = '';
+
+if (array.length === 0) {
+	text = '배열이 비어있습니다.';
+} else {
+	text = '배열이 비어있지 않습니다.';
+}
+
+console.log(text);
+```
+
+위 코드를 삼항연산자를 사용해 작성하면
+
+```
+const array = [];
+let text = array.length === 0 ? '배열이 비어있습니다.' : '배열이 비어있지 않습니다.';
+console.log(text);
+```
+
+삼항연산자를 중첩해서 사용할 수도 있음
+
+```
+const condition1 = false;
+const condition2 = false;
+
+const value = condition1 ? '와우' : condition2 ? 'blabla' : 'foo';
+
+console.log(value);
+```
+
+이런 경우는 `if` 문을 사용하는 것이 좀 더 직관적!
+
+![27 - 01 삼항연산자]({{site.baseurl}}/assets/img/FCFE/post32-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 01 강의소개
+
+[모던 리액트 문서](https://react.vlpt.us/)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 02 리액트는 어쩌다가 만들어졌을까
+
+**Ember, Backbone, AngularJs...**
+
+⇒ DOM의 상태가 바뀌었을 때 그 상태를 업데이트 하는 방식을 간소화 함
+
+**React**
+
+리액트는 상태가 바뀌었을 때, 아예 다 날리고 모든 것을 새로 만들면 어떨까 하는 발상에서 시작
+
+DOM 속성을 업데이트하는 것이 아니라 다 날려버리고 처음부터 새로 만들어 보여주자!
+
+**어떻게...?**
+
+Virtual DOM을 만들어 DOM과 비교 후 차이가 있는 곳을 실제 DOM에 패치하자!
+
+~~UI를 어떻게 업데이트 할지~~ → UI를 어떻게 보여줄지 집중!
+
+리액트에서는 UI를 컴포넌트라는 조각을 사용함!
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 03 작업환경 준비
+
+## 설치할 것
+
+Node.js, Yarn, 코드 에디터, Git bash
+
+- 설치 안되면 이용 → 코드 샌드박스
+
+  [React](https://codesandbox.io/s/new)
+
+- **Node.js**는 브라우저 환경이 아닌 곳에서도 JS를 실행할 수 있게 해주는 Chrome V8 JavaScript 엔진으로 빌드된 JavaScript 런타임입니다.
+- **Yarn** npm과 비슷한데 JS 패키지 설치 시 빠르게 해 줌(생략가능)
+
+## 맥OS에서 설치
+
+### **Node.js**
+
+[nvm](https://github.com/nvm-sh/nvm) 이라는 도구를 사용하여 Node.js 를 설치하시는 것을 권장 → 버전 바뀔 때 upgrade/downgrade 가 쉬움!
+
+```bash
+curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh) | bash
+```
+
+- 터미널에 위와 같이 입력 후 설치 완료 되면 터미널을 껐다 다시켜고 아래와 같이 입력
+
+```bash
+nvm install —lts
+```
+
+- nvm이 없다고 뜨면 아래코드 입력
+
+  ```bash
+  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+  ```
+
+### **Yarn**
+
+```bash
+brew install yarn
+```
+
+설치 확인하기
+
+```bash
+node --version
+yarn --version
+```
+
+## 새 프로젝트 만들기
+
+```bash
+pwd // 현재위치 확인
+mkdir react-tutorial // 새로운 디렉토리 만들기
+```
+
+```bash
+npx create-react-app begin-react
+```
+
+### npx?
+
+**npm**
+
+Node.js의 의존성 패키지 관리를 위한 패키지 매니저
+
+**npx**
+
+Node 패키지를 실행시키는 하나의 도구
+
+1. 기본적으로 실행되어야할 패키지가 경로에 있는지 먼저 확인
+2. 경로에 제대로 있다면, 그대로 실행
+3. 그렇지 않다면 패키지는 설치되어 있지 않다는 걸 의미: npx가 최신 버전의 패키지를 설치 한 후에 실행
+
+- npm과 npx 차이
+
+  [[번역] 그래, npx! npm말고 - 차이점 설명](https://velog.io/@kimkyeseung/%EB%B2%88%EC%97%AD-%EA%B7%B8%EB%9E%98-npx-npm%EB%A7%90%EA%B3%A0-%EC%B0%A8%EC%9D%B4%EC%A0%90-%EC%84%A4%EB%AA%85)
+
+**에러**
+
+'node'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는
+배치 파일이 아닙니다.
+
+**해결**
+
+- 참고
+
+  [...는 내부 또는 외부 명령,실행할 수 있는 프로그램,또는 배치 파일이 아닙니다.](http://blog.naver.com/PostView.nhn?blogId=jh4l2656&logNo=70082442469)
+
+위 에러는 없어지고
+
+"'create-react-app'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그
+램, 또는 배치 파일이 아닙니다." 생김
+
+> > > cmd에서는 됨.... (git bash 가 안됨.)
+
+### react 돌리기
+
+```bash
+cd begin-react
+yarn start
+```
+
+종료: ctrl + c
+![27 - 03 작업환경 준비]({{site.baseurl}}/assets/img/FCFE/post32-2.png)
+
+---
+
+<br>
+
+#### 32회차 인증샷
+
+![32회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post32.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

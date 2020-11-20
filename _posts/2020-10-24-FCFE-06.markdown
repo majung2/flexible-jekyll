@@ -8,22 +8,24 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 ---
 
 강의
+
 - [25 - 11 자료형](#11-자료형)
 - [25 - 12 조건문-1](#12-조건문-1)
 
-*****
+---
 
 # 11 자료형
+
 > Data Types
 
 [자바스크립트의 자료형 MDN 문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Data_structures)
-   
 
 ## 동적타이핑
+
 > Dynamic Type Language
 
-```
-let whatever = 'Mijeong';
+```jsx
+let whatever = "Mijeong";
 
 whatever = 37;
 
@@ -31,216 +33,225 @@ whatever = true;
 ```
 
 자바스크립트에서는 값에 따라 변수의 타입이 달라짐 = 동적 타이핑
+
 > 변수가 가지는 고정 타입이 없다.
->   > 하지만 타입이 없는 것은 아니다!
+>
+> > 하지만 타입이 없는 것은 아니다!
 
-   
 ## 데이터 타입
-- 기본 타입 Primitive values
-    - Boolean
-    - Null
-    - Undefined
-    - Number
-    - String
-    - Symbol (*ECMAScript 6에 추가됨*)
-- 객체 Objects
-    - 브라우저에서 제공하는 객체가 있음 : 표준 내장 객체
 
-      
+- 기본 타입 Primitive values
+  - Boolean
+  - Null
+  - Undefined
+  - Number
+  - String
+  - Symbol (_ECMAScript 6에 추가됨_)
+- 객체 Objects
+  - 브라우저에서 제공하는 객체가 있음 : 표준 내장 객체
+
 ### Boolean
+
 - `true` 와 `false` 라는 값이 있음
 
-```
+```jsx
 const isTrue = true;
 const isFalse = false;
 console.log(isTrue, typeof isTrue); // 값인 true와 타입인 boolean 출력
 console.log(isFalse, typeof isFalse); // 값인 false와 타입인 boolean 출력
 ```
+
 > `typeof` 자료형 확인하는 함수
 
-```
+```jsx
 // Boolean 객체를 만들고 false로 초기화해 a에 넣어 사용가능
 const a = new Boolean(false);
 console.log(a, typeof a); // [Boolean: false] object
 
 // 이 경우 a의 값은 false지만 객체여서 true로 인식 > 혼동가능 해 사용 x
-if (a){
-    console.log('false?');
+if (a) {
+  console.log("false?");
 }
 ```
+
 - `false` 의 위치에 `true` 와 `false` 판단이 필요한 값을 넣어 사용
 
-```
+```jsx
 const b = Boolean(false);
 ```
-   
 
 ### Null
+
 값이 없다는 객체
-```
+
+```jsx
 const a = null;
 console.log(a, typeof a); // null, object
 ```
-   
+
 ### Undefined
+
 값이 정해지지 않은 객체
-```
+
+```jsx
 let b;
 console.log(b, typeof b);
 ```
 
 > 비교시 어떻게 되는가?
 
-```
-if (a == b){
-    console.log(a == b); // true 
+```jsx
+if (a == b) {
+  console.log(a == b); // true
 }
-if (a === b){
-    console.log(a === b); // false
+if (a === b) {
+  console.log(a === b); // false
 }
 ```
-   
+
 ### Number
-- 정수 
-```
+
+- 정수
+
+```jsx
 const a = 37;
 console.log(a, typeof a); // 37, number
 ```
 
 - 실수
-```
+
+```jsx
 const b = 96.7;
 console.log(b, typeof b);
 ```
 
 - NaN : 형 변환시 숫자가 아닌 숫자를 의미
-    ```
-    const c = NaN;
-    console.log(c, typeof c); // NaN, number
-    ```
 
-    ```
-    const d = Number('Mark');
-    console.log(d, typeof d); // NaN, number
+  ```jsx
+  const c = NaN;
+  console.log(c, typeof c); // NaN, number
+  ```
 
-    const e = Number('37');
-    console.log(e, typeof e); // 37, number
-    ```
+  ```jsx
+  const d = Number("Mark");
+  console.log(d, typeof d); // NaN, number
 
-   
+  const e = Number("37");
+  console.log(e, typeof e); // 37, number
+  ```
+
 ### String
 
-```
-const a = 'Mark';
+```jsx
+const a = "Mark";
 console.log(a, typeof a); // Mark, string
 ```
+
 - `""` 도 사용 가능
-```
+
+```jsx
 const b = "Mark";
 ```
+
 - 문자열끼리 더하기 가능
+
+```jsx
+const b = "Mark" + " Lee";
+const c = b + "hello";
 ```
-const b = 'Mark' + ' Lee';
-const c = b + 'hello';
-```
-   
+
 - ES6 에서 새로나온 기능 : **템플릿 스트링**
 - `{}` 안에 자바스크립트 표현식을 넣어 사용가능
-```
-const a = 'Mark';
+
+```jsx
+const a = "Mark";
 const d = `${a} Lee`; // Mark Lee
 ```
 
-   
 ### Symbol
+
 ES6부터 등장
 
 - 함수 호출하는 형태로 사용
 - 고유한 값을 사용하고 싶을 때 사용
 
-```
+```jsx
 const a = Symbol();
 const b = Symbol(37);
-const c = Symbol('Mark');
-const d = Symbol('Mark');
+const c = Symbol("Mark");
+const d = Symbol("Mark");
 
 console.log(a, typeof a); // Symbol() symbol
 console.log(c === d); // false
 ```
 
-
-
 ![25 - 11 자료형]({{site.baseurl}}/assets/img/FCFE/post6-1.png)
-   
-   
-   
+
 # 12 조건문-1
+
 > Conditional Statements
 
 ## if
 
 - 표현식이 참으로 평가될 때 살행되는 블럭
-    - *블럭*: 중괄호 `{}` 로 설정해 한 개 이상의 statment를 작성한 코드 덩어리
+  - _블럭_: 중괄호 `{}` 로 설정해 한 개 이상의 statment를 작성한 코드 덩어리
 - `if` 라는 키워드를 사용하고 중괄호 `{}` 로 실행영역 설정
 - 블록에 코드가 *한 줄*이면, 중괄호 `{}` 는 생략이 가능하다.
 
-```
-if (true) console.log('항상 실행');
-if (false) console.log('항상 실행되지 않음');
+```jsx
+if (true) console.log("항상 실행");
+if (false) console.log("항상 실행되지 않음");
 ```
 
-  
 ### 표현식이 거짓으로 평가될 때 : Falsy 한 값
+
 > `false`, `0`, `''`, `null`, `undefined`, `NaN`
 
-```
+```jsx
 if (false) console.log(false);
 if (0) console.log(false);
-if ('') console.log('');
+if ("") console.log("");
 if (null) console.log(null);
 if (undefined) console.log(undefined);
 if (NaN) console.log(NaN);
 ```
+
 - 모두 실행되지 않음
 
-   
 ### 표현식이 참으로 평가될 때 : Truethy 한 값
+
 > Falsy의 반대 : `true`, `37`, `'Mark'`, `{}`, `[]`
 
-```
-if (true) console.log(true); 
-if (-37) console.log(-37); 
-if ('Mark') console.log('Mark');
-if (' ') console.log(' ');
+```jsx
+if (true) console.log(true);
+if (-37) console.log(-37);
+if ("Mark") console.log("Mark");
+if (" ") console.log(" ");
 if ({}) console.log({}); // 빈 객체: 참
 if ([]) console.log([]); // 빈 배열: 참
 ```
+
 - 모두 실행 됨
 
-   
 ## else
+
 > if 에 해당하지 않을 때
 
-```
+```jsx
 const n = 37;
-if (n>0){
-    console.log('n이 0 보다 큰 경우');
-}else{
-    console.log('n이 0보다 작은 경우');
+if (n > 0) {
+  console.log("n이 0 보다 큰 경우");
+} else {
+  console.log("n이 0보다 작은 경우");
 }
 ```
 
-
-
-
 ![25 - 12 조건문-1]({{site.baseurl}}/assets/img/FCFE/post6-2.png)
-   
-   
-   
-*****
+
+---
 
 #### 6회차 인증샷
-![6회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post6.jpg)
 
+![6회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post6.jpg)
 
 올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

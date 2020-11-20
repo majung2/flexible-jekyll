@@ -22,14 +22,14 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 
 - 조건이 true면 true에 해당하는 부분 실행, false면 false에 해당하는 부분 실행
 
-```
+```javascript
 const array = [];
-let text = '';
+let text = "";
 
 if (array.length === 0) {
-	text = '배열이 비어있습니다.';
+  text = "배열이 비어있습니다.";
 } else {
-	text = '배열이 비어있지 않습니다.';
+  text = "배열이 비어있지 않습니다.";
 }
 
 console.log(text);
@@ -37,19 +37,20 @@ console.log(text);
 
 위 코드를 삼항연산자를 사용해 작성하면
 
-```
+```javascript
 const array = [];
-let text = array.length === 0 ? '배열이 비어있습니다.' : '배열이 비어있지 않습니다.';
+let text =
+  array.length === 0 ? "배열이 비어있습니다." : "배열이 비어있지 않습니다.";
 console.log(text);
 ```
 
 삼항연산자를 중첩해서 사용할 수도 있음
 
-```
+```javascript
 const condition1 = false;
 const condition2 = false;
 
-const value = condition1 ? '와우' : condition2 ? 'blabla' : 'foo';
+const value = condition1 ? "와우" : condition2 ? "blabla" : "foo";
 
 console.log(value);
 ```
@@ -118,7 +119,7 @@ Node.js, Yarn, 코드 에디터, Git bash
 [nvm](https://github.com/nvm-sh/nvm) 이라는 도구를 사용하여 Node.js 를 설치하시는 것을 권장 → 버전 바뀔 때 upgrade/downgrade 가 쉬움!
 
 ```bash
-curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh) | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
 ```
 
 - 터미널에 위와 같이 입력 후 설치 완료 되면 터미널을 껐다 다시켜고 아래와 같이 입력
@@ -189,10 +190,11 @@ Node 패키지를 실행시키는 하나의 도구
 
 위 에러는 없어지고
 
-"'create-react-app'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그
-램, 또는 배치 파일이 아닙니다." 생김
+> 'create-react-app'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다.
 
-> > > cmd에서는 됨.... (git bash 가 안됨.)
+생김
+
+cmd에서는 됨.... (git bash 가 안됨.)
 
 ### react 돌리기
 

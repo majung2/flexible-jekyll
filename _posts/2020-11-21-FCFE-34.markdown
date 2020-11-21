@@ -1,0 +1,296 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 34회차 미션"
+date: 2020-11-21 18:16:03 +0300
+description: # Add post description (optional)
+img: FCFE/post34.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 03 단축 평가 논리 계산법](#03-단축-평가-논리-계산법)
+- [30 - 05 JSX](#05-JSX)
+
+---
+
+# 03 단축 평가 논리 계산법
+
+Short-circuit evaluation
+
+논리 연산자를 사용해 코드를 더 짧게 작성하는 것
+
+```jsx
+true && true; // true
+true && false; // false
+true || false; // true
+false || false; // false
+```
+
+## &&
+
+아래와 같은 코드가 있다고 가정
+
+```jsx
+const dog = {
+  name: "멍멍이",
+};
+function getName(animal) {
+  if (animal) {
+    return animal.name;
+  }
+  return undefined;
+}
+
+const name = getName(dog); // dog 대신 빈 값이면 -> undefined
+console.log(name); // 멍멍이
+```
+
+`getName` 함수를 아래와 같이 줄일 수 있다.
+
+```jsx
+function getName(animal) {
+  return animal && animal.name;
+}
+```
+
+왜 그럴까?
+
+`&&` 연산자는 앞에 값이 `true` 면 뒤의 값, `false` 면 앞의 값
+
+```jsx
+console.log(true && "hello");
+console.log(false && "hello");
+console.log("hello" && "bye");
+console.log(null && "hello");
+console.log(undefined && "hello");
+console.log("" && "hello");
+console.log(0 && "hello");
+console.log(1 && "hello");
+console.log(1 && 1);
+```
+
+예를들어
+
+```jsx
+const object = null;
+const name = object.name;
+```
+
+이럴경우 에러 발생, 하지만 `object &&` 를 추가하면 에러발생하지 않음
+
+```jsx
+const object = null;
+const name = object && object.name;
+console.log(name); // null 출력
+```
+
+→ 객체가 제대로 된 값이면 `name` 이 제대로 작동
+
+## ||
+
+어떤 값이 falsy 하다면 대체로 사용할 값을 지정할 때 사용
+
+아래와 같은 코드가 있다고 가정
+
+```jsx
+const namelessDog = {
+  name: "",
+};
+
+function getName(animal) {
+  const name = animal && animal.name;
+  if (!name) {
+    return "이름이 없는 동물입니다.";
+  }
+  return name;
+}
+
+const name = getName(namelessDog);
+console.log(name);
+```
+
+→ 이름이 없으면 '이름이 없는 동물입니다.' 출력, 이름이 있으면 이름 출력
+
+`getName` 함수를 아래와 같이 작성가능
+
+```jsx
+function getName(animal) {
+  const name = animal && animal.name;
+  return name || "이름이 없는 동물입니다.";
+}
+```
+
+`||` 연산자는 앞에 값이 `false` 일 때 뒤의 값 출력
+
+```jsx
+console.log(false || "hello");
+console.log("" || "이름없다.");
+console.log(null || "널이다");
+console.log(undefined || "define 되지 않았다.");
+console.log(0 || "제로다");
+
+console.log(1 || "음?");
+console.log([] || "여긴 안본다");
+```
+
+![27 - 03 단축 평가 논리 계산법]({{site.baseurl}}/assets/img/FCFE/post34-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 05 JSX
+
+## JSX?
+
+리액트에서 컴포넌트의 생김새를 정의할 때 사용하는 문법
+
+바벨을 통해 자바스크립트 코드가 html로 변환
+
+- 아래링크 Try it out 에서 확인 가능
+
+  [Babel · The compiler for next generation JavaScript](https://babeljs.io/)
+
+JSX문법을 사용해 XML형태로 선언하면 JS로 변환되도록 Babel이 해줌
+
+## JSX 규칙
+
+### 태그는 무조건 닫혀있어야 한다.
+
+만약 내용이 없을 경우, 아래의 `<Hello />` 와 같이 self-closing 태그 이용하면 됨
+
+!05-JSX[30 - 05 JSX]({05-JSX{site.baseurl}}/assets/img/FCFE/post34-2.png)
+
+### 두 개 이상의 태그는 하나의 태그로 감싸져야 함
+
+!05-JSX[30 - 05 JSX]({05-JSX{site.baseurl}}/assets/img/FCFE/post34-3.png)
+
+감싸기 애매할 경우 fragment를 사용 > 불필요한 div 만들어지지 않음
+
+!05-JSX[30 - 05 JSX]({05-JSX{site.baseurl}}/assets/img/FCFE/post34-4.png)
+
+\*참고 - 괄호 `()` 는 가독성을 위한 것! (없어도 됨)
+
+### JSX에서 JS 값을 사용하는 방법
+
+중괄호 `{}` 로 감싸주면 됨
+
+```jsx
+function App() {
+  const name = "react";
+  return (
+    <>
+      <Hello />
+      <div>{name}</div>
+    </>
+  );
+}
+```
+
+### style과 class 설정하는 법
+
+### style
+
+- 객체를 만들어서 설정해야함
+- `-` 로 연결된 속성은 CamelCase로 작성
+
+```jsx
+function App() {
+  const name = "react";
+  const style = {
+    backgroundColor: "black",
+    color: "aqua",
+    fontSize: 24,
+    padding: "1rem",
+  };
+  return (
+    <>
+      <Hello />
+      <div style={style}>{name}</div>
+    </>
+  );
+}
+```
+
+### class
+
+`App.css` 파일에 아래 코드 작성해보자
+
+```css
+.gray-box {
+  background: gray;
+  width: 64px;
+  height: 64px;
+}
+```
+
+`App.js` 에서 사용시 `className` 으로 사용!
+
+```jsx
+import "./App.css"; // 추가후
+
+function App() {
+  const name = "react";
+  const style = {
+    backgroundColor: "black",
+    color: "aqua",
+    fontSize: 24,
+    padding: "1rem",
+  };
+  return (
+    <>
+      <Hello />
+      <div style={style}>{name}</div>
+      <div className="gray-box"></div>
+    </>
+  );
+}
+```
+
+### 주석
+
+`{}` 와 함께 작성
+
+```jsx
+{
+  /* 주석주석 */
+}
+```
+
+혹은 self-closing 태그 내부에 `//` 를 이용해 작성 가능
+
+```jsx
+<Hello
+// 이렇게도 작성이 가능가능
+/>
+```
+
+- 자바스크립트 문법 확장
+
+  [JSX 소개 - React](https://reactjs-kr.firebaseapp.com/docs/introducing-jsx.html)
+
+### XML?
+
+Extensible Markup Language
+
+W3C에서 개발된, 다른 특수한 목적을 갖는 마크업 언어를 만드는데 사용하도록 권장하는 다목적 마크업 언어이다.
+
+### Babel
+
+- 자바스크립트의 문법을 확장해주는 도구
+
+  [Babel · The compiler for next generation JavaScript](https://bit.ly/2wMpkk2)
+
+---
+
+<br>
+
+#### 34회차 인증샷
+
+![34회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post34.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

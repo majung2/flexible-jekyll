@@ -1,0 +1,243 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 35회차 미션"
+date: 2020-11-22 13:10:00 +0300
+description: # Add post description (optional)
+img: FCFE/post35.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 04 함수의 기본 파라미터](#04-함수의-기본-파라미터)
+- [30 - 06 props를 통해 컴포넌트에게 값 전달하기](#06-props를-통해-컴포넌트에게-값-전달하기)
+
+---
+
+# 04 함수의 기본 파라미터
+
+함수를 하나 만들어보자
+
+```jsx
+function calculateCircleArea(r) {
+  return Math.PI * r * r;
+}
+
+const area = calculateCircleArea(4);
+console.log(area); // 50.26548245743669
+```
+
+만약 `r` 값을 설정하지 않으면 `NaN` 이 출력됨
+
+기본값을 1로 설정하려면
+
+```jsx
+function calculateCircleArea(r) {
+  const radius = r || 1;
+  return Math.PI * radius * radius;
+}
+
+const area = calculateCircleArea();
+console.log(area);
+```
+
+이렇게 할 수 있지만 다른 방법도 있음!
+
+아래와 같이 작성하면 `r` 의 기본값이 `1` 인 것!
+
+```jsx
+function calculateCircleArea(r = 1) {
+  return Math.PI * r * r;
+}
+```
+
+이는 화살표 함수에서도 사용 가능!
+
+```jsx
+const calculateCircleArea = (r = 1) => Math.PI * r * r;
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 06 props를 통해 컴포넌트에게 값 전달하기
+
+## props?
+
+**prop**ertie**s** 의 줄인말
+
+컴포넌트를 사용할 때 특정 값을 전달할 때 사용
+
+`App.js` 에 `name="react"` 를 사용하고자 할 때
+
+```jsx
+// App.js
+import React from "react";
+import Hello from "./Hello";
+import "./App.css";
+
+function App() {
+  return <Hello name="react" />;
+}
+
+export default App;
+```
+
+`Hello.js` 에서 `props` 로 받아서 사용 → 객체 형태로 넘어감
+
+```jsx
+// Hello.js
+import React from "react";
+
+function Hello(props) {
+  console.log(props);
+  return <div>안녕하세요</div>;
+}
+
+export default Hello;
+```
+
+![30 - 06 props를 통해 컴포넌트에게 값 전달하기]({{site.baseurl}}/assets/img/FCFE/post35-1.png)
+
+만약 `Hello.js` 에서 `name` 의 값을 사용하려면 `{props.name}` 으로 사용
+
+```jsx
+// Hello.js
+<div>안녕하세요 {props.name}</div>
+```
+
+이번에는 `color` 라는 값을 설정해보자
+
+```jsx
+// App.js
+function App() {
+  return <Hello name="react" color="red" />;
+}
+```
+
+이 값을 사용하려면
+
+```jsx
+// Hello.js
+<div style={{ color: props.color }}> 안녕하세요 {props.name}</div>
+```
+
+→ 첫번째 중괄호 `{` 는 객체를 의미하는 것 두번째는 `props` 값을 사용하기 위한 것!
+
+일일이 `props.` 으로 사용하는 것이 어려우면, 비구조화 할당을 이용해 다음과 같이 작성가능
+
+```jsx
+// Hello.js
+function Hello({ color, name }) {
+  return (
+    <div
+      style={{
+        color, // color : color 와 동일
+      }}
+    >
+      안녕하세요 {name}
+    </div>
+  );
+}
+```
+
+## defaultProps
+
+값이 없을 경우 기본 설정값
+
+`Hello.js` 에 아래코드 추가
+
+```jsx
+// Hello.js
+Hello.defaultProps = {
+  name: "이름없음",
+};
+```
+
+```jsx
+// App.js
+function App() {
+  return (
+    <>
+      <Hello color="pink" />
+      <Hello name="react" color="red" />
+    </>
+  );
+}
+```
+
+![30 - 06 props를 통해 컴포넌트에게 값 전달하기]({{site.baseurl}}/assets/img/FCFE/post35-2.png)
+
+## Props.children
+
+새로운 컴포넌트를 만들자
+
+`Wrapper.js` 라는 컴포넌트 생성
+
+```jsx
+// Wrapper.js
+import React from "react";
+
+function Wrapper() {
+  const style = {
+    border: "2px solid black",
+    padding: 16,
+  };
+  return <div style={style}></div>;
+}
+
+export default Wrapper;
+```
+
+이를 `App.js` 에서 사용할 때 `<Wrapper>` 를 입력하면 아래 코드 자동완성됨
+
+```jsx
+// App.js
+import Wrapper from "./Wrapper";
+```
+
+이렇게 작성시 `<Wrapper>` 안에 내용이 보이지 않음!!
+
+```jsx
+// App.js
+function App() {
+  return (
+    <Wrapper>
+      <Hello color="pink" />
+      <Hello name="react" color="red" />
+    </Wrapper>
+  );
+}
+```
+
+![30 - 06 props를 통해 컴포넌트에게 값 전달하기]({{site.baseurl}}/assets/img/FCFE/post35-3.png)
+
+안에 내용을 보이게 하려면 `Props.children` 사용!
+
+```jsx
+// Wrapper.js
+function Wrapper({ children }) {
+  const style = {
+    border: "2px solid black",
+    padding: 16,
+  };
+  return <div style={style}>{children}</div>;
+}
+```
+
+![30 - 06 props를 통해 컴포넌트에게 값 전달하기]({{site.baseurl}}/assets/img/FCFE/post35-4.png)
+
+---
+
+<br>
+
+#### 35회차 인증샷
+
+![35회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post35.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

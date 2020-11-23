@@ -1,0 +1,237 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 36회차 미션"
+date: 2020-11-23 16:41:49 +0300
+description: # Add post description (optional)
+img: FCFE/post36.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 05 조건문 더 스마트하게 쓰기](#05-조건문-더-스마트하게-쓰기)
+- [30 - 06 조건부 렌더링](#06-조건부-렌더링)
+
+---
+
+# 05조건문 더 스마트하게 쓰기
+
+특정 값들 중 하나인지 확인하는 코드
+
+```jsx
+function isAnimal(text) {
+  return (
+    text === "고양이" || text === "개" || text === "거북이" || text === "너구리"
+  );
+}
+console.log(isAnimal("개"));
+console.log(isAnimal("노트북"));
+```
+
+이렇게보다 간단히 작성가능!
+
+```jsx
+function isAnimal(text) {
+  const animals = ["고양이", "개", "거북이", "너구리"];
+  return animals.includes(text);
+}
+```
+
+화살표 함수로 작성시
+
+```jsx
+const isAnimal = (text) => ["고양이", "개", "거북이", "너구리"].includes(text);
+```
+
+다음경우는 어떻게 하면 좋을까?
+
+```jsx
+function getSound(animal) {
+  if (animal === "개") return "멍멍!";
+  if (animal === "고양이") return "야옹";
+  if (animal === "참새") return "짹짹";
+  if (animal === "비둘기") return "구구구구";
+  return "...?";
+}
+
+console.log(getSound("개"));
+console.log(getSound("비둘기"));
+console.log(getSound("인간"));
+```
+
+`switch` `case` 도 별로...
+
+```jsx
+function getSound(animal) {
+  switch (animal) {
+    case "개":
+      return "멍멍!";
+    case "고양이":
+      return "야옹";
+    case "참새":
+      return "짹짹";
+    case "비둘기":
+      return "구구구구";
+    default:
+      return "....?";
+  }
+}
+```
+
+### **객체**를 활용할 수 있다!
+
+```jsx
+function getSound(animal) {
+  const sounds = {
+    개: "멍멍",
+    고양이: "야옹",
+    참새: "짹짹",
+    비둘기: "구구 구 구",
+  };
+  return sounds[animal] || "...?"; // 없으면 출력할 값
+}
+```
+
+특정 값이 주어지는 것에 따라 다른 코드 실행되게 하기
+
+```jsx
+function makeSound(animal) {
+  const tasks = {
+    개: () => {
+      console.log("멍멍!");
+    },
+    고양이() {
+      console.log("야옹");
+    },
+    비둘기: function () {
+      // 이렇게도 작성가능하지만 위 방법들 선호!
+      console.log("구구 구 구");
+    },
+  };
+  if (!tasks[animal]) {
+    console.log("...?");
+    return;
+  }
+  tasks[animal]();
+}
+
+makeSound("개");
+makeSound("비둘기");
+makeSound("인간");
+```
+
+`tasks[animal]` 이 중복되므로
+
+```jsx
+const task = tasks[animal];
+if (!task) {
+  console.log("...?");
+  return;
+}
+task();
+```
+
+이렇게 작성하면 깔끔!
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 06 조건부 렌더링
+
+특정 조건의 참/거짓 여부에 따라 다른
+
+`Hello` 컴포넌트에 `isSpecial` 이라는 값을 추가하고 참/거짓 여부에 따라 다른 값을 출력해보자!
+
+```jsx
+// App.js
+<Hello name="react" color="red" isSpecial={true} />
+```
+
+삼항연산자를 사용해서 추가
+
+```jsx
+// Hello.js
+function Hello({ color, name, isSpecial }) {
+  return (
+    <div
+      style={{
+        color,
+      }}
+    >
+      {isSpecial ? <b>*</b> : null}
+      안녕하세요 {name}
+    </div>
+  );
+}
+```
+
+![30 - 06 조건부 렌더링]({{site.baseurl}}/assets/img/FCFE/post36-1.png)
+![30 - 06 조건부 렌더링]({{site.baseurl}}/assets/img/FCFE/post36-2.png)
+
+### 참고
+
+JS에서 0을 제외한 falsy한 값을 렌더링 하면 아무것도 보이지 않음!
+
+```jsx
+{
+  undefined;
+}
+{
+  0;
+}
+```
+
+![30 - 06 조건부 렌더링]({{site.baseurl}}/assets/img/FCFE/post36-3.png)
+
+0은 예외!! 그대로 나타남!
+
+삼항연산자는 보통 내용이 달라질 때 사용! `&&` 연산자 사용이 더 간편함
+
+```jsx
+// Hello.js
+{
+  isSpecial && <b>*</b>;
+}
+```
+
+### 삼항연상자와 && 연산자
+
+삼항연산자: 특정 조건에 따라 보여줘야 하는 내용이 다를 때 사용
+
+```jsx
+{
+  isSpecial ? <b>*</b> : <b>x</b>;
+}
+```
+
+`&&`연산자: true면 보여주고 아니면 숨길때 사용
+
+```jsx
+{
+  isSpecial && <b>*</b>;
+}
+```
+
+\*TIP
+
+`boolean` 값은 default가 `true` !! 아래와 같이 작성해도 `isSpecial={true}` 와 동일한 결과
+
+```jsx
+// App.js
+<Hello name="react" color="red" isSpecial />
+```
+
+---
+
+<br>
+
+#### 36회차 인증샷
+
+![36회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post36.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

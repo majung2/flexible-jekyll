@@ -1,0 +1,357 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 37회차 미션"
+date: 2020-11-24 16:33:54 +0300
+description: # Add post description (optional)
+img: FCFE/post37.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 06 비구조화 할당](#06-비구조화-할당)
+- [30 - 07 useState를 통해 컴포넌트에서 바뀌는 값 관리하기](#07-useState를-통해-컴포넌트에서-바뀌는-값-관리하기)
+
+---
+
+# 06 비구조화 할당
+
+## 객체 비구조화 할당
+
+```jsx
+const object = { a: 1, b: 2 };
+function print({ a, b }) {
+  console.log(a); // 1 출력
+  console.log(b); // 2 출력
+}
+print(object);
+```
+
+이 때, `b` 가 없을 경우 기본 값으로 2을 사용한다고 해보자
+
+```jsx
+const object = { a: 1 };
+function print({ a, b = 2 }) {
+  console.log(a); // 1 출력
+  console.log(b); // 2 출력
+}
+print(object);
+```
+
+함수가 아닌 경우에도 비구조화 할당 가능!
+
+```jsx
+const object = { a: 1 };
+const { a, b = 2 } = object;
+console.log(a); // 1
+console.log(b); // 2
+```
+
+비구조화 할당을 할 때는 `=` 을 사용하면 된다!
+
+아래와 같은 코드가 있다고 해보자
+
+```jsx
+const animal = {
+  name: "멍멍이",
+  type: "개",
+};
+
+const nickname = animal.name;
+
+console.log(nickname);
+```
+
+이를 비구조화 할당으로 하면,
+
+```jsx
+const animal = {
+  name: "멍멍이",
+  type: "개",
+};
+
+const { name: nickname } = animal;
+
+console.log(nickname); // 멍멍이
+console.log(animal); // {name: "멍멍이", type: "개"}
+```
+
+원래 객체가 바뀌는 것은 아니다!
+
+## 배열 비구조화 할당
+
+```jsx
+const array = [1, 2];
+const one = array[0];
+const two = array[1];
+
+console.log(one);
+console.log(two);
+```
+
+이 경우는
+
+```jsx
+const array = [1, 2];
+const [one, two] = array;
+
+console.log(one);
+console.log(two);
+```
+
+이렇게 작성할 수 있다.
+
+객체와 마찬가지로 기본값을 넣어줄 수 있다.
+
+```jsx
+const array = [1];
+const [one, two = 2] = array;
+```
+
+## 객체 안에 객체
+
+비구조화 할당 두 번 사용하기
+
+```jsx
+const deepObject = {
+  state: {
+    information: {
+      name: "velopert",
+      languages: ["korean", "english", "chinese"],
+    },
+  },
+  value: 5,
+};
+
+const { name, languages } = deepObject.state.information;
+const { value } = deepObject;
+
+const extracted = {
+  name,
+  languages,
+  value,
+};
+console.log(extracted);
+```
+
+![27 - 06 비구조화 할당]({{site.baseurl}}/assets/img/FCFE/post37-1.png)
+
+이것을 한 번에 빼오려면
+
+```jsx
+const {
+  state: {
+    information: { name, languages },
+  },
+  value,
+} = deepObject;
+
+const extracted = {
+  name,
+  languages,
+  value,
+};
+console.log(extracted);
+```
+
+배열을 더 구체적으로
+
+```jsx
+const {
+  state: {
+    information: {
+      name,
+      languages: [fistLang, secondLang],
+    },
+  },
+  value,
+} = deepObject;
+
+const extracted = {
+  name,
+  fistLang,
+  secondLang,
+  value,
+};
+```
+
+이렇게도 가능!
+
+상황에 따라 다르게 사용가능하다!
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 07 useState를 통해 컴포넌트에서 바뀌는 값 관리하기
+
+컴포넌트 내용이 사용자 인터렉션에 따라 달라질 때!
+
+리액트 16.8 에서 Hooks 라는 기능이 도입되면서 함수형 컴포넌트에서도 상태를 관리할 수 있게 되었습니다.
+
+## useState
+
+`src` 에 `Counter.js` 파일 만들기
+
+```jsx
+// Counter.js
+import React from "react";
+
+function Counter() {
+  return (
+    <div>
+      <h1>0</h1>
+      <button>+1</button>
+      <button>-1</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+`App.js` 를 다음과 같이 바꿔보자
+
+```jsx
+// App.js
+import React from "react";
+import "./App.css";
+import Counter from "./Counter";
+
+function App() {
+  return <Counter />;
+}
+
+export default App;
+```
+
+## 이벤트 설정하기
+
+`onIncrease` 와 `onDecrease` 함수 만들기
+
+```jsx
+// Counter.js
+const onIncrease = () => {
+  console.log("+1");
+};
+const onDecrease = () => {
+  console.log("-1");
+};
+```
+
+### onClick 이벤트
+
+```jsx
+// Counter.js
+function Counter() {
+  const onIncrease = () => {
+    console.log("+1");
+  };
+  const onDecrease = () => {
+    console.log("-1");
+  };
+  return (
+    <div>
+      <h1>0</h1>
+      <button onClick={onIncrease}>+1</button>
+      <button onClick={onDecrease}>-1</button>
+    </div>
+  );
+}
+```
+
+_주의_ `onClick={}` 여기에 함수를 호출하는 것이 아니라 함수 이름을 넣어야 함!
+
+→ 호출할 경우 렌더링 시 함수가 호출되어버린다.
+
+### useState
+
+리액트에서 `useState` 를 불러온다.
+
+```jsx
+// Counter.js
+import React, { useState } from "react";
+```
+
+`Counter` 함수 안에 아래와 같이 입력
+
+```jsx
+// Counter.js
+const [number, setNumber] = useState(0);
+```
+
+→ `number` 라는 상태를 만들건데, 기본값이 `0` 이다.
+
+→ `setNumber` 는 상태를 바꿔주는 함수
+
+원래는...
+
+```jsx
+const numberState = useState(0);
+const number = numberState[0];
+const setNumber = numberState[1];
+```
+
+이렇게 작성해야 함! (배열 비구조화 할당으로 위와 같이 작성한 것)
+
+### 최종 코드와 결과
+
+```jsx
+// Counter.js
+import React, { useState } from "react";
+
+function Counter() {
+  const [number, setNumber] = useState(0);
+
+  const onIncrease = () => {
+    setNumber(number + 1);
+  };
+  const onDecrease = () => {
+    setNumber(number - 1);
+  };
+  return (
+    <div>
+      <h1>{number}</h1>
+      <button onClick={onIncrease}>+1</button>
+      <button onClick={onDecrease}>-1</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+![27 - 07 useState를 통해 컴포넌트에서 바뀌는 값 관리하기]({{site.baseurl}}/assets/img/FCFE/post37-2.png)
+
+최적화를 위해 아래와 같이 작성할 수도 있다.
+
+```jsx
+const onIncrease = () => {
+  setNumber((prevNumber) => prevNumber + 1);
+};
+const onDecrease = () => {
+  setNumber((prevNumber) => prevNumber - 1);
+};
+```
+
+→ 함수형 업데이트
+
+### setNumber
+
+→ 바꿀 값을 넣어줄 수도 있고
+
+→ 바꾸는 로직(함수)을 넣어줄 수도 있다.
+
+---
+
+<br>
+
+#### 37회차 인증샷
+
+![37회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post37.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

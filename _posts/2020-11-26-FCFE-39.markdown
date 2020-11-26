@@ -1,0 +1,227 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 39회차 미션"
+date: 2020-11-26 13:30:46 +0300
+description: # Add post description (optional)
+img: FCFE/post39.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 08 spread와 rest - rest](#08-spread와-rest---rest)
+- [30 - 09 여러개의 input 상태 관리하기](#09-여러개의-input-상태-관리하기)
+
+---
+
+# 08 spread와 rest - rest
+
+## rest
+
+`spread` 와 생김새는 유사
+
+```jsx
+const purpleCuteSlime = {
+  name: "슬라임",
+  attribute: "cute",
+  color: "purple",
+};
+
+const { color, ...rest } = purpleCuteSlime;
+console.log(color); // purple
+console.log(rest); // {name: "슬라임", attribute: "cute"}
+```
+
+→ `rest` 는 `color` 를 제외한 속성들이 있음
+
+→ 이름이 꼭 `rest` 가 아니어도 됨
+
+```jsx
+const { color, ...cuteSlime } = purpleCuteSlime;
+console.log(color); // purple
+console.log(cuteSlime); // {name: "슬라임", attribute: "cute"}
+
+const { attribute, ...slime } = cuteSlime;
+console.log(slime); // {name: "슬라임"}
+```
+
+## spread vs rest
+
+`spread` 는 특정 객체/배열 안에 다른 객체/배열을 퍼뜨리면
+
+`rest` 는 모아옴
+
+### 배열에서 rest
+
+```jsx
+const numbers = [0, 1, 2, 3, 4, 5, 6];
+
+const [one, ...rest] = numbers;
+console.log(one); // 0
+console.log(rest); // [1,2,3,4,5,6
+```
+
+> 단, `rest` 가 앞에 올 수는 없다!!
+
+![27 - 08 spread와 rest - rest]({{site.baseurl}}/assets/img/FCFE/post39-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 09 여러개의 input 상태 관리하기
+
+`InputSample.js` 에 `return` 값 수정하기
+
+```jsx
+// InputSample.js
+return (
+  <div>
+    <input placeholder="이름" />
+    <input placeholder="닉네임" />
+    <button onClick={onReset}>초기화</button>
+    <div>
+      <b>값: </b>
+      이름 (닉네임)
+    </div>
+  </div>
+);
+```
+
+`useState` 객체로 값 관리하기
+
+```jsx
+// InputSample.js
+import React, { useState } from "react";
+
+function InputSample() {
+  const [inputs, setInputs] = useState({
+    name: "",
+    nickname: "",
+  });
+  const { name, nickname } = inputs; // 비구조화 할당
+  const onChange = (e) => {
+    console.log(e.target.name);
+    console.log(e.target.value);
+  };
+
+  const onReset = () => {};
+  return (
+    <div>
+      <input name="name" placeholder="이름" onChange={onChange} />
+      <input name="nickname" placeholder="닉네임" onChange={onChange} />
+      <button onClick={onReset}>초기화</button>
+      <div>
+        <b>값: </b>
+        이름 (닉네임)
+      </div>
+    </div>
+  );
+}
+
+export default InputSample;
+```
+
+이 상태로 내용을 바꾸면
+![30 - 09 여러개의 input 상태 관리하기]({{site.baseurl}}/assets/img/FCFE/post39-1.png)
+
+### onChange
+
+```jsx
+// InputSample.js 의 InputSample() 함수
+
+const [inputs, setInputs] = useState({
+  name: "",
+  nickname: "",
+});
+
+const { name, nickname } = inputs;
+
+const onChange = (e) => {
+  const { name, value } = e.target;
+
+  const nextInputs = {
+    ...inputs, // 기존내용 복사
+    [name]: value, // []로 인해 name의 값에 따라 name 혹은 nickname 을 키로 가진 값이 변경됨
+  };
+  setInputs(nextInputs);
+};
+```
+
+→ `nextInputs` 라는 새로운 객체를 만들고, `setInputs(nextInputs)` 를 통해 해당 객체를 쓰겠다!
+
+이를 합쳐서 작성하면
+
+```jsx
+// InputSample.js
+
+const onChange = (e) => {
+  const { name, value } = e.target;
+
+  setInputs({
+    ...inputs, // 기존내용 복사
+    [name]: value,
+  });
+};
+```
+
+### onReset
+
+```jsx
+const onReset = () => {
+  setInputs({
+    name: "",
+    nickname: "",
+  });
+};
+```
+
+`return` 값 변경
+
+```jsx
+return (
+  <div>
+    <input name="name" placeholder="이름" onChange={onChange} value={name} />
+    <input
+      name="nickname"
+      placeholder="닉네임"
+      onChange={onChange}
+      value={nickname}
+    />
+    <button onClick={onReset}>초기화</button>
+    <div>
+      <b>값: </b>
+      {name} ({nickname})
+    </div>
+  </div>
+);
+```
+
+![30 - 09 여러개의 input 상태 관리하기]({{site.baseurl}}/assets/img/FCFE/post39-2.png)
+
+## 요약: 불변성 지키기
+
+객체의 값을 업데이트 할 땐, 반드시 1) 기존 상태를 복사하고 2) 새로운 값을 덮어씌운 후 3) 상태를 업데이트 해야 함!
+
+→ 리액트가 상태변화를 감지하고 새로운 DOM을 형성함
+
+```jsx
+setInputs({
+  // 3) 상태 업데이트
+  ...inputs, // 1) 기존내용 복사
+  [name]: value, // 2) 새로운 값 덮어씌우기
+});
+```
+
+---
+
+<br>
+
+#### 39회차 인증샷
+
+![39회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post39.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

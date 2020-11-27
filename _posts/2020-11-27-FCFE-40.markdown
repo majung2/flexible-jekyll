@@ -1,0 +1,182 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 40회차 미션"
+date: 2020-11-27 22:14:28 +0300
+description: # Add post description (optional)
+img: FCFE/post40.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 09 spread와 rest - 함수인자에서의 spread](#09-spread와-rest---함수인자에서의-spread)
+- [30 - 10 useRef로 특정 DOM 선택하기](#10-useRef로-특정-DOM-선택하기)
+
+---
+
+# 09 spread와 rest - 함수인자에서의 spread
+
+아래와 같은 `sum` 함수가 있다고 가정해보자
+
+```jsx
+function sum(a, b, c, d, e, f, g) {
+  return a + b + c + d + e + f + g;
+}
+
+console.log(sum(1, 2, 3, 4, 5)); // NaN
+```
+
+함수 파라미터 갯수만큼 채워지지 않으면 `NaN` 반환!
+
+```jsx
+function sum(a, b, c, d, e, f, g) {
+  let result = 0;
+  if (a) result += a;
+  if (b) result += b;
+  if (c) result += c;
+  if (d) result += d;
+  if (e) result += e;
+  if (f) result += f;
+  if (g) result += g;
+  return result;
+}
+```
+
+이렇게 해결할 수 있지만... 너무 귀찮...
+
+이런 경우!
+
+```jsx
+function sum(...rest) {
+  return rest.reduce((acc, current) => acc + current, 0);
+}
+```
+
+이렇게 작성시 `rest` 가 모든 파라미터가 담긴 배열이 되고 이 배열을 배열 내장함수 `reduce` 로 돌면서 합을 구하면 된다!
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 10 useRef로 특정 DOM 선택하기
+
+리액트에서 DOM을 직접 선택해야하는 상황이 발생할 수 있음!
+
+초기화 버튼을 누른 후 포커싱을 이름 입력 칸으로 바뀌게 해보자!
+
+`InputSample.js` 에 `useRef` 를 추가한다.
+
+```jsx
+// InputSample.js
+import React, { useState, useRef } from "react";
+```
+
+`InputSample` 함수에 아래 코드 추가
+
+```jsx
+const nameInput = useRef();
+```
+
+이름 입력하는 `Input` 에 `ref={nameInput}` 코드 추가
+
+```jsx
+<input
+  name="name"
+  placeholder="이름"
+  onChange={onChange}
+  value={name}
+  ref={nameInput}
+/>
+```
+
+`onReset` 함수에 `nameInput.current.focus()` 추가
+
+```jsx
+const onReset = () => {
+  setInputs({
+    name: "",
+    nickname: "",
+  });
+  nameInput.current.focus();
+};
+```
+
+**결과**
+
+초기화 버튼 누른 후 포커싱이 이름으로 바뀜!
+
+![30 - 10 useRef로 특정 DOM 선택하기]({{site.baseurl}}/assets/img/FCFE/post40-1.png)
+
+`InputSample.js` 전체코드
+
+```jsx
+// InputSample.js
+
+import React, { useState, useRef } from "react";
+
+function InputSample() {
+  const [inputs, setInputs] = useState({
+    name: "",
+    nickname: "",
+  });
+  const nameInput = useRef();
+  const { name, nickname } = inputs;
+  const onChange = (e) => {
+    const { name, value } = e.target;
+
+    setInputs({
+      ...inputs, // 기존내용 복사
+      [name]: value,
+    });
+  };
+
+  const onReset = () => {
+    setInputs({
+      name: "",
+      nickname: "",
+    });
+    nameInput.current.focus();
+  };
+
+  return (
+    <div>
+      <input
+        name="name"
+        placeholder="이름"
+        onChange={onChange}
+        value={name}
+        ref={nameInput}
+      />
+      <input
+        name="nickname"
+        placeholder="닉네임"
+        onChange={onChange}
+        value={nickname}
+      />
+      <button onClick={onReset}>초기화</button>
+      <div>
+        <b>값: </b>
+        {name} ({nickname})
+      </div>
+    </div>
+  );
+}
+
+export default InputSample;
+```
+
+![30 - 10 useRef로 특정 DOM 선택하기]({{site.baseurl}}/assets/img/FCFE/post40-2.png)
+
+---
+
+<br>
+
+#### 40회차 인증샷
+
+![40회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post40.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

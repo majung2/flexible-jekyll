@@ -1,0 +1,242 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 41회차 미션"
+date: 2020-11-28 23:26:10 +0300
+description: # Add post description (optional)
+img: FCFE/post41.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 10 spread와 rest - 함수 인자에서의 spread](#10-spread와-rest---함수-인자에서의-spread)
+- [30 - 11 배열 렌더링하기](#11-배열-렌더링하기)
+
+---
+
+# 10 spread와 rest - 함수 인자에서의 spread
+
+## 파라미터 vs 인자
+
+```jsx
+function subtract(x, y) {
+  // x, y가 파라미터
+  return x - y;
+}
+
+const result = subtract(1, 2); // 1, 2가 인자
+```
+
+아래와 같은 함수가 있다고 해보자!
+
+```jsx
+const numbers = [1, 2];
+const result = subtract(numbers[0], numbers[1]);
+console.log(result);
+```
+
+이와 동일한 것이
+
+```jsx
+const numbers = [1, 2];
+const result = subtract(...numbers);
+console.log(result);
+```
+
+→ 배열의 원소를 모두 인자로 넣어 줄 수 있다!
+
+## [퀴즈](https://learnjs.vlpt.us/useful/07-spread-and-rest.html#%ED%80%B4%EC%A6%88)
+
+나의 답
+
+```jsx
+function max(...numbers) {
+  return numbers.reduce((maxNum, cur) => {
+    return maxNum > cur ? maxNum : cur;
+  }, 0);
+}
+
+const result = max(1, 2, 3, 4, 10, 5, 6, 7);
+console.log(result);
+
+export default max;
+```
+
+정답
+
+```jsx
+function max(...numbers) {
+  return numbers.reduce(
+    // acc 이 current 보다 크면 결과값을 current 로 하고
+    // 그렇지 않으면 acc 가 결과값
+    (acc, current) => (current > acc ? current : acc),
+    numbers[0]
+  );
+}
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 11 배열 렌더링하기
+
+## 비효율적인 방법으로 구현하기
+
+`src` 에 `UserList.js` 컴포넌트 생성하기!
+
+```jsx
+// UserList.js
+import React from "react";
+
+function UserList() {
+  const users = [
+    {
+      id: 1,
+      username: "majunge",
+      email: "majunge@gmail.com",
+    },
+    {
+      id: 2,
+      username: "lalala",
+      email: "lalala@gmail.com",
+    },
+    {
+      id: 3,
+      username: "SR",
+      email: "SR@naver.com",
+    },
+  ];
+  return (
+    <div>
+      <div>
+        <b>{users[0].username}</b>
+        <span>({users[0].email})</span>
+      </div>
+      <div>
+        <b>{users[1].username}</b>
+        <span>({users[1].email})</span>
+      </div>
+      <div>
+        <b>{users[2].username}</b>
+        <span>({users[2].email})</span>
+      </div>
+    </div>
+  );
+}
+
+export default UserList;
+```
+
+`App.js` 에서 렌더링~
+
+```jsx
+// App.js
+import React from "react";
+import "./App.css";
+import UserList from "./UserList";
+
+function App() {
+  return <UserList />;
+}
+
+export default App;
+```
+
+![30 - 11 배열 렌더링하기]({{site.baseurl}}/assets/img/FCFE/post41-1.png)
+
+**하지만!** 똑같은 코드가 반복된다!
+
+`UserList.js` 에 `User` 라는 컴포넌트 생성 후 반복되는 코드를 넣어준다.
+
+```jsx
+// UserList.js
+function User({ user }) {
+  return (
+    <div>
+      <b>{user.username}</b>
+      <span>({user.email})</span>
+    </div>
+  );
+}
+```
+
+그리고 `UserList` 컴포넌트 `return` 값 변경하기!
+
+```jsx
+// UserList.js
+function UserList() {
+
+	...
+
+  return (
+    <div>
+      <User user={users[0]} />
+      <User user={users[1]} />
+      <User user={users[2]} />
+    </div>
+  );
+}
+```
+
+배열이 고정적이라면 위와 같이 해도 문제가 없다. 하지만 배열이 바뀌면 애매!
+
+⇒ JS 배열 내장함수 `map` 이용!!
+
+```jsx
+return (
+  <div>
+    {users.map((user) => (
+      <User user={user} />
+    ))}
+  </div>
+);
+```
+
+콘솔을 보면 아래와 같은 에러를 확인할 수 있다.
+
+![30 - 11 배열 렌더링하기]({{site.baseurl}}/assets/img/FCFE/post41-2.png)
+
+→ 각 원소의 고유값을 `key` 로 설정해야함!
+
+이 경우는 `id` 를 사용할 수 있다.
+
+```jsx
+<div>
+  {users.map((user) => (
+    <User user={user} key={user.id} />
+  ))}
+</div>
+```
+
+고유값이 없을 경우 `map` 에서 사용하는 `index` 를 사용할 수 있음
+
+→ 경고만 사라질 뿐 성능적으로 좋아지진 않음...
+
+```jsx
+<div>
+  {users.map((user, index) => (
+    <User user={user} key={index} />
+  ))}
+</div>
+```
+
+⇒ 왠만하면 피해주자!
+
+### key 가 없다면?
+
+배열의 내용이 업데이트 될 때 굉 장 히 비효율적으로 업데이트 됨!
+
+---
+
+<br>
+
+#### 41회차 인증샷
+
+![41회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post41.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

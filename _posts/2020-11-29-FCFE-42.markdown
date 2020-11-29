@@ -1,0 +1,211 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 42회차 미션"
+date: 2020-11-29 11:03:27 +0300
+description: # Add post description (optional)
+img: FCFE/post42.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 11 scope의 이해 - scope 이해하기](#11-scope의-이해---scope-이해하기)
+- [30 - 12 useRef로 컴포넌트 안의 변수 만들기](#12-useRef로-컴포넌트-안의-변수-만들기)
+
+---
+
+# 11 scope의 이해 - scope 이해하기
+
+## Scope
+
+변수/함수의 유효범위
+
+- Global
+- Function
+- Block
+
+### global scope vs function scope
+
+```jsx
+const value = "hello!"; // global scope
+
+function myFunction() {
+  console.log("myFunction: ");
+  console.log(value); // hello!
+}
+
+function otherFunction() {
+  console.log("otherFunction: ");
+  const value = "bye!"; // function scope
+  console.log(value); // bye!
+}
+
+myFunction();
+otherFunction();
+
+console.log("global scope: ");
+console.log(value); // hello!
+```
+
+### function scope
+
+```jsx
+const value = "hello!";
+
+function myFunction() {
+  const value = "bye!";
+  const anotherValue = "world";
+  function functionInside() {
+    console.log("functionInside: ");
+    console.log(value); // bye!
+    console.log(anotherValue); // world
+  }
+  functionInside();
+}
+
+myFunction();
+console.log("global scope:");
+console.log(value); // hello!
+console.log(anotherValue); // ERROR! anotherValue is not defined
+```
+
+![27 - 11 scope의 이해 - scope 이해하기]({{site.baseurl}}/assets/img/FCFE/post42-1.png)
+
+### block scope
+
+`const` , `let`는 block scope
+
+```jsx
+const value = "hello!";
+
+function myFunction() {
+  const value = "bye!";
+  if (true) {
+    const value = "world";
+    console.log("block scope:");
+    console.log(value); // world
+  }
+  console.log("function scope:");
+  console.log(value); // bye!
+}
+
+myFunction();
+console.log("global scope:");
+console.log(value); // hello!
+```
+
+`var` 는 function scope 이므로 `{}` 에 영향을 안 받음
+
+```jsx
+var value = "hello!";
+
+function myFunction() {
+  var value = "bye!";
+  if (true) {
+    var value = "world";
+    console.log("block scope:");
+    console.log(value); // world
+  }
+  console.log("function scope:");
+  console.log(value); // world
+}
+
+myFunction();
+console.log("global scope:");
+console.log(value); // hello!
+```
+
+![27 - 11 scope의 이해 - scope 이해하기]({{site.baseurl}}/assets/img/FCFE/post42-2.png)
+
+![27 - 11 scope의 이해 - scope 이해하기]({{site.baseurl}}/assets/img/FCFE/post42-3.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 12 useRef로 컴포넌트 안의 변수 만들기
+
+## useRef
+
+컴포넌트가 리 렌더링 될 때마다 유지되는 값을 기억할 때 사용할 수 있다.
+
+⇒ 값이 바뀌어도 컴포넌트가 리 렌더링 되지 않는다!
+
+`UserList` 에서 users 배열을 `props` 로 받게 바꾼다.
+
+```jsx
+// UserList.js
+function UserList({ users }) { // 배열 삭제
+  return (
+    <div>
+      {users.map((user, index) => (
+        <User user={user} key={index} />
+      ))}
+    </div>
+  );
+```
+
+`App.js` 에 배열 넣기
+
+```jsx
+// App.js
+function App() {
+  const users = [
+    {
+      id: 1,
+      username: "majunge",
+      email: "majunge@gmail.com",
+    },
+    {
+      id: 2,
+      username: "lalala",
+      email: "lalala@gmail.com",
+    },
+    {
+      id: 3,
+      username: "SR",
+      email: "SR@naver.com",
+    },
+  ];
+  return <UserList users={users} />; // users 전달!
+}
+```
+
+## `useRef` 를 사용하기
+
+`useRef` 를 import 한다.
+
+```jsx
+// App.js
+import React, { useRef } from "react";
+```
+
+`App` 함수에 아래 코드 추가
+
+```jsx
+// App.js
+const nextId = useRef(4);
+
+const onCreate = () => {
+  console.log(nextId.current);
+  nextId.current += 1;
+};
+```
+
+- 특정 DOM을 선택할 때도 사용
+- 리렌더링 되어도 기억할 값이 있을 때 사용
+
+값이 바뀐다고 컴포넌트가 리 렌더링 되지 않음을 기억!
+
+---
+
+<br>
+
+#### 42회차 인증샷
+
+![42회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post42.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

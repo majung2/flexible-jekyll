@@ -117,7 +117,7 @@ console.log(value); // hello!
 
 ![27 - 11 scope의 이해 - scope 이해하기]({{site.baseurl}}/assets/img/FCFE/post42-2.png)
 
-![27 - 11 scope의 이해 - scope 이해하기]({{site.baseurl}}/assets/img/FCFE/post42-3.png)
+![27 - 11 scope의 이해 - scope 이해하기]({{site.baseurl}}/assets/img/FCFE/post42-32.png)
 <br>
 <br>
 <br>

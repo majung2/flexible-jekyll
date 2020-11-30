@@ -1,0 +1,248 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 43회차 미션"
+date: 2020-11-30 13:08:35 +0300
+description: # Add post description (optional)
+img: FCFE/post43.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [27 - 12 scope의 이해 - hoisting](#12-scope의-이해---hoisting)
+- [30 - 13 배열에 항목 추가하기](#13-배열에-항목-추가하기)
+
+---
+
+# 12 scope의 이해 - hoisting
+
+## Hoisting
+
+아직 선언되지 않은 함수/변수를 끌어올려서 사용할 수 있는 자바스크립트의 작동방식
+
+호이스팅은 가능한 피하는 것이 좋음! ⇒ 헷갈릴 수 있어 유지보수 어려움!
+
+### 함수
+
+함수 선언이 아래에 있어도 작동함!
+
+```jsx
+myFunction();
+
+function myFunction() {
+  console.log("hello world");
+}
+```
+
+### 변수
+
+```jsx
+console.log(number); // undefined
+var number = 2;
+```
+
+`var` 로 변수를 선언한 경우 선언부가 위로 올라감!
+
+\*`const` 나 `let` 은 호이스팅이 일어나지 않음
+
+```jsx
+function fn() {
+  console.log(a);
+  let a = 2;
+}
+
+fn();
+```
+
+![27 - 12 scope의 이해 - hoisting]({{site.baseurl}}/assets/img/FCFE/post43-1.png)
+
+- 참고 - 코드샌드박스
+
+  코드샌드박스에서는 바벨로 인해 `const` 나 `let` 도 호이스팅이 일어남
+
+  → 설정 > .babelrc > 내용 삭제!
+
+  ![27 - 12 scope의 이해 - hoisting]({{site.baseurl}}/assets/img/FCFE/post43-2.png)
+
+## 호이스팅 방지
+
+- 변수는 `const` 나 `let` 사용
+- 함수는 아래와 같이 작성할 수 있음
+
+      ```jsx
+      const myFunction = function myFunction() {
+      	console.log('hello world');
+      };
+      myFunction();
+      ```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 13 배열에 항목 추가하기
+
+`src` 에 `CreateUser` 컴포넌트를 생성한다.
+
+```jsx
+// CreateUser.js
+import React from "react";
+
+function CreateUser({ username, email, onChange, onCreate }) {
+  return (
+    <div>
+      <input
+        name="username"
+        placeholder="계정명"
+        onChange={onChange}
+        value={username}
+      />
+      <input
+        name="email"
+        placeholder="이메일"
+        onChange={onChange}
+        value={email}
+      />
+      <button onClick={onCreate}>등록</button>
+    </div>
+  );
+}
+
+export default CreateUser;
+```
+
+`App.js` 의 `return` 을 수정한다.
+
+```jsx
+// App.js
+import CreateUser from "./CreateUser";
+...
+return (
+    <>
+      <CreateUser />
+      <UserList users={users} />
+    </>
+ );
+```
+
+`useState` 를 추가하고 이를 입력받을 수 있는 변수 설정한다!
+
+```jsx
+// App.js
+import React, { useRef, useState } from "react";
+...
+function App() {
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: "",
+  });
+  const { username, email } = inputs;
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value, // 입력값의 종류에 따라(username/email) 해당 값이 변경되게 함
+    });
+  };
+...
+return (
+    <>
+      <CreateUser
+        username={username}
+        email={email}
+        onChange={onChange}
+        onCreate={onCreate}
+      />
+      <UserList users={users} />
+    </>
+  );
+```
+
+`onCreate` 함수를 수정해 '등록' 버튼을 누르면 초기화 될 수 있는 코드 작성
+
+```jsx
+// App.js
+const onCreate = () => {
+  setInputs({
+    username: "",
+    email: "",
+  });
+  console.log(nextId.current);
+  nextId.current += 1;
+};
+```
+
+`users` 배열을 컴포넌트의 상태로서 관리할 수 있게 바꾸기! ⇒ `useState` 로 감싸기
+
+```jsx
+const [users, setUsers] = useState([
+  {
+    id: 1,
+    username: "majunge",
+    email: "majunge@gmail.com",
+  },
+  {
+    id: 2,
+    username: "lalala",
+    email: "lalala@gmail.com",
+  },
+  {
+    id: 3,
+    username: "SR",
+    email: "SR@naver.com",
+  },
+]);
+```
+
+배열의 값을 변경할 때...
+
+⇒ push slice sort 등을 사용하지 않아야 함 (사용시 복사 후 사용!)
+
+배열의 불변성을 유지하며 값을 수정하는 법
+
+### `spread` 연산자 사용!
+
+`onCreate` 함수에 추가한다!
+
+```jsx
+const user = {
+      id: nextId.current,
+      username,
+      email,
+    };
+    setUsers([...users, user]);
+    setInputs({
+      username: "",
+      email: "",
+    });
+...
+```
+
+등록을 누르면 아래에 새로 추가된다!
+
+![30 - 13 배열에 항목 추가하기]({{site.baseurl}}/assets/img/FCFE/post43-3.png)
+
+### `concat` 함수를 사용하는 법
+
+```jsx
+const user = {
+  id: nextId.current,
+  username,
+  email,
+};
+setUsers(users.concat(user));
+```
+
+---
+
+<br>
+
+#### 43회차 인증샷
+
+![43회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post43.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

@@ -1,0 +1,40 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 44회차 미션"
+date: 2020-12-01 15:40:50 +0300
+description: # Add post description (optional)
+img: FCFE/post44.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [28 - 01강](#)
+- [30 - 02강](#)
+
+---
+
+# 01강
+
+![27 - 01강]({{site.baseurl}}/assets/img/FCFE/post44-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 02강
+
+![30 - 02강]({{site.baseurl}}/assets/img/FCFE/post44-2.png)
+
+---
+
+<br>
+
+#### 44회차 인증샷
+
+![44회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post44.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

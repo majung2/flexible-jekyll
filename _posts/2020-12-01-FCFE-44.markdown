@@ -9,23 +9,196 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 
 강의
 
-- [28 - 01강](#)
-- [30 - 02강](#)
+- [28 - 01 비동기 처리의 이해](#01-비동기-처리의-이해)
+- [30 - 14 배열에 항목 제거하기](#14-배열에-항목-제거하기)
 
 ---
 
-# 01강
+# 01 비동기 처리의 이해
 
-![27 - 01강]({{site.baseurl}}/assets/img/FCFE/post44-1.png)
+## 동기와 비동기
+
+![27 - 01 비동기 처리의 이해]({{site.baseurl}}/assets/img/FCFE/post44-1.png)
+
+먼저!
+
+설정 > sandbox.config.json > Infinite Loop Protection 비활성화
+
+작업시간이 긴 함수를 만들어보자
+
+```jsx
+function work() {
+  const start = Date.now();
+  for (let i = 0; i < 1000000000; i++) {}
+  const end = Date.now();
+  console.log(end - start + "ms");
+}
+
+work(); // 868ms
+console.log("다음작업");
+```
+
+`setTimeout` 을 설정해보자
+
+: 0ms 이후에 작업 실행 (시스템적으로 사실은 4ms)
+
+```jsx
+function work() {
+  setTimeout(() => {
+    const start = Date.now();
+    for (let i = 0; i < 1000000000; i++) {}
+    const end = Date.now();
+    console.log(end - start + "ms");
+  }, 0);
+}
+
+console.log("작업시작");
+work();
+console.log("다음작업");
+```
+
+**결과**
+
+작업시작
+
+다음작업
+
+862ms
+
+만약, `work` 함수가 끝나고 나서 수행되길 원한다면? ⇒ `callback` 함수를 파라미터로 전달
+
+```jsx
+function work(callback) {
+  setTimeout(() => {
+    const start = Date.now();
+    for (let i = 0; i < 1000000000; i++) {}
+    const end = Date.now();
+    console.log(end - start + "ms");
+    callback(end - start);
+  }, 0);
+}
+
+console.log("작업시작");
+work((ms) => {
+  console.log("작업이 끝났어요!");
+  console.log(ms + "ms 걸렸다고 해요.");
+});
+console.log("다음작업");
+```
+
+![27 - 01 비동기 처리의 이해]({{site.baseurl}}/assets/img/FCFE/post44-2.png)
+
+비동기적으로 처리하는 예
+
+Ajax web API 요청, 파일 읽기, 암호화/복호화, 작업 예약
+
 <br>
 <br>
 <br>
 <br>
 <br>
 
-# 02강
+# 14 배열에 항목 제거하기
 
-![30 - 02강]({{site.baseurl}}/assets/img/FCFE/post44-2.png)
+`UserList` 컴포넌트의 `UserList` 함수에 `onRemove` 라는 props를 추가하고, 이를 `User` 컴포넌트에 그대로 전달한다.
+
+```jsx
+// UserList.js
+function UserList({ users, onRemove }) {
+  return (
+    <div>
+      {users.map((user, index) => (
+        <User user={user} key={index} onRemove={onRemove} />
+      ))}
+    </div>
+  );
+}
+```
+
+`User` 컴포넌트에서 받아오고 삭제버튼을 추가한다.
+
+```jsx
+// UserList.js
+function User({ user, onRemove }) {
+  return (
+    <div>
+      <b>{user.username}</b>
+      <span>({user.email})</span>
+      <button>삭제</button>
+    </div>
+  );
+}
+```
+
+![30 - 14 배열에 항목 제거하기]({{site.baseurl}}/assets/img/FCFE/post44-3.png)
+
+삭제 버튼이 눌렸을 때 `onRemove` 를 호출하는데, `user` 의 `id` 값을 넣어 호출한다.
+
+`onClick` 에 함수를 넣어준다.
+
+```jsx
+// UserList.js
+function User({ user, onRemove }) {
+  return (
+    <div>
+      <b>{user.username}</b>
+      <span>({user.email})</span>
+      <button onClick={() => onRemove(id)}>삭제</button>
+    </div>
+  );
+}
+```
+
+만약 `user.` 해서 사용하는 것이 싫다면 미리 할당해서 사용가능!
+
+```jsx
+function User({ user, onRemove }) {
+  const { username, email, id } = user;
+  return (
+    <div>
+      <b>{username}</b>
+      <span>({email})</span>
+      <button onClick={() => onRemove(id)}>삭제</button>
+    </div>
+  );
+}
+```
+
+### `onRemove` 함수
+
+`filter` 함수로 파라미터로 넘어온 `id` 값을 가진 `user` 를 제외한 새로운 배열을 넘겨준다.
+
+```jsx
+// App.js
+const onRemove = (id) => {
+  setUsers(users.filter((user) => user.id != id));
+};
+```
+
+그리고 `UserList` 에 넘겨준다.
+
+```jsx
+// App.js
+...
+<UserList users={users} onRemove={onRemove} />
+```
+
+만약!
+
+```jsx
+// UserList.js
+<button onClick={() => onRemove(id)}>삭제</button>
+```
+
+이 부분을 함수를 새로 만들지 않고
+
+```jsx
+<button onClick={onRemove(id)}>삭제</button>
+```
+
+이렇게 작성한다면 함수가 렌더링 되는 순간 실행되어 모두 사라지게 됨.
+
+함수를 바로 호출하는 것이 아니라 함수를 호출하는 함수를 넣어야 한다!
 
 ---
 

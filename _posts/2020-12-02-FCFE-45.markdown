@@ -1,0 +1,324 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 45회차 미션"
+date: 2020-12-02 10:22:44 +0300
+description: # Add post description (optional)
+img: FCFE/post45.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [28 - 02 Promise](#02-Promise)
+- [30 - 15 배열에 항목 수정하기](#15-배열에-항목-수정하기)
+
+---
+
+# 02 Promise
+
+콜백으로 비동기 작업시 많아지면 난잡해짐!
+
+```jsx
+function increseAndPrint(n, callback) {
+  setTimeout(() => {
+    const increased = n + 1;
+    console.log(increased);
+    if (callback) {
+      callback(increased);
+    }
+  }, 100);
+}
+
+increseAndPrint(0, (n) => {
+  increseAndPrint(n, (n) => {
+    increseAndPrint(n, (n) => {
+      increseAndPrint(n, (n) => {
+        increseAndPrint(n, (n) => {
+          console.log("작업 끝!");
+        });
+      });
+    });
+  });
+});
+```
+
+**결과**
+
+1
+
+(1초후)2
+
+(2초후)3
+
+(3초후)4
+
+(4초후)5
+
+작업끝
+
+## Promise
+
+```jsx
+const myPromise = new Promise((resolve, reject) => {
+  // 구현...
+});
+```
+
+`resolve` 성공할 때 `reject` 실패할 때
+
+1초 뒤에 성공하는 예제
+
+`then` 으로 다음 할 작업 설정
+
+```jsx
+const myPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("result");
+  }, 1000);
+});
+
+myPromise.then((result) => {
+  console.log(result);
+});
+```
+
+`catch` 로 에러 처리
+
+```jsx
+const myPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject(new Error());
+  }, 1000);
+});
+
+myPromise
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+```
+
+다음과 같은 함수를 작성해보자
+
+```jsx
+function increaseAndPrint(n) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const value = n + 1;
+      if (value === 5) {
+        const error = new Error();
+        error.name = "ValueIsFiveError";
+        reject(error);
+        return;
+      }
+      console.log(value);
+      resolve(value);
+    }, 1000);
+  });
+}
+
+increaseAndPrint(0).then((n) => {
+  console.log("result", n);
+});
+```
+
+```jsx
+function increaseAndPrint(n) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const value = n + 1;
+      if (value === 5) {
+        const error = new Error();
+        error.name = "ValueIsFiveError";
+        reject(error);
+        return;
+      }
+      console.log(value);
+      resolve(value);
+    }, 1000);
+  });
+}
+
+increaseAndPrint(0)
+  .then(increaseAndPrint)
+  .then(increaseAndPrint)
+  .then(increaseAndPrint)
+  .then(increaseAndPrint)
+  .catch((e) => {
+    console.log(e);
+  });
+```
+
+**결과**
+
+1
+
+2
+
+3
+
+4
+
+ValueIsFiveError
+
+장점
+
+- 비동기 작업 갯수가 많아져도 깊이가 깊어지지 않음
+
+단점
+
+- 어디에서 에러가 발생했는지 알기 어려움
+- 특정 값을 공유해가며 작업하기 어려움
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 15 배열에 항목 수정하기
+
+![30 - 15 배열에 항목 수정하기]({{site.baseurl}}/assets/img/FCFE/post45-1.png)
+
+계정을 누르면 초록색으로 바뀌고 다시 누르면 검정색으로 바뀌는 기능을 추가해보자!
+
+`users` 배열에 `active` 값을 추가한다.
+
+```jsx
+// App.js
+...
+const [users, setUsers] = useState([
+    {
+      id: 1,
+      username: "majunge",
+      email: "majunge@gmail.com",
+      active: true,
+    },
+    {
+      id: 2,
+      username: "lalala",
+      email: "lalala@gmail.com",
+      active: false,
+    },
+    {
+      id: 3,
+      username: "SR",
+      email: "SR@naver.com",
+      active: false,
+    },
+  ]);
+...
+```
+
+`UserList` 에서 `active` 값을 받아와서 사용
+
+`style` 을 `active` 값에 따라 설정한다.
+
+```jsx
+function User({ user, onRemove }) {
+  const { username, email, id, active } = user;
+  return (
+    <div>
+      <b
+        style={{
+          color: active ? "green" : "black",
+          cursor: "pointer",
+        }}
+      >
+        {username}
+      </b>
+      <span>({email})</span>
+      <button onClick={() => onRemove(id)}>삭제</button>
+    </div>
+  );
+}
+```
+
+![30 - 15 배열에 항목 수정하기]({{site.baseurl}}/assets/img/FCFE/post45-2.png)
+
+공백 `&nbsp`
+
+## onToggle
+
+불변성을 지키면서 배열의 특정 아이템만 업데이트 할 때도 `map` 을 사용
+
+```jsx
+// App.js
+const onToggle = (id) => {
+  setUsers(
+    users.map((user) =>
+      user.id === id ? { ...user, active: !user.active } : user
+    )
+  );
+};
+```
+
+⇒ `id` 값이 일치하면 `active` 값 반전, 아니면 `user` 그대로 설정
+
+`UserList` 에 넘겨주기
+
+```jsx
+// App.js
+...
+<UserList users={users} onRemove={onRemove} onToggle={onToggle} />
+...
+```
+
+`UserList` 에서 받아서 설정하기
+
+```jsx
+// UserList.js
+function User({ user, onRemove, onToggle }) {
+  const { username, email, id, active } = user;
+  return (
+    <div>
+      <b
+        style={{
+          color: active ? "green" : "black",
+          cursor: "pointer",
+        }}
+        onClick={() => onToggle(id)}
+      >
+        {username}
+      </b>
+      &nbsp;
+      <span>({email})</span>
+      <button onClick={() => onRemove(id)}>삭제</button>
+    </div>
+  );
+}
+
+function UserList({ users, onRemove, onToggle }) {
+  return (
+    <div>
+      {users.map((user) => (
+        <User user={user} onRemove={onRemove} onToggle={onToggle} />
+      ))}
+    </div>
+  );
+}
+```
+
+![30 - 15 배열에 항목 수정하기]({{site.baseurl}}/assets/img/FCFE/post45-3.png)
+
+## 정리
+
+추가 `spread` or `concat`
+
+제거 `filter`
+
+수정 `map`
+
+---
+
+<br>
+
+#### 45회차 인증샷
+
+![45회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post45.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

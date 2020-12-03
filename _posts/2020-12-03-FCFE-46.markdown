@@ -1,0 +1,207 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 46회차 미션"
+date: 2020-12-03 21:47:09 +0300
+description: # Add post description (optional)
+img: FCFE/post46.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [28 - 03 async, await](#03-async,-await)
+- [30 - 16 useEffect를 사용하여 마운트 언마운트 업데이트 시 할 작업 설정하기](#16-useEffect를-사용하여-마운트-언마운트-업데이트-시-할-작업-설정하기)
+
+---
+
+# 03 async, await
+
+ES8 등장
+
+```jsx
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function process() {
+  console.log("안녕하세요");
+  await sleep(1000);
+  console.log("반갑습니다.");
+}
+
+process();
+```
+
+**결과**
+
+안녕하세요
+
+(1초후) 반갑습니다.
+
+`async` 함수는 `promise` 를 반환 함!
+
+```jsx
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function process() {
+  console.log("안녕하세요");
+  await sleep(1000);
+  console.log("반갑습니다.");
+  return true;
+}
+
+process().then((value) => {
+  console.log(value); // true
+});
+```
+
+에러를 잡을 땐 `try` `catch` 를 사용하면 된다.
+
+```jsx
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function makeError() {
+  await sleep(1000);
+  const error = new Error();
+  throw error;
+}
+
+async function process() {
+  try {
+    await makeError();
+  } catch (e) {
+    console.log(e); // Error
+  }
+}
+
+process();
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 16 useEffect를 사용하여 마운트 언마운트 업데이트 시 할 작업 설정하기
+
+처음 화면에 나타나게 될 때, 사라질 때 특정 작업 가능
+
+업데이트로 인해 상태 바뀔 때 등...
+
+`UserList` 에 `useEffect` 를 추가한다.
+
+```jsx
+// UserList.js
+import React, { userEffect } from "react";
+```
+
+## 마운트 & 언마운트
+
+마운트: 나타난다
+
+`User` 컴포넌트에 아래 코드를 추가한다.
+
+`deps` → 의존되는 값들을 배열에 넣어준다.
+
+→ 아래 처럼 비어있을 경우 화면에 처음 나타날때만 실행
+
+```jsx
+// UserList.js
+...
+useEffect(() => {
+    console.log("컴포넌트가 화면에 나타남");
+  }, []);
+```
+
+사용예
+
+- props → state
+- REST API
+- D3 Video.js
+- setInterval, setTimeout
+
+### 클리너 함수
+
+컴포넌트가 사라질 때 특정 작업하기 → 함수를 반환하면 된다.
+
+```jsx
+useEffect(() => {
+  console.log("컴포넌트가 화면에 나타남");
+  return () => {
+    console.log("컴포넌트가 화면에서 사라짐");
+  };
+}, []);
+```
+
+사용예
+
+- clearInterval, clearTimeout
+- 라이브러리 인스턴스 제거
+
+**결과**
+
+![30 - 16 useEffect를 사용하여 마운트 언마운트 업데이트 시 할 작업 설정하기]({{site.baseurl}}/assets/img/FCFE/post46-1.png)
+
+## deps 배열이 있는 경우
+
+⇒ useEffect 에서 사용하는 값이 있으면 무조건 넣어야 함! (함수포함)
+
+```jsx
+useEffect(() => {
+  console.log(user);
+}, [user]);
+```
+
+→ `user` 가 변경이 될 때 작동
+
+클리너를 설정해보자
+
+```jsx
+useEffect(() => {
+  console.log("user 값이 설정됨");
+  console.log(user);
+  return () => {
+    console.log("user 값이 바뀌기 전");
+    console.log(user);
+  };
+}, [user]); // useEffect 에서 사용하는 값이 있으면 무조건 넣어야 함!
+```
+
+SR이라는 값을 눌렀을 경우 결과
+
+![30 - 16 useEffect를 사용하여 마운트 언마운트 업데이트 시 할 작업 설정하기]({{site.baseurl}}/assets/img/FCFE/post46-2.png)
+
+클리너는 해당 값이 바뀌기 직전에 호출!
+
+만약, `useEffect` 의 `deps` 에 추가하지 않은 경우
+
+```jsx
+useEffect(() => {
+  console.log("user 값이 설정됨");
+});
+```
+
+→ `user`
+
+### 정리
+
+- `useEffect()` 의 첫번째 파라미터는 함수, 두번째 파라미터는 `deps` 라는 배열 등록!
+- `return` 은 변경되기 직전에 실행
+- `useEffect` 내부에서 사용하는 값은 `deps` 배열에 넣어야 함!
+
+---
+
+<br>
+
+#### 46회차 인증샷
+
+![46회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post46.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

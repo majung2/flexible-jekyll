@@ -1,0 +1,175 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 47회차 미션"
+date: 2020-12-04 19:50:53 +0300
+description: # Add post description (optional)
+img: FCFE/post47.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [28 - 04 Promise.all, Promise.race](#04-Promise.all,-Promise.race)
+- [30 - 17 useMemo를 사용하여 연산한 값 재사용하기](#17-useMemo를-사용하여-연산한-값-재사용하기)
+
+---
+
+# 04 Promise.all, Promise.race
+
+여러 비동기 함수 처리하기!
+
+```jsx
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+const getDog = async () => {
+  await sleep(1000);
+  return "멍멍이";
+};
+
+const getRabbit = async () => {
+  await sleep(5000);
+  return "토끼";
+};
+
+const getTurtle = async () => {
+  await sleep(3000);
+  return "거북이";
+};
+
+async function process() {
+  const dog = await getDog();
+  console.log(dog);
+  const rabbit = await getRabbit();
+  console.log(rabbit);
+  const turtle = await getTurtle();
+  console.log(turtle);
+}
+
+process();
+```
+
+**결과**
+
+(1초후)멍멍이
+
+(5초후)토끼
+
+(3초후)거북이
+
+화살표 함수는 `()` 앞에 `async` 를 붙여서 비동기 함수로 만들 수 있다!
+
+→ 동시에 처리해보자
+
+### Promise.all([])
+
+```jsx
+async function process() {
+  const start = Date.now();
+  const results = await Promise.all([getDog(), getRabbit(), getTurtle()]);
+  console.log(results); // (3) ["멍멍이", "토끼", "거북이"]
+  console.log(Date.now() - start); // 5155
+}
+```
+
+→ 배열 내 모든 함수가 실행된 후에 결과 출력
+
+→ 가장 오래걸리는 토끼 기준 약 5초 걸림
+
+결과를 각각의 값에 넣을 경우
+
+```jsx
+async function process() {
+  const [dog, rabbit, turtle] = await Promise.all([
+    getDog(),
+    getRabbit(),
+    getTurtle(),
+  ]);
+  console.log(dog);
+  console.log(rabbit);
+  console.log(turtle);
+}
+```
+
+**주의** promise 배열 중 하나라도 에러이면 에러!
+
+### Promise.race
+
+가장 먼저되는 것 수행
+
+```jsx
+async function process() {
+  const first = await Promise.race([getDog(), getRabbit(), getTurtle()]);
+  console.log(first); // 멍멍이 -> 가장 빠른 것 출력
+}
+```
+
+→ 가장 빨리 된 것이 에러라면 에러 (다른 것은 에러여도 상관 무)
+
+![27 - 04 Promise.all, Promise.race]({{site.baseurl}}/assets/img/FCFE/post47-1.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 17 useMemo를 사용하여 연산한 값 재사용하기
+
+active 된 값을 세는 함수를 만들어보자
+
+`App.js` 상단에 `countActive` 함수를 만든다.
+
+```jsx
+// App.js
+function countActiveUsers(users) {
+  console.log("활성사용자 세는중...");
+  return users.filter((user) => user.active === true).length;
+}
+```
+
+`App` 함수에 아래 코드 추가한다.
+
+```jsx
+...
+const count = countActiveUsers(users);
+return (
+    <>
+			...
+      <div>활성 사용자 수 : {count}</div>
+    </>
+  );
+```
+
+![30 - 17 useMemo를 사용하여 연산한 값 재사용하기]({{site.baseurl}}/assets/img/FCFE/post47-14.png)
+
+→ 계정을 추가할 때도 리렌더링 해서 활성 사용자 수를 세고 있음! ⇒ `useMemo`
+
+## useMemo(함수, deps)
+
+⇒ 특정 값(`deps` 안의 값)이 바뀌었을 때만 리렌더링 하는 것
+
+```jsx
+// App.js
+import React, { useRef, useState, useMemo } from "react";
+```
+
+```jsx
+const count = useMemo(() => countActiveUsers(users), [users]);
+```
+
+→ `input` 이 바뀌어도 영향을 받지 않음
+
+![30 - 17 useMemo를 사용하여 연산한 값 재사용하기]({{site.baseurl}}/assets/img/FCFE/post47-2.png)
+
+---
+
+<br>
+
+#### 47회차 인증샷
+
+![47회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post47.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

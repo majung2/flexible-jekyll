@@ -1,0 +1,175 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 48회차 미션"
+date: 2020-12-05 23:33:23 +0300
+description: # Add post description (optional)
+img: FCFE/post48.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [29 - 01 카운터 만들기](#01-카운터-만들기)
+- [30 - 18 useCallback을 사용하여 함수 재사용하기](#18-useCallback을-사용하여-함수-재사용하기)
+
+---
+
+# 01 카운터 만들기
+
+`index.html` 파일을 아래와 같이 작성한다.
+
+```jsx
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Parcel Sandbox</title>
+		<meta charset="UTF-8" />
+	</head>
+
+	<body>
+		<h2 id="number">0</h2>
+		<div>
+			<button id="increase">+1</button>
+			<button id="decrease">-1</button>
+		</div>
+		<script src="src/index.js"></script>
+	</body>
+</html>
+```
+
+![29 - 01 카운터 만들기]({{site.baseurl}}/assets/img/FCFE/post48-1.png)
+
+각 DOM을 선택할 변수를 `index.js` 에 만든다.
+
+```jsx
+const number = document.getElementById("number");
+const increase = document.getElementById("increase");
+const decrease = document.getElementById("decrease");
+```
+
+`onclick` 이벤트를 등록한다.
+
+```jsx
+increase.onclick = () => {
+  const current = parseInt(number.innerText, 10);
+  number.innerText = current + 1;
+};
+decrease.onclick = () => {
+  const current = parseInt(number.innerText, 10);
+  number.innerText = current - 1;
+};
+```
+
+### parseInt(문자열, 진수)
+
+⇒ 문자열을 숫자로 변환하는 함수
+
+아래와 같이 `increase`, `decrease` 버튼을 선택해도 된다.
+
+```jsx
+const buttons = document.querySelectorAll("button");
+const [increase, decrease] = buttons;
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 18 useCallback을 사용하여 함수 재사용하기
+
+## useCallback(함수, [])
+
+함수를 위한 hook, 함수를 재 사용할 때 사용
+
+`[]` 에 함수가 참조하는 값들을 넣어준다.
+
+먼저, `App.js` 에 불러온다.
+
+```jsx
+// App.js
+import React, { useRef, useState, useMemo, useCallback } from "react";
+```
+
+기존의 함수들을 감싸준다.
+
+```jsx
+const onChange = useCallback(
+  (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  },
+  [inputs]
+);
+```
+
+```jsx
+const onCreate = useCallback(() => {
+  const user = {
+    id: nextId.current,
+    username,
+    email,
+  };
+  setUsers(users.concat(user));
+  setInputs({
+    username: "",
+    email: "",
+  });
+  console.log(nextId.current);
+  nextId.current += 1;
+}, [username, email, users]);
+```
+
+→ props 에 안 넣으면 최신 상태를 참조하지 않을 수 있음.
+
+```jsx
+const onRemove = useCallback(
+  (id) => {
+    setUsers(users.filter((user) => user.id !== id));
+  },
+  [users]
+);
+```
+
+```jsx
+const onToggle = useCallback(
+  (id) => {
+    setUsers(
+      users.map((user) =>
+        user.id === id ? { ...user, active: !user.active } : user
+      )
+    );
+  },
+  [users]
+);
+```
+
+## react devtools
+
+→ 크롬 확장 프로그램
+
+개발자도구에서 Components
+
+![30 - 18 useCallback을 사용하여 함수 재사용하기]({{site.baseurl}}/assets/img/FCFE/post48-2.png)
+
+톱니바퀴 → Highlight updates 선택
+
+![30 - 18 useCallback을 사용하여 함수 재사용하기]({{site.baseurl}}/assets/img/FCFE/post48-3.png)
+
+`input` 값이 변경될 때마다 전체 컴포넌트가 변경됨을 확인할 수 있다! ⇒ 최적화 필요
+
+---
+
+<br>
+
+#### 48회차 인증샷
+
+![48회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post48.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

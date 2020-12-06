@@ -1,0 +1,252 @@
+---
+layout: post
+title: "[패스트캠퍼스 수강 후기] 프론트엔드 인강 100% 환급 챌린지 49회차 미션"
+date: 2020-12-06 23:04:46 +0300
+description: # Add post description (optional)
+img: FCFE/post49.jpg
+tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
+---
+
+강의
+
+- [29 - 02 모달 만들기](#02-모달-만들기)
+- [30 - 19 React.memo를 사용한 컴포넌트 리렌더링 방지](#19-React.memo를-사용한-컴포넌트-리렌더링-방지)
+
+---
+
+# 02 모달 만들기
+
+CodeSandbox에서 바닐라 자바스크립트 파일 생성
+
+`index.js` 에서 아래 코드만 남긴다.
+
+```jsx
+// index.js
+import "./styles.css";
+```
+
+`index.html`
+
+```jsx
+// index.html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Parcel Sandbox</title>
+		<meta charset="UTF-8" />
+	</head>
+
+	<body>
+		<h1>안녕하세요!</h1>
+		<p>내용내용</p>
+		<button>모달 열기</button>
+		<script src="src/index.js"></script>
+	</body>
+</html>
+```
+
+![29 - 02 모달 만들기]({{site.baseurl}}/assets/img/FCFE/post49-1.png)
+
+`modal` 을 만든다!
+
+```html
+<div class="modal-wrapper">
+  <div class="modal">
+    <div class="modal-title">안녕하세요</div>
+    <p>모달 내용은 어쩌고 저쩌고</p>
+    <div class="close-wrapper">
+      <button>닫기</button>
+    </div>
+  </div>
+</div>
+```
+
+`style.css`
+
+```css
+body {
+  font-family: sans-serif;
+}
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: white;
+  padding: 24px 16px;
+  border-radius: 4px;
+  width: 320px;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.close-wrapper {
+  text-align: right;
+}
+```
+
+모달 열고 닫기를 해보자!
+
+`index.html` 에서 모달 `display` 속성 `none` 으로 하기!
+
+```html
+<div class="modal-wrapper" style="display: none;"></div>
+```
+
+`id` 값 넣기
+
+```html
+<button id="open">모달 열기</button>
+...
+<button id="close">닫기</button>
+```
+
+`index.js` 에서 `onclick` 이벤트 설정하기
+
+```jsx
+// index.js
+const open = document.getElementById("open");
+const close = document.getElementById("close");
+const modal = document.querySelector(".modal-wrapper");
+
+open.onclick = () => {
+  modal.style.display = "flex";
+};
+close.onclick = () => {
+  modal.style.display = "none";
+};
+```
+
+![29 - 02 모달 만들기]({{site.baseurl}}/assets/img/FCFE/post49-2.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+# 19 React.memo를 사용한 컴포넌트 리렌더링 방지
+
+컴19-React.memo를 사용한 컴포넌트 리렌더링-방지포넌트에서 리렌더링 성능 최적화 하기!
+
+`CreateUser` 컴포넌트를 연다. 컴포넌트 내보낼때 `React.memo`로 감싼다!
+
+```jsx
+// CreateUser.js
+export default React.memo(CreateUser);
+```
+
+`UserList` 에도 해준다.
+
+```jsx
+// UserList.js
+const User = React.memo(function User({ user, onRemove, onToggle }) {
+  const { username, email, id, active } = user;
+  useEffect(() => {});
+  return (
+    <div>
+      <b
+        style={{
+          color: active ? "green" : "black",
+          cursor: "pointer",
+        }}
+        onClick={() => onToggle(id)}
+      >
+        {username}
+      </b>
+      &nbsp;
+      <span>({email})</span>
+      <button onClick={() => onRemove(id)}>삭제</button>
+    </div>
+  );
+});
+...
+export default React.memo(UserList);
+```
+
+### 함수형 업데이트
+
+`onCreate`
+
+```jsx
+// App.js
+const onCreate = useCallback(() => {
+  const user = {
+    id: nextId.current,
+    username,
+    email,
+  };
+  setUsers((users) => users.concat(user));
+  setInputs({
+    username: "",
+    email: "",
+  });
+  console.log(nextId.current);
+  nextId.current += 1;
+}, [email, users]);
+```
+
+`onToggle`
+
+```jsx
+const onToggle = useCallback((id) => {
+  setUsers((users) =>
+    users.map((user) =>
+      user.id === id ? { ...user, active: !user.active } : user
+    )
+  );
+}, []);
+```
+
+`onRemove`
+
+```jsx
+const onRemove = useCallback((id) => {
+  setUsers((users) => users.filter((user) => user.id !== id));
+}, []);
+```
+
+### React.memo의 두 번째 파라미터
+
+```jsx
+// UserList.js
+...
+export default React.memo(
+  UserList,
+  (prevProps, nextProps) => prevProps.users === nextProps.users
+);
+```
+
+## 정리
+
+`useMemo` 연산된 값을 재사용
+
+`useCallback` 특정 함수 재사용
+
+`React.memo` 컴포넌트 렌더링 결과물 재사용
+
+⇒ 최적화가 필요할 때 구현할 것!
+
+![30 - 19 React.memo를 사용한 컴포넌트 리렌더링 방지]({19-React.memo를 사용한 컴포넌트 리렌더링-방지{site.baseurl}}/assets/img/FCFE/post49-2.png)
+
+---
+
+<br>
+
+#### 49회차 인증샷
+
+![49회차 인증샷]({{site.baseurl}}/assets/img/FCFE/post49.jpg)
+<br>  
+<br>
+
+올인원 패키지 : 프론트엔드 개발👉[https://bit.ly/3m0t8GM](https://bit.ly/3m0t8GM)

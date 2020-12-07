@@ -10,12 +10,13 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 강의
 
 - [29 - 03 마무리](#03-마무리)
-- [30 - 02강](#)
+- [30 - 20 useReducer 기초](#20-useReducer-기초)
 
 ---
 
 # 03 마무리
 
+JavaScript 기본 학습 이후 할 만한 것들...
 → React, Vue, Angular...
 → Node.js...
 <br>
@@ -24,9 +25,85 @@ tags: [패스트캠퍼스, FastCampus, Front-End, 인강, JavaScript]
 <br>
 <br>
 
-# 02강
+# 20 useReducer 기초
 
-![30 - 02강]({{site.baseurl}}/assets/img/FCFE/post50-2.png)
+상태를 업데이트 하는 방법!
+
+`action` 객체를 기반으로 업데이트 함.
+
+상태 업데이트 로직을 컴포넌트 밖으로 분리 가능
+
+`reducer` 상태를 업데이트 하는 함수
+
+### 형태
+
+![30 - 20 useReducer 기초]({{site.baseurl}}/assets/img/FCFE/post50-1.png)
+
+→ 현재상태와 액션객체를 파라미터로 받아와서 새로운 상태를 반환해야함.
+
+![30 - 20 useReducer 기초]({{site.baseurl}}/assets/img/FCFE/post50-2.png)
+
+→ 위에서 정의한 `reducer` 함수, 기본값(`0`)
+
+→ `number`: 현재상태 `dispatch` : 액션을 발생시킨다.
+
+`Counter` 컴포넌트를 연다.
+
+```jsx
+// Counter.js
+import React, { useReducer } from "react";
+```
+
+`reducer` 함수를 만든다.
+
+```jsx
+// Counter.js
+function reducer(state, action) {
+  switch (action.type) {
+    case "INCREASEMENT":
+      return state + 1;
+    case "DECREASEMENT":
+      return state - 1;
+    default:
+      throw new Error("Unhandled Action");
+  }
+}
+```
+
+`Counter` 함수에서 사용한다.
+
+```jsx
+// Counter.js
+function Counter() {
+  const [number, dispatch] = useReducer(reducer, 0);
+
+  const onIncrease = () => {
+    dispatch({
+      type: "INCREMENT",
+    });
+  };
+  const onDecrease = () => {
+    dispatch({
+      type: "DECREMENT",
+    });
+  };
+  return (
+    <div>
+      <h1>{number}</h1>
+      <button onClick={onIncrease}>+1</button>
+      <button onClick={onDecrease}>-1</button>
+    </div>
+  );
+}
+```
+
+`index.js` 에서 `App` 대신 `Counter` 를 렌더링 해 보자.
+
+![30 - 20 useReducer 기초]({{site.baseurl}}/assets/img/FCFE/post50-3.png)
+
+→ 잘 작동되면 다시 `App` 렌더링하도록 바꾸기
+
+상태의 업데이트 로직이 컴포넌트 밖에 있음!
 
 ---
 
